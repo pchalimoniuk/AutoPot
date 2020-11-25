@@ -23,7 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "soil_moisture_sensor.h"
-#include "temperature_sensor.h"
+//#include "temperature_sensor.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -46,8 +46,6 @@ DMA_HandleTypeDef hdma_adc1;
 
 RTC_HandleTypeDef hrtc;
 
-TIM_HandleTypeDef htim2;
-
 UART_HandleTypeDef huart2;
 UART_HandleTypeDef huart3;
 
@@ -66,23 +64,24 @@ static void MX_USB_OTG_FS_PCD_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_RTC_Init(void);
 static void MX_USART2_UART_Init(void);
-static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
-
+void setAlarm();
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 	char msg[20];
-	char msg2[20];
+	char message[100];
 
 	float soil_moisture = 100.0f;
 	float RH = 0.0f;
 	float TM = 0.0f;
 	uint32_t soil_moisture_raw=0;
-	DHT_Data DHT11_Data = {0};
 	float Temperature, Humidity;
 	uint8_t flag = 0;
+	uint8_t alarm_flag = 0;
+	RTC_TimeTypeDef currentTime;
+	RTC_DateTypeDef currentDate;
 /* USER CODE END 0 */
 
 /**
@@ -119,20 +118,33 @@ int main(void)
   MX_ADC1_Init();
   MX_RTC_Init();
   MX_USART2_UART_Init();
-  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 
-  	__HAL_LINKDMA(&hadc1,DMA_Handle,hdma_adc1);
-  	HAL_DMA_Init(&hdma_adc1);
-    if(HAL_ADC_Start_DMA(&hadc1,&soil_moisture_raw, 1) != HAL_OK){
-    	Error_Handler();
-    }
-    if(HAL_TIM_Base_Start(&htim2) != HAL_OK){
-    	Error_Handler();
-    }
+  __HAL_LINKDMA(&hadc1,DMA_Handle,hdma_adc1);
+//    if(HAL_ADC_Start_DMA(&hadc1,&soil_moisture_raw, 1) != HAL_OK){
+//    	Error_Handler();
+//    }
+//    if(HAL_TIM_Base_Start(&htim2) != HAL_OK){
+//    	Error_Handler();
+//    }
   //HAL_TIM_Base_Start(&htim3);
-
-
+//	if(HAL_RTC_GetTime (&hrtc, &currentTime, RTC_FORMAT_BIN) != HAL_OK){
+//		Error_Handler();
+//	}
+//	if(HAL_RTC_GetDate(&hrtc,&currentDate , RTC_FORMAT_BIN) != HAL_OK){
+//			Error_Handler();
+//	}
+//	sprintf(msg,"%u\r\n",currentTime.Seconds);
+//	HAL_UART_Transmit(&huart3, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
+//	HAL_Delay(4000);
+//	if(HAL_RTC_GetTime (&hrtc, &currentTime, RTC_FORMAT_BIN) != HAL_OK){
+//			Error_Handler();
+//	}
+//	if(HAL_RTC_GetDate(&hrtc,&currentDate , RTC_FORMAT_BIN) != HAL_OK){
+//			Error_Handler();
+//	}
+//	sprintf(msg,"%u\r\n",currentTime.Seconds);
+//	HAL_UART_Transmit(&huart3, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -142,10 +154,6 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-        HAL_Delay(10000);
-    	HAL_GPIO_WritePin(GPIOF, GPIO_PIN_7, GPIO_PIN_SET);
-    	HAL_Delay(10000);
-    	HAL_GPIO_WritePin(GPIOF, GPIO_PIN_7, GPIO_PIN_RESET);
 //    	 if((get_data_from_sensor(&DHT11_Data, GPIOC, GPIO_PIN_11))){
 //    	 sprintf(msg2, "%f\r\n", DHT11_Data.temperature);
 //    	 HAL_UART_Transmit(&huart3, (uint8_t*)msg2, strlen(msg2), HAL_MAX_DELAY);
@@ -167,6 +175,25 @@ int main(void)
 //
 //
 //    	}
+    	if(1 == alarm_flag){
+			HAL_DMA_Init(&hdma_adc1);
+			if(HAL_ADC_Start_DMA(&hadc1, &soil_moisture_raw, 1) != HAL_OK){
+				Error_Handler();
+			}
+			alarm_flag = 0;
+    	}
+    	if(1==flag){
+      		if(HAL_RTC_GetTime (&hrtc, &currentTime, RTC_FORMAT_BIN) != HAL_OK){
+				Error_Handler();
+      		}
+      		if(HAL_RTC_GetDate(&hrtc,&currentDate , RTC_FORMAT_BIN) != HAL_OK){
+      				Error_Handler();
+      		}
+      		sprintf(message,"Time: %02d:%02d:%02d Moiustur:%lu\r\n",currentTime.Hours, currentTime.Minutes, currentTime.Seconds, soil_moisture_raw);
+      		HAL_UART_Transmit(&huart3, (uint8_t*)message, strlen(message), HAL_MAX_DELAY);
+      		flag = 0;
+      		setAlarm();
+    	}
 
     }
 
@@ -253,8 +280,8 @@ static void MX_ADC1_Init(void)
   hadc1.Init.ScanConvMode = DISABLE;
   hadc1.Init.ContinuousConvMode = DISABLE;
   hadc1.Init.DiscontinuousConvMode = DISABLE;
-  hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_RISING;
-  hadc1.Init.ExternalTrigConv = ADC_EXTERNALTRIGCONV_T2_TRGO;
+  hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
+  hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc1.Init.NbrOfConversion = 1;
   hadc1.Init.DMAContinuousRequests = DISABLE;
@@ -265,9 +292,9 @@ static void MX_ADC1_Init(void)
   }
   /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
   */
-  sConfig.Channel = ADC_CHANNEL_0;
+  sConfig.Channel = ADC_CHANNEL_1;
   sConfig.Rank = 1;
-  sConfig.SamplingTime = ADC_SAMPLETIME_144CYCLES;
+  sConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
@@ -338,68 +365,33 @@ static void MX_RTC_Init(void)
   /** Enable the Alarm A
   */
   sAlarm.AlarmTime.Hours = 0x0;
-  sAlarm.AlarmTime.Minutes = 0x0;
+  sAlarm.AlarmTime.Minutes = 0x1;
   sAlarm.AlarmTime.Seconds = 0x0;
   sAlarm.AlarmTime.SubSeconds = 0x0;
   sAlarm.AlarmTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
   sAlarm.AlarmTime.StoreOperation = RTC_STOREOPERATION_RESET;
-  sAlarm.AlarmMask = RTC_ALARMMASK_NONE;
+  sAlarm.AlarmMask = RTC_ALARMMASK_MINUTES;
   sAlarm.AlarmSubSecondMask = RTC_ALARMSUBSECONDMASK_ALL;
   sAlarm.AlarmDateWeekDaySel = RTC_ALARMDATEWEEKDAYSEL_DATE;
   sAlarm.AlarmDateWeekDay = 0x1;
   sAlarm.Alarm = RTC_ALARM_A;
-  if (HAL_RTC_SetAlarm(&hrtc, &sAlarm, RTC_FORMAT_BCD) != HAL_OK)
+  if (HAL_RTC_SetAlarm_IT(&hrtc, &sAlarm, RTC_FORMAT_BCD) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** Enable the Alarm B
+  */
+  sAlarm.AlarmTime.Minutes = 0x0;
+  sAlarm.AlarmMask = RTC_ALARMMASK_NONE;
+  sAlarm.AlarmDateWeekDay = 0x1;
+  sAlarm.Alarm = RTC_ALARM_B;
+  if (HAL_RTC_SetAlarm_IT(&hrtc, &sAlarm, RTC_FORMAT_BCD) != HAL_OK)
   {
     Error_Handler();
   }
   /* USER CODE BEGIN RTC_Init 2 */
-
+  //__HAL_RCC_RTC_ENABLE();
   /* USER CODE END RTC_Init 2 */
-
-}
-
-/**
-  * @brief TIM2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_TIM2_Init(void)
-{
-
-  /* USER CODE BEGIN TIM2_Init 0 */
-
-  /* USER CODE END TIM2_Init 0 */
-
-  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
-  TIM_MasterConfigTypeDef sMasterConfig = {0};
-
-  /* USER CODE BEGIN TIM2_Init 1 */
-
-  /* USER CODE END TIM2_Init 1 */
-  htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 41999;
-  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 4999;
-  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
-  if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_UPDATE;
-  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_ENABLE;
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN TIM2_Init 2 */
-
-  /* USER CODE END TIM2_Init 2 */
 
 }
 
@@ -550,12 +542,6 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOC, GPIO_PIN_11, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin : USER_Btn_Pin */
-  GPIO_InitStruct.Pin = USER_Btn_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(USER_Btn_GPIO_Port, &GPIO_InitStruct);
-
   /*Configure GPIO pin : PF7 */
   GPIO_InitStruct.Pin = GPIO_PIN_7;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -600,6 +586,30 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
 		flag = 1;
 		//HAL_TIM_Base_Stop(&htim2);
 
+}
+void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc){
+	if(!flag)
+		alarm_flag = 1;
+
+}
+//void HAL_RTC_AlarmIRQHandler (RTC_HandleTypeDef * hrtc)
+void setAlarm(){
+	  RTC_AlarmTypeDef sAlarm = {0};
+	  sAlarm.AlarmTime.Hours = 0x0;
+	  sAlarm.AlarmTime.Minutes = 1;
+	  sAlarm.AlarmTime.Seconds = 0x0;
+	  sAlarm.AlarmTime.SubSeconds = 0x0;
+	  sAlarm.AlarmTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
+	  sAlarm.AlarmTime.StoreOperation = RTC_STOREOPERATION_RESET;
+	  sAlarm.AlarmMask = RTC_ALARMMASK_MINUTES;
+	  sAlarm.AlarmSubSecondMask = RTC_ALARMSUBSECONDMASK_ALL;
+	  sAlarm.AlarmDateWeekDaySel = RTC_ALARMDATEWEEKDAYSEL_DATE;
+	  sAlarm.AlarmDateWeekDay = 0x1;
+	  sAlarm.Alarm = RTC_ALARM_A;
+	  if (HAL_RTC_SetAlarm_IT(&hrtc, &sAlarm, RTC_FORMAT_BCD) != HAL_OK)
+	  {
+	    Error_Handler();
+	  }
 }
 /* USER CODE END 4 */
 

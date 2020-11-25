@@ -219,13 +219,13 @@ uint8_t get_data_from_sensor(DHT_Data * data, GPIO_TypeDef * GPIOx, uint16_t GPI
 	}
 	return 0;
 }
-
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-  if (htim == &htim3)
-  {
-	  timer_flag = 1;
-	  //HAL_TIM_Base_Stop_IT(&htim3);
-  }
-
-}
+//
+//void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+//{
+//  if (htim == &htim3)
+//  {
+//	  timer_flag = 1;
+//	  //HAL_TIM_Base_Stop_IT(&htim3);
+//  }
+//
+//}
