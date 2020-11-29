@@ -73,12 +73,12 @@ void setAlarm();
 	char msg[20];
 	char message[100];
 
-	float soil_moisture = 100.0f;
+	float soil_moisture = 0.0f;
 	float RH = 0.0f;
 	float TM = 0.0f;
-	uint32_t soil_moisture_raw=0;
+	uint16_t soil_moisture_raw=0;
 	float Temperature, Humidity;
-	uint8_t flag = 0;
+	uint8_t moisture_sensor_flag = 0;
 	uint8_t alarm_flag = 0;
 	RTC_TimeTypeDef currentTime;
 	RTC_DateTypeDef currentDate;
@@ -120,31 +120,6 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
-  __HAL_LINKDMA(&hadc1,DMA_Handle,hdma_adc1);
-//    if(HAL_ADC_Start_DMA(&hadc1,&soil_moisture_raw, 1) != HAL_OK){
-//    	Error_Handler();
-//    }
-//    if(HAL_TIM_Base_Start(&htim2) != HAL_OK){
-//    	Error_Handler();
-//    }
-  //HAL_TIM_Base_Start(&htim3);
-//	if(HAL_RTC_GetTime (&hrtc, &currentTime, RTC_FORMAT_BIN) != HAL_OK){
-//		Error_Handler();
-//	}
-//	if(HAL_RTC_GetDate(&hrtc,&currentDate , RTC_FORMAT_BIN) != HAL_OK){
-//			Error_Handler();
-//	}
-//	sprintf(msg,"%u\r\n",currentTime.Seconds);
-//	HAL_UART_Transmit(&huart3, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
-//	HAL_Delay(4000);
-//	if(HAL_RTC_GetTime (&hrtc, &currentTime, RTC_FORMAT_BIN) != HAL_OK){
-//			Error_Handler();
-//	}
-//	if(HAL_RTC_GetDate(&hrtc,&currentDate , RTC_FORMAT_BIN) != HAL_OK){
-//			Error_Handler();
-//	}
-//	sprintf(msg,"%u\r\n",currentTime.Seconds);
-//	HAL_UART_Transmit(&huart3, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -154,44 +129,24 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-//    	 if((get_data_from_sensor(&DHT11_Data, GPIOC, GPIO_PIN_11))){
-//    	 sprintf(msg2, "%f\r\n", DHT11_Data.temperature);
-//    	 HAL_UART_Transmit(&huart3, (uint8_t*)msg2, strlen(msg2), HAL_MAX_DELAY);
-//    	 }
-//    	 HAL_Delay(1000);
 
-//    	if(1==flag){
-//    		sprintf(msg, "%lu\r\n", soil_moisture_raw);
-//    		HAL_UART_Transmit(&huart3, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
-//    		flag = 0;
-//    		HAL_GPIO_WritePin(GPIOF, GPIO_PIN_7, GPIO_PIN_SET);
-//    		HAL_Delay(10000);
-//    		HAL_GPIO_WritePin(GPIOF, GPIO_PIN_7, GPIO_PIN_RESET);
-//
-////    	  	HAL_DMA_Init(&hdma_adc1);
-////    		 if(HAL_ADC_Start_DMA(&hadc1, &soil_moisture_raw, 1) != HAL_OK){
-////   		    	Error_Handler();
-////    		 }
-//
-//
-//    	}
     	if(1 == alarm_flag){
-			HAL_DMA_Init(&hdma_adc1);
-			if(HAL_ADC_Start_DMA(&hadc1, &soil_moisture_raw, 1) != HAL_OK){
+			if(!start_soil_moisture_measurement(&hadc1, &hdma_adc1, &soil_moisture_raw)){
 				Error_Handler();
 			}
 			alarm_flag = 0;
     	}
-    	if(1==flag){
+    	if(1==moisture_sensor_flag){
       		if(HAL_RTC_GetTime (&hrtc, &currentTime, RTC_FORMAT_BIN) != HAL_OK){
 				Error_Handler();
       		}
       		if(HAL_RTC_GetDate(&hrtc,&currentDate , RTC_FORMAT_BIN) != HAL_OK){
       				Error_Handler();
       		}
-      		sprintf(message,"Time: %02d:%02d:%02d Moiustur:%lu\r\n",currentTime.Hours, currentTime.Minutes, currentTime.Seconds, soil_moisture_raw);
+      		soil_moisture = get_normalized_moisture_level(soil_moisture_raw);
+      		sprintf(message,"Time: %02d:%02d:%02d Moisture:%f % \r\n",currentTime.Hours, currentTime.Minutes, currentTime.Seconds, soil_moisture);
       		HAL_UART_Transmit(&huart3, (uint8_t*)message, strlen(message), HAL_MAX_DELAY);
-      		flag = 0;
+      		moisture_sensor_flag = 0;
       		setAlarm();
     	}
 
@@ -365,12 +320,12 @@ static void MX_RTC_Init(void)
   /** Enable the Alarm A
   */
   sAlarm.AlarmTime.Hours = 0x0;
-  sAlarm.AlarmTime.Minutes = 0x1;
-  sAlarm.AlarmTime.Seconds = 0x0;
+  sAlarm.AlarmTime.Minutes = 0;
+  sAlarm.AlarmTime.Seconds = 0x1;
   sAlarm.AlarmTime.SubSeconds = 0x0;
   sAlarm.AlarmTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
   sAlarm.AlarmTime.StoreOperation = RTC_STOREOPERATION_RESET;
-  sAlarm.AlarmMask = RTC_ALARMMASK_MINUTES;
+  sAlarm.AlarmMask = RTC_ALARMMASK_DATEWEEKDAY | RTC_ALARMMASK_HOURS | RTC_ALARMMASK_MINUTES;
   sAlarm.AlarmSubSecondMask = RTC_ALARMSUBSECONDMASK_ALL;
   sAlarm.AlarmDateWeekDaySel = RTC_ALARMDATEWEEKDAYSEL_DATE;
   sAlarm.AlarmDateWeekDay = 0x1;
@@ -381,16 +336,9 @@ static void MX_RTC_Init(void)
   }
   /** Enable the Alarm B
   */
-  sAlarm.AlarmTime.Minutes = 0x0;
-  sAlarm.AlarmMask = RTC_ALARMMASK_NONE;
-  sAlarm.AlarmDateWeekDay = 0x1;
-  sAlarm.Alarm = RTC_ALARM_B;
-  if (HAL_RTC_SetAlarm_IT(&hrtc, &sAlarm, RTC_FORMAT_BCD) != HAL_OK)
-  {
-    Error_Handler();
-  }
+
   /* USER CODE BEGIN RTC_Init 2 */
-  //__HAL_RCC_RTC_ENABLE();
+
   /* USER CODE END RTC_Init 2 */
 
 }
@@ -580,15 +528,14 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
-	if(HAL_ADC_Stop_DMA(&hadc1) != HAL_OK){
+	if(stop_soil_measurement(&hadc1)){
 		Error_Handler();
 	}
-		flag = 1;
-		//HAL_TIM_Base_Stop(&htim2);
+		moisture_sensor_flag = 1;
 
 }
 void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc){
-	if(!flag)
+	if(!moisture_sensor_flag)
 		alarm_flag = 1;
 
 }
@@ -596,12 +543,12 @@ void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc){
 void setAlarm(){
 	  RTC_AlarmTypeDef sAlarm = {0};
 	  sAlarm.AlarmTime.Hours = 0x0;
-	  sAlarm.AlarmTime.Minutes = 1;
-	  sAlarm.AlarmTime.Seconds = 0x0;
+	  sAlarm.AlarmTime.Minutes = 0x1;
+	  sAlarm.AlarmTime.Seconds = 0x3;
 	  sAlarm.AlarmTime.SubSeconds = 0x0;
 	  sAlarm.AlarmTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
 	  sAlarm.AlarmTime.StoreOperation = RTC_STOREOPERATION_RESET;
-	  sAlarm.AlarmMask = RTC_ALARMMASK_MINUTES;
+	  sAlarm.AlarmMask = RTC_ALARMMASK_DATEWEEKDAY | RTC_ALARMMASK_HOURS;
 	  sAlarm.AlarmSubSecondMask = RTC_ALARMSUBSECONDMASK_ALL;
 	  sAlarm.AlarmDateWeekDaySel = RTC_ALARMDATEWEEKDAYSEL_DATE;
 	  sAlarm.AlarmDateWeekDay = 0x1;
