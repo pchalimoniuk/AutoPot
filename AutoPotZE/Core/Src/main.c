@@ -23,6 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "soil_moisture_sensor.h"
+#include "water_pump.h"
 //#include "temperature_sensor.h"
 /* USER CODE END Includes */
 
@@ -46,6 +47,8 @@ DMA_HandleTypeDef hdma_adc1;
 
 RTC_HandleTypeDef hrtc;
 
+TIM_HandleTypeDef htim2;
+
 UART_HandleTypeDef huart2;
 UART_HandleTypeDef huart3;
 
@@ -64,6 +67,7 @@ static void MX_USB_OTG_FS_PCD_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_RTC_Init(void);
 static void MX_USART2_UART_Init(void);
+static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
 void setAlarm();
 /* USER CODE END PFP */
@@ -82,6 +86,7 @@ void setAlarm();
 	uint8_t alarm_flag = 0;
 	RTC_TimeTypeDef currentTime;
 	RTC_DateTypeDef currentDate;
+	water_pump pump;
 /* USER CODE END 0 */
 
 /**
@@ -118,8 +123,14 @@ int main(void)
   MX_ADC1_Init();
   MX_RTC_Init();
   MX_USART2_UART_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-
+  void setAlarm();
+  set_watering_time(&pump, 20);
+  set_tim(&pump, &htim2);
+  set_GPIO_port(&pump,GPIOB, GPIO_PIN_7);
+  water_pump_init(&pump);
+  HAL_Delay(1000);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -134,7 +145,11 @@ int main(void)
 			if(!start_soil_moisture_measurement(&hadc1, &hdma_adc1, &soil_moisture_raw)){
 				Error_Handler();
 			}
+			start_watering(&pump);
 			alarm_flag = 0;
+    	}
+    	if(is_watering_complete(&pump)){
+    		stop_watering(&pump);
     	}
     	if(1==moisture_sensor_flag){
       		if(HAL_RTC_GetTime (&hrtc, &currentTime, RTC_FORMAT_BIN) != HAL_OK){
@@ -169,7 +184,7 @@ void SystemClock_Config(void)
   /** Configure the main internal regulator output voltage
   */
   __HAL_RCC_PWR_CLK_ENABLE();
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
+  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE3);
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
@@ -193,11 +208,11 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV4;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
   {
     Error_Handler();
   }
@@ -230,7 +245,7 @@ static void MX_ADC1_Init(void)
   /** Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion)
   */
   hadc1.Instance = ADC1;
-  hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;
+  hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV2;
   hadc1.Init.Resolution = ADC_RESOLUTION_12B;
   hadc1.Init.ScanConvMode = DISABLE;
   hadc1.Init.ContinuousConvMode = DISABLE;
@@ -320,12 +335,12 @@ static void MX_RTC_Init(void)
   /** Enable the Alarm A
   */
   sAlarm.AlarmTime.Hours = 0x0;
-  sAlarm.AlarmTime.Minutes = 0x0;
-  sAlarm.AlarmTime.Seconds = 0x1;
+  sAlarm.AlarmTime.Minutes = 0x1;
+  sAlarm.AlarmTime.Seconds = 0x0;
   sAlarm.AlarmTime.SubSeconds = 0x0;
   sAlarm.AlarmTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
   sAlarm.AlarmTime.StoreOperation = RTC_STOREOPERATION_RESET;
-  sAlarm.AlarmMask = RTC_ALARMMASK_DATEWEEKDAY | RTC_ALARMMASK_HOURS | RTC_ALARMMASK_MINUTES;
+  sAlarm.AlarmMask = RTC_ALARMMASK_DATEWEEKDAY | RTC_ALARMMASK_HOURS;;
   sAlarm.AlarmSubSecondMask = RTC_ALARMSUBSECONDMASK_ALL;
   sAlarm.AlarmDateWeekDaySel = RTC_ALARMDATEWEEKDAYSEL_DATE;
   sAlarm.AlarmDateWeekDay = 0x1;
@@ -336,10 +351,62 @@ static void MX_RTC_Init(void)
   }
   /** Enable the Alarm B
   */
-
+  sAlarm.AlarmTime.Minutes = 0x0;
+  sAlarm.AlarmMask = RTC_ALARMMASK_NONE;
+  sAlarm.AlarmDateWeekDay = 0x1;
+  sAlarm.Alarm = RTC_ALARM_B;
+  if (HAL_RTC_SetAlarm_IT(&hrtc, &sAlarm, RTC_FORMAT_BCD) != HAL_OK)
+  {
+    Error_Handler();
+  }
   /* USER CODE BEGIN RTC_Init 2 */
 
   /* USER CODE END RTC_Init 2 */
+
+}
+
+/**
+  * @brief TIM2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM2_Init(void)
+{
+
+  /* USER CODE BEGIN TIM2_Init 0 */
+
+  /* USER CODE END TIM2_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM2_Init 1 */
+
+  /* USER CODE END TIM2_Init 1 */
+  htim2.Instance = TIM2;
+  htim2.Init.Prescaler = 0;
+  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim2.Init.Period = 210000000-1;
+  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM2_Init 2 */
+
+  /* USER CODE END TIM2_Init 2 */
 
 }
 
@@ -468,7 +535,7 @@ static void MX_DMA_Init(void)
 static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
-  HAL_GPIO_WritePin(GPIOx, GPIO_Pin, PinState)
+
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOF_CLK_ENABLE();
@@ -543,12 +610,12 @@ void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc){
 void setAlarm(){
 	  RTC_AlarmTypeDef sAlarm = {0};
 	  sAlarm.AlarmTime.Hours = 0x0;
-	  sAlarm.AlarmTime.Minutes = 0x1;
-	  sAlarm.AlarmTime.Seconds = 0x3;
+	  sAlarm.AlarmTime.Minutes = 0x0;
+	  sAlarm.AlarmTime.Seconds = 0x30;
 	  sAlarm.AlarmTime.SubSeconds = 0x0;
 	  sAlarm.AlarmTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
 	  sAlarm.AlarmTime.StoreOperation = RTC_STOREOPERATION_RESET;
-	  sAlarm.AlarmMask = RTC_ALARMMASK_DATEWEEKDAY | RTC_ALARMMASK_HOURS;
+	  sAlarm.AlarmMask = RTC_ALARMMASK_DATEWEEKDAY | RTC_ALARMMASK_HOURS | RTC_ALARMMASK_MINUTES;
 	  sAlarm.AlarmSubSecondMask = RTC_ALARMSUBSECONDMASK_ALL;
 	  sAlarm.AlarmDateWeekDaySel = RTC_ALARMDATEWEEKDAYSEL_DATE;
 	  sAlarm.AlarmDateWeekDay = 0x1;
@@ -557,6 +624,13 @@ void setAlarm(){
 	  {
 	    Error_Handler();
 	  }
+}
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+	 if (htim->Instance==TIM2)
+	 {
+		 increase_counter(&pump);
+	 }
 }
 /* USER CODE END 4 */
 
