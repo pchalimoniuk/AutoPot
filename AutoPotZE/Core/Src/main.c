@@ -76,6 +76,9 @@ void setAlarm();
 /* USER CODE BEGIN 0 */
 	char msg[20];
 	char message[100];
+	//
+	uint8_t data[20];
+	//
 
 	float soil_moisture = 0.0f;
 	float RH = 0.0f;
@@ -84,6 +87,7 @@ void setAlarm();
 	float Temperature, Humidity;
 	uint8_t moisture_sensor_flag = 0;
 	uint8_t alarm_flag = 0;
+	uint8_t bluetooth_flag = 0;
 	RTC_TimeTypeDef currentTime;
 	RTC_DateTypeDef currentDate;
 	water_pump pump;
@@ -131,6 +135,8 @@ int main(void)
   set_GPIO_port(&pump,GPIOB, GPIO_PIN_7);
   water_pump_init(&pump);
   HAL_Delay(1000);
+  HAL_UART_Receive_IT(&huart2, &data, sizeof(data));
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -140,30 +146,34 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-
-    	if(1 == alarm_flag){
-			if(!start_soil_moisture_measurement(&hadc1, &hdma_adc1, &soil_moisture_raw)){
-				Error_Handler();
-			}
-			start_watering(&pump);
-			alarm_flag = 0;
+    	sprintf(message,"Im sending data/n");
+    	if(bluetooth_flag == 1){
+    	HAL_UART_Transmit(&huart2, (uint8_t *) message, strlen(message), HAL_MAX_DELAY);
+    	HAL_Delay(1000);
     	}
-    	if(is_watering_complete(&pump)){
-    		stop_watering(&pump);
-    	}
-    	if(1==moisture_sensor_flag){
-      		if(HAL_RTC_GetTime (&hrtc, &currentTime, RTC_FORMAT_BIN) != HAL_OK){
-				Error_Handler();
-      		}
-      		if(HAL_RTC_GetDate(&hrtc,&currentDate , RTC_FORMAT_BIN) != HAL_OK){
-      				Error_Handler();
-      		}
-      		soil_moisture = get_normalized_moisture_level(soil_moisture_raw);
-      		sprintf(message,"Time: %02d:%02d:%02d Moisture:%f % \r\n",currentTime.Hours, currentTime.Minutes, currentTime.Seconds, soil_moisture);
-      		HAL_UART_Transmit(&huart3, (uint8_t*)message, strlen(message), HAL_MAX_DELAY);
-      		moisture_sensor_flag = 0;
-      		setAlarm();
-    	}
+//    	if(1 == alarm_flag){
+//			if(!start_soil_moisture_measurement(&hadc1, &hdma_adc1, &soil_moisture_raw)){
+//				Error_Handler();
+//			}
+//			start_watering(&pump);
+//			alarm_flag = 0;
+//    	}
+//    	if(is_watering_complete(&pump)){
+//    		stop_watering(&pump);
+//    	}
+//    	if(1==moisture_sensor_flag){
+//      		if(HAL_RTC_GetTime (&hrtc, &currentTime, RTC_FORMAT_BIN) != HAL_OK){
+//				Error_Handler();
+//      		}
+//      		if(HAL_RTC_GetDate(&hrtc,&currentDate , RTC_FORMAT_BIN) != HAL_OK){
+//      				Error_Handler();
+//      		}
+//      		soil_moisture = get_normalized_moisture_level(soil_moisture_raw);
+//      		sprintf(message,"Time: %02d:%02d:%02d Moisture:%f % \r\n",currentTime.Hours, currentTime.Minutes, currentTime.Seconds, soil_moisture);
+//      		HAL_UART_Transmit(&huart3, (uint8_t*)message, strlen(message), HAL_MAX_DELAY);
+//      		moisture_sensor_flag = 0;
+//      		setAlarm();
+//    	}
 
     }
 
@@ -328,7 +338,7 @@ static void MX_RTC_Init(void)
   sDate.Date = 0x1;
   sDate.Year = 0x0;
 
-  if (HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BCD) != HAL_OK)
+  if (HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BIN) != HAL_OK)
   {
     Error_Handler();
   }
@@ -340,7 +350,7 @@ static void MX_RTC_Init(void)
   sAlarm.AlarmTime.SubSeconds = 0x0;
   sAlarm.AlarmTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
   sAlarm.AlarmTime.StoreOperation = RTC_STOREOPERATION_RESET;
-  sAlarm.AlarmMask = RTC_ALARMMASK_DATEWEEKDAY | RTC_ALARMMASK_HOURS;;
+  sAlarm.AlarmMask = RTC_ALARMMASK_MINUTES;
   sAlarm.AlarmSubSecondMask = RTC_ALARMSUBSECONDMASK_ALL;
   sAlarm.AlarmDateWeekDaySel = RTC_ALARMDATEWEEKDAYSEL_DATE;
   sAlarm.AlarmDateWeekDay = 0x1;
@@ -426,7 +436,7 @@ static void MX_USART2_UART_Init(void)
 
   /* USER CODE END USART2_Init 1 */
   huart2.Instance = USART2;
-  huart2.Init.BaudRate = 115200;
+  huart2.Init.BaudRate = 9600;
   huart2.Init.WordLength = UART_WORDLENGTH_8B;
   huart2.Init.StopBits = UART_STOPBITS_1;
   huart2.Init.Parity = UART_PARITY_NONE;
@@ -438,7 +448,6 @@ static void MX_USART2_UART_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN USART2_Init 2 */
-
   /* USER CODE END USART2_Init 2 */
 
 }
@@ -615,7 +624,7 @@ void setAlarm(){
 	  sAlarm.AlarmTime.SubSeconds = 0x0;
 	  sAlarm.AlarmTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
 	  sAlarm.AlarmTime.StoreOperation = RTC_STOREOPERATION_RESET;
-	  sAlarm.AlarmMask = RTC_ALARMMASK_DATEWEEKDAY | RTC_ALARMMASK_HOURS | RTC_ALARMMASK_MINUTES;
+	  sAlarm.AlarmMask =  RTC_ALARMMASK_SECONDS | RTC_ALARMMASK_MINUTES;
 	  sAlarm.AlarmSubSecondMask = RTC_ALARMSUBSECONDMASK_ALL;
 	  sAlarm.AlarmDateWeekDaySel = RTC_ALARMDATEWEEKDAYSEL_DATE;
 	  sAlarm.AlarmDateWeekDay = 0x1;
@@ -631,6 +640,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	 {
 		 increase_counter(&pump);
 	 }
+}
+
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
+	if(huart->Instance == USART2){
+		bluetooth_flag =1;
+	}
 }
 /* USER CODE END 4 */
 
