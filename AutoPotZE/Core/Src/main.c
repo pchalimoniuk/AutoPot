@@ -210,11 +210,11 @@ int main(void)
     	HAL_Delay(1000);
     	}
 		if (1 == alarm_flag) {
-			if (!start_soil_moisture_measurement(&hadc1, &hdma_adc1,
-					&soil_moisture_raw)) {
-				Error_Handler();
-			}
-			start_watering(&pump);
+//			if (!start_soil_moisture_measurement(&hadc1, &hdma_adc1,
+//					&soil_moisture_raw)) {
+//				Error_Handler();
+//			}
+//			start_watering(&pump);
 			alarm_flag = 0;
 
 			HAL_UART_Transmit(&huart3, (uint8_t*) "ALARM/r/n",
