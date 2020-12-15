@@ -34,7 +34,6 @@ uint16_t get_time(water_pump pump){  //to be delted
 	return pump_efficency/6;
 }
 uint16_t set_end_timer(water_pump * pump){ //only for now
-
 }
 uint8_t start_watering(water_pump* pump){
 	if(HAL_TIM_Base_Start_IT(pump->tim) != HAL_OK){

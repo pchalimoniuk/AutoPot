@@ -12,7 +12,7 @@
 #include "string.h"
 #include "stdio.h"
 #include "stm32f4xx_hal.h"
-float get_normalized_moisture_level(uint16_t value);
-uint16_t start_soil_moisture_measurement(ADC_HandleTypeDef* adc, DMA_HandleTypeDef* hdma_adc, uint16_t* value);
-uint16_t stop_soil_measurement(ADC_HandleTypeDef* adc);
+uint16_t get_normalized_moisture_level(uint16_t value);
+uint8_t start_soil_moisture_measurement(ADC_HandleTypeDef* adc, DMA_HandleTypeDef* hdma_adc, uint32_t* value);
+uint8_t stop_soil_measurement(ADC_HandleTypeDef* adc);
 #endif /* INC_SOIL_MOISTURE_SENSOR_H_ */

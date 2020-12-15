@@ -26,6 +26,8 @@
 #include "water_pump.h"
 #include "RTC_alarm.h"
 #include "bluetooth_logic.h"
+#include "flags.h"
+#include "sensors_readings.h"
 //#include "temperature_sensor.h"
 /* USER CODE END Includes */
 
@@ -71,7 +73,9 @@ static void MX_RTC_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
-void setAlarm();
+void handle_measurement(void);
+void handle_bluetooth(void);
+void handle_wattering(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -79,26 +83,21 @@ void setAlarm();
 	char msg[20];
 	char message[100];
 	char *test_message_1 = "T/9/59/3";
+	char *test_message_1x = "T/9/59/5";
 	char *test_message_2 = "F/10/0";
 	char *test_message_3 = "D/";
 	char *test_message_4 = "A/20";
 	char *test_message_5 = "P/";
-	uint8_t data[20];
-	//
-	float soil_moisture = 0.0f;
-	float RH = 0.0f;
-	float TM = 0.0f;
-	uint16_t soil_moisture_raw=0;
-	float Temperature, Humidity;
-	uint8_t moisture_sensor_flag = 0;
-	uint8_t alarm_flag = 0;
-	uint8_t bluetooth_flag = 0;
+	uint8_t data[18];
+	uint8_t testdata[18];
+	flags_struct flags = {0};
+	sensor_readings_struct sensor_readings = {0};
+	water_pump pump;
+	alarm alarm_struct;
+	//temporary
 	RTC_TimeTypeDef currentTime;
 	RTC_DateTypeDef currentDate;
-	water_pump pump;
-	uint8_t watering_flag;
-	uint8_t refresh_flag;
-	alarm alarm_struct;
+	//temporary
 
 /* USER CODE END 0 */
 
@@ -138,48 +137,58 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
+  HAL_Delay(1000);
+  HAL_UART_Transmit(&huart3, (uint8_t *) "TEST_T\r\n", strlen("TEST_T\r\n"), HAL_MAX_DELAY);
+
   alarm_struct.hrtc= &hrtc;
   alarm_struct.ALARM_TYPEx = RTC_ALARM_A;
-  void setAlarm();
+  set_alarm(&alarm_struct);
   set_watering_time(&pump, 20);
   set_tim(&pump, &htim2);
   set_GPIO_port(&pump,GPIOB, GPIO_PIN_7);
   water_pump_init(&pump);
-  HAL_Delay(1000);
- // HAL_UART_Receive_IT(&huart2, &data, sizeof(data));
-
+  set_water_level(&pump,70);
+  //HAL_UART_Transmit(&huart2, (uint8_t *)"ja wysylam", strlen("ja wysylam"), HAL_MAX_DELAY);
+  HAL_UART_Receive_IT(&huart2, data, sizeof(data));
 
   /*BLUETOOTH INTERPRETATION TESTS*/
-  HAL_UART_Transmit(&huart3, (uint8_t *) "TEST_T\r\n", strlen("TEST_T\r\n"), HAL_MAX_DELAY);
-  if(bluetooth(test_message_1, &pump, &watering_flag, &refresh_flag, &alarm_struct) == BLUETOOTH_COMMAND_OK){
-	  HAL_UART_Transmit(&huart3, (uint8_t *) "TEST_T successful\r\n", strlen("TEST_T successful\r\n"), HAL_MAX_DELAY);
+  HAL_UART_Transmit(&huart3, (uint8_t *) "TEST_T1\r\n", strlen("TEST_T1\r\n"), HAL_MAX_DELAY);
+  if(bluetooth(test_message_1x, &pump, &flags, &alarm_struct) == BLUETOOTH_COMMAND_OK){
+	  HAL_UART_Transmit(&huart3, (uint8_t *) "TEST_T1 successful\r\n", strlen("TEST_T1 successful\r\n"), HAL_MAX_DELAY);
 
   }else{
-	  HAL_UART_Transmit(&huart3,(uint8_t *)  "TEST_T failed\r\n", strlen("TEST_T failed\r\n"), HAL_MAX_DELAY);
+	  HAL_UART_Transmit(&huart3,(uint8_t *)  "TEST_T1 failed\r\n", strlen("TEST_T1 failed\r\n"), HAL_MAX_DELAY);
+  }
+  HAL_UART_Transmit(&huart3, (uint8_t *) "TEST_T1\r\n", strlen("TEST_T1\r\n"), HAL_MAX_DELAY);
+  if(bluetooth(test_message_1, &pump, &flags, &alarm_struct) == BLUETOOTH_COMMAND_OK){
+	  HAL_UART_Transmit(&huart3, (uint8_t *) "TEST_T2 successful\r\n", strlen("TEST_T21 successful\r\n"), HAL_MAX_DELAY);
+
+  }else{
+	  HAL_UART_Transmit(&huart3,(uint8_t *)  "TEST_T2 failed\r\n", strlen("TEST_T2 failed\r\n"), HAL_MAX_DELAY);
   }
   HAL_UART_Transmit(&huart3, (uint8_t *) "TEST_F\r\n", strlen("TEST_F\r\n"), HAL_MAX_DELAY);
-  if(bluetooth(test_message_2, &pump, &watering_flag, &refresh_flag, &alarm_struct) == BLUETOOTH_COMMAND_OK){
+  if(bluetooth(test_message_2, &pump, &flags, &alarm_struct) == BLUETOOTH_COMMAND_OK){
 	  HAL_UART_Transmit(&huart3, (uint8_t *) "TEST_F successful\r\n", strlen("TEST_F successful\r\n"), HAL_MAX_DELAY);
 
   }else{
 	  HAL_UART_Transmit(&huart3, (uint8_t *) "TEST_F failed\r\n", strlen("TEST_F failed\r\n"), HAL_MAX_DELAY);
   }
   HAL_UART_Transmit(&huart3,(uint8_t *)  "TEST_D\r\n", strlen("TEST_D\r\n"), HAL_MAX_DELAY);
-  if(bluetooth(test_message_3, &pump, &watering_flag, &refresh_flag, &alarm_struct) == BLUETOOTH_COMMAND_OK){
+  if(bluetooth(test_message_3, &pump, &flags, &alarm_struct) == BLUETOOTH_COMMAND_OK){
 	  HAL_UART_Transmit(&huart3,(uint8_t *)  "TEST_D successful\r\n", strlen("TEST_T successful\r\n"), HAL_MAX_DELAY);
 
   }else{
 	  HAL_UART_Transmit(&huart3,(uint8_t *)  "TEST_D failed\r\n", strlen("TEST_D failed\r\n"), HAL_MAX_DELAY);
   }
   HAL_UART_Transmit(&huart3,(uint8_t *)  "TEST_A\r\n", strlen("TEST_A\r\n"), HAL_MAX_DELAY);
-  if(bluetooth(test_message_4, &pump, &watering_flag, &refresh_flag, &alarm_struct) == BLUETOOTH_COMMAND_OK){
+  if(bluetooth(test_message_4, &pump, &flags, &alarm_struct) == BLUETOOTH_COMMAND_OK){
 	  HAL_UART_Transmit(&huart3, (uint8_t *) "TEST_A successful\r\n", strlen("TEST_A successful\r\n"),  HAL_MAX_DELAY);
 
   }else{
 	  HAL_UART_Transmit(&huart3, (uint8_t *) "TEST_A failed\r\n", strlen("TEST_A failed\r\n"),  HAL_MAX_DELAY);
   }
   HAL_UART_Transmit(&huart3, (uint8_t *) "TEST_P\r\n", strlen("TEST_P\r\n"), HAL_MAX_DELAY);
-  if(bluetooth(test_message_5, &pump, &watering_flag, &refresh_flag, &alarm_struct) == BLUETOOTH_COMMAND_OK){
+  if(bluetooth(test_message_5, &pump, &flags, &alarm_struct) == BLUETOOTH_COMMAND_OK){
 	  HAL_UART_Transmit(&huart3, (uint8_t *) "TEST_P successful\r\n", strlen("TEST_P successful\r\n"),  HAL_MAX_DELAY);
 
   }else{
@@ -193,7 +202,7 @@ int main(void)
 	  Error_Handler();
   }
   sprintf(message,"Time:%02d:%02d:%02d Day of the week:%d\r\r\n",currentTime.Hours, currentTime.Minutes, currentTime.Seconds,currentDate.WeekDay);
-  HAL_UART_Transmit(&huart3, (uint8_t*)message, strlen(message), HAL_MAX_DELAY);
+  //HAL_UART_Transmit(&huart3, (uint8_t*)message, strlen(message), HAL_MAX_DELAY);
   /*END OF BLUETOOTH TESTS*/
   /* USER CODE END 2 */
 
@@ -202,78 +211,10 @@ int main(void)
     while (1)
     {
     /* USER CODE END WHILE */
-
     /* USER CODE BEGIN 3 */
-    	sprintf(message,"Im sending data/n");
-    	if(bluetooth_flag == 1){
-    	HAL_UART_Transmit(&huart2, (uint8_t *) message, strlen(message), HAL_MAX_DELAY);
-    	HAL_Delay(1000);
-    	}
-		if (1 == alarm_flag) {
-//			if (!start_soil_moisture_measurement(&hadc1, &hdma_adc1,
-//					&soil_moisture_raw)) {
-//				Error_Handler();
-//			}
-//			start_watering(&pump);
-			alarm_flag = 0;
-
-			HAL_UART_Transmit(&huart3, (uint8_t*) "ALARM/r/n",
-					strlen("ALARM/r/n"), HAL_MAX_DELAY);
-			if (HAL_RTC_GetTime(&hrtc, &currentTime, RTC_FORMAT_BIN)
-					!= HAL_OK) {
-				Error_Handler();
-			}
-			if (HAL_RTC_GetDate(&hrtc, &currentDate, RTC_FORMAT_BIN)
-					!= HAL_OK) {
-				Error_Handler();
-			}
-			sprintf(message, "Time:%02d:%02d:%02d Day of the week:%d\r\r\n",
-					currentTime.Hours, currentTime.Minutes, currentTime.Seconds,
-					currentDate.WeekDay);
-
-			HAL_UART_Transmit(&huart3, (uint8_t*) message, strlen(message),
-			HAL_MAX_DELAY);
-
-			//nextday test
-			char * next_day = "T/9/59/4";
-			char * freq_test = "F/10/1";
-			bluetooth(freq_test, &pump, &watering_flag, &refresh_flag, &alarm_struct);
-
-			bluetooth(next_day, &pump, &watering_flag, &refresh_flag, &alarm_struct);
-			if (HAL_RTC_GetTime(&hrtc, &currentTime, RTC_FORMAT_BIN)
-					!= HAL_OK) {
-				Error_Handler();
-			}
-			if (HAL_RTC_GetDate(&hrtc, &currentDate, RTC_FORMAT_BIN)
-					!= HAL_OK) {
-				Error_Handler();
-			}
-			sprintf(message, "Time:%02d:%02d:%02d Day of the week:%d\r\r\n",
-					currentTime.Hours, currentTime.Minutes, currentTime.Seconds,
-					currentDate.WeekDay);
-
-			HAL_UART_Transmit(&huart3, (uint8_t*) message, strlen(message),
-			HAL_MAX_DELAY);
-
-
-		}
-    	if(is_watering_complete(&pump)){
-    		stop_watering(&pump);
-    	}
-//    	if(1==moisture_sensor_flag){
-//      		if(HAL_RTC_GetTime (&hrtc, &currentTime, RTC_FORMAT_BIN) != HAL_OK){
-//				Error_Handler();
-//      		}
-//      		if(HAL_RTC_GetDate(&hrtc,&currentDate , RTC_FORMAT_BIN) != HAL_OK){
-//      				Error_Handler();
-//      		}
-//      		soil_moisture = get_normalized_moisture_level(soil_moisture_raw);
-//      		sprintf(message,"Time: %02d:%02d:%02d Moisture:%f % \r\r\n",currentTime.Hours, currentTime.Minutes, currentTime.Seconds, soil_moisture);
-//      		HAL_UART_Transmit(&huart3, (uint8_t*)message, strlen(message), HAL_MAX_DELAY);
-//      		moisture_sensor_flag = 0;
-//      		setAlarm();
-//    	}
-
+    	handle_bluetooth();
+    	handle_measurement();
+    	handle_wattering();
     }
 
 
@@ -547,6 +488,8 @@ static void MX_USART2_UART_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN USART2_Init 2 */
+  HAL_NVIC_SetPriority(USART2_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(USART2_IRQn);
   /* USER CODE END USART2_Init 2 */
 
 }
@@ -583,7 +526,6 @@ static void MX_USART3_UART_Init(void)
   /* USER CODE END USART3_Init 2 */
 
 }
-
 /**
   * @brief USB_OTG_FS Initialization Function
   * @param None
@@ -698,41 +640,97 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_11, GPIO_PIN_SET);
 
 }
 
 /* USER CODE BEGIN 4 */
+void handle_measurement(void) {
+	if (1 == flags.alarm) {
+		if (!start_soil_moisture_measurement(&hadc1, &hdma_adc1,
+				&sensor_readings.soil_moisture_raw)) {
+			Error_Handler();
+		}
+		//start_watering(&pump);
+		flags.alarm = 0;
+
+		HAL_UART_Transmit(&huart3, (uint8_t*) "ALARM/r/n", strlen("ALARM/r/n"),
+				HAL_MAX_DELAY);
+		if (HAL_RTC_GetTime(&hrtc, &currentTime, RTC_FORMAT_BIN) != HAL_OK) {
+			Error_Handler();
+		}
+		if (HAL_RTC_GetDate(&hrtc, &currentDate, RTC_FORMAT_BIN) != HAL_OK) {
+			Error_Handler();
+		}
+		sprintf(message, "Time:%02d:%02d:%02d Day of the week:%d\r\r\n",
+				currentTime.Hours, currentTime.Minutes, currentTime.Seconds,
+				currentDate.WeekDay);
+
+	}
+	if(flags.soil_sensor){
+  		if(HAL_RTC_GetTime (&hrtc, &currentTime, RTC_FORMAT_BIN) != HAL_OK){
+			Error_Handler();
+  		}
+  		if(HAL_RTC_GetDate(&hrtc,&currentDate , RTC_FORMAT_BIN) != HAL_OK){
+  				Error_Handler();
+  		}
+  		sensor_readings.soil_moisture_percent = get_normalized_moisture_level(sensor_readings.soil_moisture_raw);
+  		sprintf(message,"Time: %02d:%02d:%02d Moisture:%d \r\n",currentTime.Hours, currentTime.Minutes, currentTime.Seconds, sensor_readings.soil_moisture_percent);
+  		HAL_UART_Transmit(&huart3, (uint8_t*)message, strlen(message), HAL_MAX_DELAY);
+  		flags.soil_sensor = 0;
+  		set_alarm(&alarm_struct);
+	}
+}
+void handle_bluetooth(void) {
+	if (flags.bluetooth == 1) {
+		HAL_UART_Transmit(&huart3, (uint8_t*) data, sizeof(data),
+				HAL_MAX_DELAY);
+		if (bluetooth((char*) data, &pump, &flags,
+				&alarm_struct) == BLUETOOTH_COMMAND_OK) {
+			HAL_UART_Transmit(&huart2, (uint8_t*) "Command ok\r\n",
+					sizeof("Command ok\r\n"), HAL_MAX_DELAY);
+			HAL_UART_Transmit(&huart3, (uint8_t*) "Command ok\r\n",
+					sizeof("Command ok\r\n"), HAL_MAX_DELAY);
+		}
+		HAL_NVIC_ClearPendingIRQ(USART2_IRQn);
+		__HAL_UART_FLUSH_DRREGISTER(&huart2);
+		HAL_UART_Receive_IT(&huart2, data, sizeof(data));
+  		if(HAL_RTC_GetTime (&hrtc, &currentTime, RTC_FORMAT_BIN) != HAL_OK){
+			Error_Handler();
+  		}
+  		if(HAL_RTC_GetDate(&hrtc,&currentDate , RTC_FORMAT_BIN) != HAL_OK){
+  				Error_Handler();
+  		}
+		sprintf(message,"Time: %02d:%02d:%02d Moisture:%d Day of the week %d \r\n",currentTime.Hours, currentTime.Minutes, currentTime.Seconds, sensor_readings.soil_moisture_percent, currentDate.WeekDay);
+		HAL_UART_Transmit(&huart3, (uint8_t*)message, strlen(message), HAL_MAX_DELAY);
+		RTC_AlarmTypeDef  sAlarm;
+		HAL_RTC_GetAlarm(&hrtc, &sAlarm, RTC_ALARM_A, RTC_FORMAT_BIN);
+		sprintf(message,"Next alarm Time: %02d:%02d:%02d  Day of the week %d \r\n",sAlarm.AlarmTime.Hours,sAlarm.AlarmTime.Minutes,sAlarm.AlarmTime.Seconds, sAlarm.AlarmDateWeekDay);
+				HAL_UART_Transmit(&huart3, (uint8_t*)message, strlen(message), HAL_MAX_DELAY);
+		flags.bluetooth = 0;
+	}
+
+}
+void handle_wattering(void) {
+	if (flags.watering) {
+		if (is_watering_complete(&pump)) {
+			stop_watering(&pump);
+		}
+	}
+
+}
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
-	if(stop_soil_measurement(&hadc1)){
+	if(!stop_soil_measurement(&hadc1)){
 		Error_Handler();
 	}
-		moisture_sensor_flag = 1;
+		flags.soil_sensor = 1;
 
 
 }
 void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc){
-	//if(!moisture_sensor_flag)
-		alarm_flag = 1;
+		flags.alarm = 1;
 }
 //void HAL_RTC_AlarmIRQHandler (RTC_HandleTypeDef * hrtc)
-void setAlarm(){
-	  RTC_AlarmTypeDef sAlarm = {0};
-	  sAlarm.AlarmTime.Hours = 0x0;
-	  sAlarm.AlarmTime.Minutes = 0x0;
-	  sAlarm.AlarmTime.Seconds = 0x30;
-	  sAlarm.AlarmTime.SubSeconds = 0x0;
-	  sAlarm.AlarmTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
-	  sAlarm.AlarmTime.StoreOperation = RTC_STOREOPERATION_RESET;
-	  sAlarm.AlarmMask =  RTC_ALARMMASK_SECONDS | RTC_ALARMMASK_MINUTES;
-	  sAlarm.AlarmSubSecondMask = RTC_ALARMSUBSECONDMASK_ALL;
-	  sAlarm.AlarmDateWeekDaySel = RTC_ALARMDATEWEEKDAYSEL_DATE;
-	  sAlarm.AlarmDateWeekDay = 0x1;
-	  sAlarm.Alarm = RTC_ALARM_A;
-	  if (HAL_RTC_SetAlarm_IT(&hrtc, &sAlarm, RTC_FORMAT_BCD) != HAL_OK)
-	  {
-	    Error_Handler();
-	  }
-}
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
 	 if (htim->Instance==TIM2)
@@ -744,9 +742,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 	if(huart->Instance == USART2){
-		bluetooth_flag =1;
+		flags.bluetooth = 1;
 	}
 }
+
+
+
+
 /* USER CODE END 4 */
 
 /**
