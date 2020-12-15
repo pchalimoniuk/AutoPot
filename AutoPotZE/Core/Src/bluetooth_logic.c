@@ -9,15 +9,11 @@ uint8_t get_time_from_command(char *command, uint8_t *hours, uint8_t *minutes,
 		uint8_t *day);
 uint8_t get_freq_from_command(char *command, uint8_t *hours, uint8_t *freq);
 uint8_t get_amount_from_command(char *command, uint8_t *amount);
-uint8_t interpet_command(char *command, water_pump *pump, uint8_t *watering_flag,
-		uint8_t *refresh_flag, alarm * alarm_struct);
-uint8_t bluetooth(char *command, water_pump *pump, uint8_t *watering_flag,
-		uint8_t *refresh_flag, alarm * alarm_struct) {
-	return interpet_command(command, pump, watering_flag,
-			refresh_flag, alarm_struct);
+uint8_t interpet_command(char *command, water_pump *pump, flags_struct * flags, alarm * alarm_struct);
+uint8_t bluetooth(char *command, water_pump *pump, flags_struct * flags, alarm * alarm_struct) {
+	return interpet_command(command, pump, flags, alarm_struct);
 }
-uint8_t interpet_command(char *command, water_pump *pump, uint8_t *watering_flag,
-		uint8_t *refresh_flag, alarm * alarm_struct) {
+uint8_t interpet_command(char *command, water_pump *pump, flags_struct * flags, alarm * alarm_struct) {
 	uint8_t hours = 0;
 	uint8_t minutes = 0;
 	uint8_t weekday = 0;
@@ -46,7 +42,7 @@ uint8_t interpet_command(char *command, water_pump *pump, uint8_t *watering_flag
 		}
 		break;
 	case BLUETOOTH_COMMAND_DATA_REQUEST:
-		*refresh_flag = 1;
+		flags->refresh = 1;
 		break;
 	case BLUETOOTH_COMMAND_SET_AMOUNT:
 		if(!get_amount_from_command(command, &amount)){
@@ -57,7 +53,7 @@ uint8_t interpet_command(char *command, water_pump *pump, uint8_t *watering_flag
 	case BLUETOOTH_COMMAND_SEND_DATA:
 		break;
 	case BLUETOOTH_COMMAND_FORCE_WATERING:
-		*watering_flag = 1;
+		flags->watering = 1;
 		return BLUETOOTH_COMMAND_OK;
 		break;
 	default:
