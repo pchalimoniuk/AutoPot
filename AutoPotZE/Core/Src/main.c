@@ -80,53 +80,21 @@ void handle_wattering(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-	char msg[20];
-	char message[100];
-	char *test_message_1 = "T/9/59/3";
-	char *test_message_1x = "T/9/59/5";
-	char *test_message_2 = "F/10/0";
-	char *test_message_3 = "D/";
-	char *test_message_4 = "A/20";
-	char *test_message_5 = "P/";
-	uint8_t data[18];
-	uint8_t testdata[18];
+	uint8_t command_buffer[18];
 	flags_struct flags = {0};
 	sensor_readings_struct sensor_readings = {0};
 	water_pump pump;
 	alarm alarm_struct;
-	//temporary
-	RTC_TimeTypeDef currentTime;
-	RTC_DateTypeDef currentDate;
-	//temporary
-
 /* USER CODE END 0 */
-
 /**
   * @brief  The application entry point.
   * @retval int
   */
 int main(void)
 {
-  /* USER CODE BEGIN 1 */
-
-  /* USER CODE END 1 */
-
-  /* MCU Configuration--------------------------------------------------------*/
-
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
-
-  /* USER CODE BEGIN Init */
-
-  /* USER CODE END Init */
-
   /* Configure the system clock */
   SystemClock_Config();
-
-  /* USER CODE BEGIN SysInit */
-
-  /* USER CODE END SysInit */
-
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
@@ -137,9 +105,6 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-  HAL_Delay(1000);
-  HAL_UART_Transmit(&huart3, (uint8_t *) "TEST_T\r\n", strlen("TEST_T\r\n"), HAL_MAX_DELAY);
-
   alarm_struct.hrtc= &hrtc;
   alarm_struct.ALARM_TYPEx = RTC_ALARM_A;
   set_alarm(&alarm_struct);
@@ -148,64 +113,8 @@ int main(void)
   set_GPIO_port(&pump,GPIOB, GPIO_PIN_7);
   water_pump_init(&pump);
   set_water_level(&pump,70);
-  //HAL_UART_Transmit(&huart2, (uint8_t *)"ja wysylam", strlen("ja wysylam"), HAL_MAX_DELAY);
-  HAL_UART_Receive_IT(&huart2, data, sizeof(data));
-
-  /*BLUETOOTH INTERPRETATION TESTS*/
-  HAL_UART_Transmit(&huart3, (uint8_t *) "TEST_T1\r\n", strlen("TEST_T1\r\n"), HAL_MAX_DELAY);
-  if(bluetooth(test_message_1x, &pump, &flags, &alarm_struct) == BLUETOOTH_COMMAND_OK){
-	  HAL_UART_Transmit(&huart3, (uint8_t *) "TEST_T1 successful\r\n", strlen("TEST_T1 successful\r\n"), HAL_MAX_DELAY);
-
-  }else{
-	  HAL_UART_Transmit(&huart3,(uint8_t *)  "TEST_T1 failed\r\n", strlen("TEST_T1 failed\r\n"), HAL_MAX_DELAY);
-  }
-  HAL_UART_Transmit(&huart3, (uint8_t *) "TEST_T1\r\n", strlen("TEST_T1\r\n"), HAL_MAX_DELAY);
-  if(bluetooth(test_message_1, &pump, &flags, &alarm_struct) == BLUETOOTH_COMMAND_OK){
-	  HAL_UART_Transmit(&huart3, (uint8_t *) "TEST_T2 successful\r\n", strlen("TEST_T21 successful\r\n"), HAL_MAX_DELAY);
-
-  }else{
-	  HAL_UART_Transmit(&huart3,(uint8_t *)  "TEST_T2 failed\r\n", strlen("TEST_T2 failed\r\n"), HAL_MAX_DELAY);
-  }
-  HAL_UART_Transmit(&huart3, (uint8_t *) "TEST_F\r\n", strlen("TEST_F\r\n"), HAL_MAX_DELAY);
-  if(bluetooth(test_message_2, &pump, &flags, &alarm_struct) == BLUETOOTH_COMMAND_OK){
-	  HAL_UART_Transmit(&huart3, (uint8_t *) "TEST_F successful\r\n", strlen("TEST_F successful\r\n"), HAL_MAX_DELAY);
-
-  }else{
-	  HAL_UART_Transmit(&huart3, (uint8_t *) "TEST_F failed\r\n", strlen("TEST_F failed\r\n"), HAL_MAX_DELAY);
-  }
-  HAL_UART_Transmit(&huart3,(uint8_t *)  "TEST_D\r\n", strlen("TEST_D\r\n"), HAL_MAX_DELAY);
-  if(bluetooth(test_message_3, &pump, &flags, &alarm_struct) == BLUETOOTH_COMMAND_OK){
-	  HAL_UART_Transmit(&huart3,(uint8_t *)  "TEST_D successful\r\n", strlen("TEST_T successful\r\n"), HAL_MAX_DELAY);
-
-  }else{
-	  HAL_UART_Transmit(&huart3,(uint8_t *)  "TEST_D failed\r\n", strlen("TEST_D failed\r\n"), HAL_MAX_DELAY);
-  }
-  HAL_UART_Transmit(&huart3,(uint8_t *)  "TEST_A\r\n", strlen("TEST_A\r\n"), HAL_MAX_DELAY);
-  if(bluetooth(test_message_4, &pump, &flags, &alarm_struct) == BLUETOOTH_COMMAND_OK){
-	  HAL_UART_Transmit(&huart3, (uint8_t *) "TEST_A successful\r\n", strlen("TEST_A successful\r\n"),  HAL_MAX_DELAY);
-
-  }else{
-	  HAL_UART_Transmit(&huart3, (uint8_t *) "TEST_A failed\r\n", strlen("TEST_A failed\r\n"),  HAL_MAX_DELAY);
-  }
-  HAL_UART_Transmit(&huart3, (uint8_t *) "TEST_P\r\n", strlen("TEST_P\r\n"), HAL_MAX_DELAY);
-  if(bluetooth(test_message_5, &pump, &flags, &alarm_struct) == BLUETOOTH_COMMAND_OK){
-	  HAL_UART_Transmit(&huart3, (uint8_t *) "TEST_P successful\r\n", strlen("TEST_P successful\r\n"),  HAL_MAX_DELAY);
-
-  }else{
-	  HAL_UART_Transmit(&huart3,(uint8_t *)  "TEST_P failed\r\n", strlen("TEST_P failed\r\n"),  HAL_MAX_DELAY);
-  }
-
-  if (HAL_RTC_GetTime(&hrtc, &currentTime, RTC_FORMAT_BIN) != HAL_OK) {
-	  Error_Handler();
-  }
-  if (HAL_RTC_GetDate(&hrtc, &currentDate, RTC_FORMAT_BIN) != HAL_OK) {
-	  Error_Handler();
-  }
-  sprintf(message,"Time:%02d:%02d:%02d Day of the week:%d\r\r\n",currentTime.Hours, currentTime.Minutes, currentTime.Seconds,currentDate.WeekDay);
-  //HAL_UART_Transmit(&huart3, (uint8_t*)message, strlen(message), HAL_MAX_DELAY);
-  /*END OF BLUETOOTH TESTS*/
+  HAL_UART_Receive_IT(&huart2, command_buffer, sizeof(command_buffer));
   /* USER CODE END 2 */
-
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
     while (1)
@@ -216,8 +125,6 @@ int main(void)
     	handle_measurement();
     	handle_wattering();
     }
-
-
   /* USER CODE END 3 */
 }
 
@@ -643,7 +550,6 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOC, GPIO_PIN_11, GPIO_PIN_SET);
 
 }
-
 /* USER CODE BEGIN 4 */
 void handle_measurement(void) {
 	if (1 == flags.alarm) {
@@ -651,62 +557,25 @@ void handle_measurement(void) {
 				&sensor_readings.soil_moisture_raw)) {
 			Error_Handler();
 		}
-		//start_watering(&pump);
+		start_watering(&pump);
 		flags.alarm = 0;
-
-		HAL_UART_Transmit(&huart3, (uint8_t*) "ALARM/r/n", strlen("ALARM/r/n"),
-				HAL_MAX_DELAY);
-		if (HAL_RTC_GetTime(&hrtc, &currentTime, RTC_FORMAT_BIN) != HAL_OK) {
-			Error_Handler();
-		}
-		if (HAL_RTC_GetDate(&hrtc, &currentDate, RTC_FORMAT_BIN) != HAL_OK) {
-			Error_Handler();
-		}
-		sprintf(message, "Time:%02d:%02d:%02d Day of the week:%d\r\r\n",
-				currentTime.Hours, currentTime.Minutes, currentTime.Seconds,
-				currentDate.WeekDay);
-
 	}
 	if(flags.soil_sensor){
-  		if(HAL_RTC_GetTime (&hrtc, &currentTime, RTC_FORMAT_BIN) != HAL_OK){
-			Error_Handler();
-  		}
-  		if(HAL_RTC_GetDate(&hrtc,&currentDate , RTC_FORMAT_BIN) != HAL_OK){
-  				Error_Handler();
-  		}
   		sensor_readings.soil_moisture_percent = get_normalized_moisture_level(sensor_readings.soil_moisture_raw);
-  		sprintf(message,"Time: %02d:%02d:%02d Moisture:%d \r\n",currentTime.Hours, currentTime.Minutes, currentTime.Seconds, sensor_readings.soil_moisture_percent);
-  		HAL_UART_Transmit(&huart3, (uint8_t*)message, strlen(message), HAL_MAX_DELAY);
   		flags.soil_sensor = 0;
   		set_alarm(&alarm_struct);
 	}
 }
 void handle_bluetooth(void) {
 	if (flags.bluetooth == 1) {
-		HAL_UART_Transmit(&huart3, (uint8_t*) data, sizeof(data),
-				HAL_MAX_DELAY);
-		if (bluetooth((char*) data, &pump, &flags,
+		if (bluetooth((char*) command_buffer, &pump, &flags,
 				&alarm_struct) == BLUETOOTH_COMMAND_OK) {
 			HAL_UART_Transmit(&huart2, (uint8_t*) "Command ok\r\n",
-					sizeof("Command ok\r\n"), HAL_MAX_DELAY);
-			HAL_UART_Transmit(&huart3, (uint8_t*) "Command ok\r\n",
 					sizeof("Command ok\r\n"), HAL_MAX_DELAY);
 		}
 		HAL_NVIC_ClearPendingIRQ(USART2_IRQn);
 		__HAL_UART_FLUSH_DRREGISTER(&huart2);
-		HAL_UART_Receive_IT(&huart2, data, sizeof(data));
-  		if(HAL_RTC_GetTime (&hrtc, &currentTime, RTC_FORMAT_BIN) != HAL_OK){
-			Error_Handler();
-  		}
-  		if(HAL_RTC_GetDate(&hrtc,&currentDate , RTC_FORMAT_BIN) != HAL_OK){
-  				Error_Handler();
-  		}
-		sprintf(message,"Time: %02d:%02d:%02d Moisture:%d Day of the week %d \r\n",currentTime.Hours, currentTime.Minutes, currentTime.Seconds, sensor_readings.soil_moisture_percent, currentDate.WeekDay);
-		HAL_UART_Transmit(&huart3, (uint8_t*)message, strlen(message), HAL_MAX_DELAY);
-		RTC_AlarmTypeDef  sAlarm;
-		HAL_RTC_GetAlarm(&hrtc, &sAlarm, RTC_ALARM_A, RTC_FORMAT_BIN);
-		sprintf(message,"Next alarm Time: %02d:%02d:%02d  Day of the week %d \r\n",sAlarm.AlarmTime.Hours,sAlarm.AlarmTime.Minutes,sAlarm.AlarmTime.Seconds, sAlarm.AlarmDateWeekDay);
-				HAL_UART_Transmit(&huart3, (uint8_t*)message, strlen(message), HAL_MAX_DELAY);
+		HAL_UART_Receive_IT(&huart2, command_buffer, sizeof(command_buffer));
 		flags.bluetooth = 0;
 	}
 
