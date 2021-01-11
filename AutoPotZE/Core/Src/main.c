@@ -69,7 +69,7 @@ static void MX_DMA_Init(void);
 static void MX_USART3_UART_Init(void);
 static void MX_USB_OTG_FS_PCD_Init(void);
 static void MX_ADC1_Init(void);
-static void MX_RTC_Init(void);
+//static void MX_RTC_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
@@ -81,46 +81,93 @@ void handle_wattering(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 	uint8_t command_buffer[18];
-	flags_struct flags = {0};
-	sensor_readings_struct sensor_readings = {0};
-	water_pump pump;
-	alarm alarm_struct;
+	uint8_t out_buffer[20];
+	Flags flags = {0};
+	sensorReadings sensor_readings = {0};
+	Water_pump_struct pump;
+	ALARM_RTC_struct alarm_struct;
+
+	RTC_TimeTypeDef sTime = { 0 };
+	RTC_DateTypeDef sDate = { 0 };
+	RTC_AlarmTypeDef sAlarm = { 0 };
 /* USER CODE END 0 */
+
 /**
   * @brief  The application entry point.
   * @retval int
   */
 int main(void)
 {
+  /* USER CODE BEGIN 1 */
+
+  /* USER CODE END 1 */
+
+  /* MCU Configuration--------------------------------------------------------*/
+
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
+
+  /* USER CODE BEGIN Init */
+
+  /* USER CODE END Init */
+
   /* Configure the system clock */
   SystemClock_Config();
+
+  /* USER CODE BEGIN SysInit */
+
+  /* USER CODE END SysInit */
+
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_USART3_UART_Init();
   MX_USB_OTG_FS_PCD_Init();
   MX_ADC1_Init();
-  MX_RTC_Init();
+  //MX_RTC_Init();
   MX_USART2_UART_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   alarm_struct.hrtc= &hrtc;
-  alarm_struct.ALARM_TYPEx = RTC_ALARM_A;
-  set_alarm(&alarm_struct);
-  set_watering_time(&pump, 20);
-  set_tim(&pump, &htim2);
-  set_GPIO_port(&pump,GPIOB, GPIO_PIN_7);
-  water_pump_init(&pump);
-  set_water_level(&pump,70);
+  alarm_struct.alarmTypeX = RTC_ALARM_A;
+  alarm_struct.alarmTimeHour=10;
+  ALARM_RTC_init_rtc(&alarm_struct);
+  HAL_RTC_GetTime(alarm_struct.hrtc, &sTime, RTC_FORMAT_BIN);
+  HAL_RTC_GetDate(alarm_struct.hrtc, &sDate, RTC_FORMAT_BIN);
+  ALARM_RTC_set_alarm(&alarm_struct);
+  alarm_struct.wateringPeriod=1;
+  sensor_readings.soilMoisturePercent = 100;
+  WATER_PUMP_set_watering_time(&pump, 10);
+  WATER_PUMP_set_tim(&pump, &htim2);
+  WATER_PUMP_set_GPIO_port(&pump,GPIOF, GPIO_PIN_7);
+  WATER_PUMP_init(&pump);
+  WATER_PUMP_set_water_level(&pump,70);
+  __NOP();
   HAL_UART_Receive_IT(&huart2, command_buffer, sizeof(command_buffer));
+  HAL_RTC_GetTime(alarm_struct.hrtc, &sTime, RTC_FORMAT_BIN);
+  HAL_RTC_GetDate(alarm_struct.hrtc, &sDate, RTC_FORMAT_BIN);
+  HAL_RTC_GetAlarm(alarm_struct.hrtc, &sAlarm, RTC_ALARM_A, RTC_FORMAT_BIN);
+ // set_alarm(&alarm_struct);
+  HAL_RTC_GetTime(alarm_struct.hrtc, &sTime, RTC_FORMAT_BIN);
+  HAL_RTC_GetDate(alarm_struct.hrtc, &sDate, RTC_FORMAT_BIN);
+  HAL_RTC_GetAlarm(alarm_struct.hrtc, &sAlarm, RTC_ALARM_A, RTC_FORMAT_BIN);
+  __NOP();
+//  HAL_GPIO_WritePin(GPIOF, GPIO_PIN_7, GPIO_PIN_RESET);
+//  HAL_Delay(5000);
+//  	HAL_GPIO_WritePin(GPIOF, GPIO_PIN_7, GPIO_PIN_SET);
+//  	HAL_Delay(5000);
+//  	HAL_GPIO_WritePin(GPIOF, GPIO_PIN_7, GPIO_PIN_SET);
+// HAL_Delay(5000);
   /* USER CODE END 2 */
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
     while (1)
     {
     /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
+//
     	handle_bluetooth();
     	handle_measurement();
     	handle_wattering();
@@ -231,96 +278,86 @@ static void MX_ADC1_Init(void)
   /* USER CODE END ADC1_Init 2 */
 
 }
-
-/**
-  * @brief RTC Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_RTC_Init(void)
-{
-
-  /* USER CODE BEGIN RTC_Init 0 */
-
-  /* USER CODE END RTC_Init 0 */
-
-  RTC_TimeTypeDef sTime = {0};
-  RTC_DateTypeDef sDate = {0};
-  RTC_AlarmTypeDef sAlarm = {0};
-
-  /* USER CODE BEGIN RTC_Init 1 */
-
-  /* USER CODE END RTC_Init 1 */
-  /** Initialize RTC Only
-  */
-  hrtc.Instance = RTC;
-  hrtc.Init.HourFormat = RTC_HOURFORMAT_24;
-  hrtc.Init.AsynchPrediv = 127;
-  hrtc.Init.SynchPrediv = 255;
-  hrtc.Init.OutPut = RTC_OUTPUT_DISABLE;
-  hrtc.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;
-  hrtc.Init.OutPutType = RTC_OUTPUT_TYPE_OPENDRAIN;
-  if (HAL_RTC_Init(&hrtc) != HAL_OK)
-  {
-    Error_Handler();
-  }
-
-  /* USER CODE BEGIN Check_RTC_BKUP */
-
-  /* USER CODE END Check_RTC_BKUP */
-
-  /** Initialize RTC and set the Time and Date
-  */
-  sTime.Hours = 0x0;
-  sTime.Minutes = 0x0;
-  sTime.Seconds = 0x0;
-  sTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
-  sTime.StoreOperation = RTC_STOREOPERATION_RESET;
-  if (HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BCD) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sDate.WeekDay = RTC_WEEKDAY_MONDAY;
-  sDate.Month = RTC_MONTH_JANUARY;
-  sDate.Date = 0x1;
-  sDate.Year = 0x0;
-
-  if (HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BIN) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /** Enable the Alarm A
-  */
-  sAlarm.AlarmTime.Hours = 0x0;
-  sAlarm.AlarmTime.Minutes = 0x1;
-  sAlarm.AlarmTime.Seconds = 0x0;
-  sAlarm.AlarmTime.SubSeconds = 0x0;
-  sAlarm.AlarmTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
-  sAlarm.AlarmTime.StoreOperation = RTC_STOREOPERATION_RESET;
-  sAlarm.AlarmMask = RTC_ALARMMASK_MINUTES;
-  sAlarm.AlarmSubSecondMask = RTC_ALARMSUBSECONDMASK_ALL;
-  sAlarm.AlarmDateWeekDaySel = RTC_ALARMDATEWEEKDAYSEL_DATE;
-  sAlarm.AlarmDateWeekDay = 0x1;
-  sAlarm.Alarm = RTC_ALARM_A;
-  if (HAL_RTC_SetAlarm_IT(&hrtc, &sAlarm, RTC_FORMAT_BCD) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /** Enable the Alarm B
-  */
-  sAlarm.AlarmTime.Minutes = 0x0;
-  sAlarm.AlarmMask = RTC_ALARMMASK_NONE;
-  sAlarm.AlarmDateWeekDay = 0x1;
-  sAlarm.Alarm = RTC_ALARM_B;
-  if (HAL_RTC_SetAlarm_IT(&hrtc, &sAlarm, RTC_FORMAT_BCD) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN RTC_Init 2 */
-
-  /* USER CODE END RTC_Init 2 */
-
-}
+//
+///**
+//  * @brief RTC Initialization Function
+//  * @param None
+//  * @retval None
+//  */
+//static void MX_RTC_Init(void)
+//{
+//
+//  /* USER CODE BEGIN RTC_Init 0 */
+//
+//  /* USER CODE END RTC_Init 0 */
+//
+//  RTC_TimeTypeDef sTime = {0};
+//  RTC_DateTypeDef sDate = {0};
+//  RTC_AlarmTypeDef sAlarm = {0};
+//
+//  /* USER CODE BEGIN RTC_Init 1 */
+//
+//  /* USER CODE END RTC_Init 1 */
+//  /** Initialize RTC Only
+//  */
+//  hrtc.Instance = RTC;
+//  hrtc.Init.HourFormat = RTC_HOURFORMAT_24;
+//  hrtc.Init.AsynchPrediv = 127;
+//  hrtc.Init.SynchPrediv = 255;
+//  hrtc.Init.OutPut = RTC_OUTPUT_DISABLE;
+//  hrtc.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;
+//  hrtc.Init.OutPutType = RTC_OUTPUT_TYPE_OPENDRAIN;
+//  if (HAL_RTC_Init(&hrtc) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//
+//  /* USER CODE BEGIN Check_RTC_BKUP */
+//
+//  /* USER CODE END Check_RTC_BKUP */
+//
+//  /** Initialize RTC and set the Time and Date
+//  */
+//  sTime.Hours = 9;
+//  sTime.Minutes = 59;
+//  sTime.Seconds = 40;
+//  sTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
+//  sTime.StoreOperation = RTC_STOREOPERATION_RESET;
+//  if (HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BIN) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//  sDate.WeekDay = RTC_WEEKDAY_MONDAY;
+//  sDate.Month = RTC_MONTH_JANUARY;
+//  sDate.Date = 0x1;
+//  sDate.Year = 0x0;
+//
+//  if (HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BCD) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//  /** Enable the Alarm A
+//  */
+//  sAlarm.AlarmTime.Hours = 10;
+//  sAlarm.AlarmTime.Minutes = 0;
+//  sAlarm.AlarmTime.Seconds = 0;
+//  sAlarm.AlarmTime.SubSeconds = 0;
+//  sAlarm.AlarmTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
+//  sAlarm.AlarmTime.StoreOperation = RTC_STOREOPERATION_RESET;
+//  sAlarm.AlarmMask = RTC_ALARMMASK_NONE;
+//  sAlarm.AlarmSubSecondMask = RTC_ALARMSUBSECONDMASK_ALL;
+//  sAlarm.AlarmDateWeekDaySel = RTC_ALARMDATEWEEKDAYSEL_DATE;
+//  sAlarm.AlarmDateWeekDay = 1;
+//  sAlarm.Alarm = RTC_ALARM_A;
+//  if (HAL_RTC_SetAlarm_IT(&hrtc, &sAlarm, RTC_FORMAT_BIN) != HAL_OK)
+//  {
+//    Error_Handler();
+//  }
+//  /* USER CODE BEGIN RTC_Init 2 */
+//
+//  /* USER CODE END RTC_Init 2 */
+//
+//}
 
 /**
   * @brief TIM2 Initialization Function
@@ -433,6 +470,7 @@ static void MX_USART3_UART_Init(void)
   /* USER CODE END USART3_Init 2 */
 
 }
+
 /**
   * @brief USB_OTG_FS Initialization Function
   * @param None
@@ -547,43 +585,59 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_11, GPIO_PIN_SET);
 
 }
+
 /* USER CODE BEGIN 4 */
 void handle_measurement(void) {
-	if (1 == flags.alarm) {
+	if (1 == flags.alarm || flags.refreshRequest) {
 		if (!start_soil_moisture_measurement(&hadc1, &hdma_adc1,
-				&sensor_readings.soil_moisture_raw)) {
+				&sensor_readings.soilMoistureRaw)) {
 			Error_Handler();
 		}
-		start_watering(&pump);
 		flags.alarm = 0;
 	}
-	if(flags.soil_sensor){
-  		sensor_readings.soil_moisture_percent = get_normalized_moisture_level(sensor_readings.soil_moisture_raw);
-  		flags.soil_sensor = 0;
-  		set_alarm(&alarm_struct);
+	if(flags.soilMeasurementComplete){
+  		sensor_readings.soilMoisturePercent = get_normalized_moisture_level(sensor_readings.soilMoistureRaw);
+  		flags.soilMeasurementComplete = 0;
+ 		 if(flags.refreshRequest){
+ 			 BLUETOOTH_INTERFACE_send_data((char *)out_buffer, sensor_readings);
+ 			 HAL_UART_Transmit(&huart2, out_buffer,sizeof(out_buffer),HAL_MAX_DELAY);
+ 			 flags.refreshRequest = 0;
+ 			 return;
+ 		 }
+ 	 if(sensor_readings.soilMoisturePercent < pump.water_level){
+ 			WATER_PUMP_start_watering(&pump);
+ 			flags.wateringInProgress = 1;
+ 	 	}
+  		ALARM_RTC_set_alarm(&alarm_struct);
+  		HAL_RTC_GetTime(alarm_struct.hrtc, &sTime, RTC_FORMAT_BIN);
+  		HAL_RTC_GetDate(alarm_struct.hrtc, &sDate, RTC_FORMAT_BIN);
+  		HAL_RTC_GetAlarm(alarm_struct.hrtc, &sAlarm, RTC_ALARM_A, RTC_FORMAT_BIN);
+
 	}
 }
 void handle_bluetooth(void) {
-	if (flags.bluetooth == 1) {
+	if (flags.bluetoothEvent == 1) {
 		if (bluetooth((char*) command_buffer, &pump, &flags,
 				&alarm_struct) == BLUETOOTH_COMMAND_OK) {
 			HAL_UART_Transmit(&huart2, (uint8_t*) "Command ok\r\n",
 					sizeof("Command ok\r\n"), HAL_MAX_DELAY);
 		}
-		HAL_NVIC_ClearPendingIRQ(USART2_IRQn);
+		 HAL_NVIC_ClearPendingIRQ(USART2_IRQn);
 		__HAL_UART_FLUSH_DRREGISTER(&huart2);
-		HAL_UART_Receive_IT(&huart2, command_buffer, sizeof(command_buffer));
-		flags.bluetooth = 0;
+		 HAL_UART_Receive_IT(&huart2, command_buffer, sizeof(command_buffer));
+ 		 HAL_RTC_GetTime(alarm_struct.hrtc, &sTime, RTC_FORMAT_BIN);
+ 		 HAL_RTC_GetDate(alarm_struct.hrtc, &sDate, RTC_FORMAT_BIN);
+ 		 HAL_RTC_GetAlarm(alarm_struct.hrtc, &sAlarm, RTC_ALARM_A, RTC_FORMAT_BIN);
+		flags.bluetoothEvent = 0;
 	}
 
 }
 void handle_wattering(void) {
-	if (flags.watering) {
-		if (is_watering_complete(&pump)) {
-			stop_watering(&pump);
+	if (flags.wateringInProgress) {
+		if (WATER_PUMP_is_watering_complete(&pump)) {
+			WATER_PUMP_stop_watering(&pump);
 		}
 	}
 
@@ -592,7 +646,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
 	if(!stop_soil_measurement(&hadc1)){
 		Error_Handler();
 	}
-		flags.soil_sensor = 1;
+		flags.soilMeasurementComplete = 1;
 
 
 }
@@ -604,14 +658,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
 	 if (htim->Instance==TIM2)
 	 {
-		 increase_counter(&pump);
+		 WATER_PUMP_increase_counter(&pump);
 	 }
 }
 
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 	if(huart->Instance == USART2){
-		flags.bluetooth = 1;
+		flags.bluetoothEvent = 1;
 	}
 }
 

@@ -10,11 +10,11 @@
 #include "stdlib.h"
 typedef struct{
 	uint8_t alarm;
-	uint8_t soil_sensor;
-	uint8_t bluetooth;
-	uint8_t refresh;
-	uint8_t watering;
-}flags_struct;
+	uint8_t soilMeasurementComplete;
+	uint8_t bluetoothEvent;
+	uint8_t refreshRequest;
+	uint8_t wateringInProgress;
+}Flags;
 
 
 #endif /* INC_FLAGS_H_ */

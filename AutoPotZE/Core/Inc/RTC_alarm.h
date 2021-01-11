@@ -13,14 +13,14 @@
 #include "stm32f4xx_hal.h"
 typedef struct {
 	RTC_HandleTypeDef *hrtc;
-	uint8_t freq;
-	uint8_t hours_alarm;
-	uint32_t ALARM_TYPEx;
+	uint8_t wateringPeriod;
+	uint8_t alarmTimeHour;
+	uint32_t alarmTypeX;
 	uint8_t weekday;
 	uint8_t hours;
 	uint8_t minutes;
-}alarm;
-uint8_t init_rtc(alarm * alarm_struct);
-uint8_t set_rtc(alarm * alarm_struct);
-uint8_t set_alarm(alarm * alarm_struct);
+}ALARM_RTC_struct;
+uint8_t ALARM_RTC_init_rtc(ALARM_RTC_struct * alarm_struct);
+uint8_t ALARM_RTC_set_rtc(ALARM_RTC_struct * alarm_struct);
+uint8_t ALARM_RTC_set_alarm(ALARM_RTC_struct * alarm_struct);
 #endif /* INC_RTC_ALARM_H_ */
