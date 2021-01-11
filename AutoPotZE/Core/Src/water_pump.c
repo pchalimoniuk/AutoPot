@@ -5,18 +5,41 @@
  *      Author: Dell
  */
 #include "water_pump.h"
-uint8_t pump_efficency = 1200; // mililiters per minute
-void set_water_level(water_pump* pump, uint8_t water_level){
+/**
+  * @brief sets minimal moisture
+  * @param pointer to Water_pump_struct struct
+  * @param minimal soil moisture
+  * @retval NONE
+  */
+void WATER_PUMP_set_water_level(Water_pump_struct* pump, uint8_t water_level){
 	pump->water_level = water_level;
 }
-void set_tim(water_pump* pump,TIM_HandleTypeDef* tim){
+/**
+  * @brief Sets timer timer
+  * @param pointer to Water_pump_struct struct
+  * @param Handler to timmer
+  * @retval NONE
+  */
+void WATER_PUMP_set_tim(Water_pump_struct* pump,TIM_HandleTypeDef* tim){
 	pump->tim = tim;
 }
-void set_GPIO_port(water_pump* pump, GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin){
+/**
+  * @brief Sets GPIO PIN used to drive pump
+  * @param pointer to Water_pump_struct struct
+  * @param GPIO_TypeDef pointer to selected pin
+  * @param GPIO_Pin pin number to selected pin
+  * @retval return 1 if pump stopped successfully
+  */
+void WATER_PUMP_set_GPIO_port(Water_pump_struct* pump, GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin){
 	pump->GPIOx = GPIOx;
 	pump->GPIO_Pin = GPIO_Pin;
 }
-void water_pump_init(water_pump* pump){
+/**
+  * @brief Initalize pump with default parameters
+  * @param pointer to Water_pump_struct struct
+  * @retval NONE
+  */
+void WATER_PUMP_init(Water_pump_struct* pump){
 	 HAL_GPIO_WritePin((pump->GPIOx), (pump->GPIO_Pin), GPIO_PIN_RESET);
 	 GPIO_InitTypeDef GPIO_InitStruct = {0};
 	 GPIO_InitStruct.Pin = pump->GPIO_Pin;
@@ -24,31 +47,43 @@ void water_pump_init(water_pump* pump){
 	 GPIO_InitStruct.Pull = GPIO_NOPULL;
 	 GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 	 HAL_GPIO_Init(pump->GPIOx, &GPIO_InitStruct);
+	 HAL_GPIO_WritePin((pump->GPIOx), (pump->GPIO_Pin), GPIO_PIN_SET);
 
-}
-void set_watering_time(water_pump* pump, uint8_t watering_time){ //convert time in seconds to 10s
+
+}/**
+ * @brief Stops pump
+ * @param pointer to Water_pump_struct struct
+ * @param time in seconds for how long pump should be on (minimum 10s)
+ * @retval None
+ */
+void WATER_PUMP_set_watering_time(Water_pump_struct* pump, uint8_t watering_time){ //convert time in seconds to 10s
 	uint8_t temp = watering_time/10;
 	pump->watering_time = temp;
 }
-uint16_t get_time(water_pump pump){  //to be delted
-	return pump_efficency/6;
-}
-uint16_t set_end_timer(water_pump * pump){ //only for now
-}
-uint8_t start_watering(water_pump* pump){
+/**
+  * @brief Starts pump and pumps timer
+  * @param pointer to Water_pump_struct struct
+  * @retval return 1 if pump started successfully
+  */
+uint8_t WATER_PUMP_start_watering(Water_pump_struct* pump){
 	if(HAL_TIM_Base_Start_IT(pump->tim) != HAL_OK){
 		return 0;
 	}
-	HAL_GPIO_WritePin((pump->GPIOx), (pump->GPIO_Pin), GPIO_PIN_SET);
-	if(HAL_GPIO_ReadPin((pump->GPIOx), (pump->GPIO_Pin)) != GPIO_PIN_SET){
+	HAL_GPIO_WritePin((pump->GPIOx), (pump->GPIO_Pin), GPIO_PIN_RESET);
+	if(HAL_GPIO_ReadPin((pump->GPIOx), (pump->GPIO_Pin)) != GPIO_PIN_RESET){
 		return 0;
 	}
 	return 1;
 
 }
-uint8_t stop_watering(water_pump* pump){
-	HAL_GPIO_WritePin((pump->GPIOx), (pump->GPIO_Pin), GPIO_PIN_RESET);
-	if(HAL_GPIO_ReadPin((pump->GPIOx), (pump->GPIO_Pin)) != GPIO_PIN_RESET){
+/**
+  * @brief Stops pump
+  * @param pointer to Water_pump_struct struct
+  * @retval return 1 if pump stopped successfully
+  */
+uint8_t WATER_PUMP_stop_watering(Water_pump_struct* pump){
+	HAL_GPIO_WritePin((pump->GPIOx), (pump->GPIO_Pin), GPIO_PIN_SET);
+	if(HAL_GPIO_ReadPin((pump->GPIOx), (pump->GPIO_Pin)) != GPIO_PIN_SET){
 		return 0;
 	}
 	pump->counter = 0;
@@ -57,12 +92,21 @@ uint8_t stop_watering(water_pump* pump){
 	}
 	return 1;
 }
-void increase_counter(water_pump * pump){
+/**
+  * @brief Increase pump inner counter by one
+  * @param pointer to Water_pump_struct struct
+  * @retval NONE
+  */
+void WATER_PUMP_increase_counter(Water_pump_struct * pump){
 	pump->counter++;
 }
-
-uint8_t is_watering_complete(water_pump* pump){
-	if(pump->counter>= pump->watering_time){
+/**
+  * @brief Check whether watering is complete
+  * @param pointer to Water_pump_struct struct
+  * @retval 1 if watering is complete 0 otherwise
+  */
+uint8_t WATER_PUMP_is_watering_complete(Water_pump_struct* pump){
+	if(pump->counter > pump->watering_time){
 		return 1;
 	}else{
 		return 0;

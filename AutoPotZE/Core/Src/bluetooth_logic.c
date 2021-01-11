@@ -5,15 +5,15 @@
  *      Author: Dell
  */
 #include "bluetooth_logic.h"
-uint8_t get_time_from_command(char *command, uint8_t *hours, uint8_t *minutes,
+uint8_t BLUETOOTH_INTERFACE_get_time_from_command(char *command, uint8_t *hours, uint8_t *minutes,
 		uint8_t *day);
-uint8_t get_freq_from_command(char *command, uint8_t *hours, uint8_t *freq);
-uint8_t get_amount_from_command(char *command, uint8_t *amount);
-uint8_t interpet_command(char *command, water_pump *pump, flags_struct * flags, alarm * alarm_struct);
-uint8_t bluetooth(char *command, water_pump *pump, flags_struct * flags, alarm * alarm_struct) {
-	return interpet_command(command, pump, flags, alarm_struct);
+uint8_t BLUETOOTH_INTERFACE_get_watering_period_from_command(char *command, uint8_t *hours, uint8_t *freq);
+uint8_t BLUETOOTH_INTERFACE_get_amount_from_command(char *command, uint8_t *amount);
+uint8_t BLUETOOTH_INTERFACE_interpet_command(char *command, Water_pump_struct *pump, Flags * flags, ALARM_RTC_struct * alarm_struct);
+uint8_t bluetooth(char *command, Water_pump_struct *pump, Flags * flags, ALARM_RTC_struct * alarm_struct) {
+	return BLUETOOTH_INTERFACE_interpet_command(command, pump, flags, alarm_struct);
 }
-uint8_t interpet_command(char *command, water_pump *pump, flags_struct * flags, alarm * alarm_struct) {
+uint8_t BLUETOOTH_INTERFACE_interpet_command(char *command, Water_pump_struct *pump, Flags * flags, ALARM_RTC_struct * alarm_struct) {
 	uint8_t hours = 0;
 	uint8_t minutes = 0;
 	uint8_t weekday = 0;
@@ -21,39 +21,41 @@ uint8_t interpet_command(char *command, water_pump *pump, flags_struct * flags, 
 	uint8_t amount = 10;
 	switch (*command) {
 	case BLUETOOTH_COMMAND_SET_TIME:
-		if(!get_time_from_command(command, &hours, &minutes, &weekday)){
+		if(!BLUETOOTH_INTERFACE_get_time_from_command(command, &hours, &minutes, &weekday)){
 			return BLUETOOTH_COMMAND_ERROR;
 		}
+
 		alarm_struct->hours = hours;
 		alarm_struct->minutes = minutes;
 		alarm_struct->weekday = weekday;
-		if(set_rtc(alarm_struct)){
+		if(ALARM_RTC_set_rtc(alarm_struct)){
 			return BLUETOOTH_COMMAND_OK;
 		}
 		break;
 	case BLUETOOTH_COMMAND_SET_FREQ: //think abut that
-		if(!get_freq_from_command(command, &hours, &freq)){
+		if(!BLUETOOTH_INTERFACE_get_watering_period_from_command(command, &hours, &freq)){
 			return BLUETOOTH_COMMAND_ERROR;
 		}
-		alarm_struct->hours_alarm = hours;
-		alarm_struct->freq = freq;
-		if(set_alarm(alarm_struct)){
+		alarm_struct->alarmTimeHour = hours;
+		alarm_struct->wateringPeriod = freq;
+		if(ALARM_RTC_set_alarm(alarm_struct)){
 			return BLUETOOTH_COMMAND_OK;
 		}
 		break;
 	case BLUETOOTH_COMMAND_DATA_REQUEST:
-		flags->refresh = 1;
+		flags->refreshRequest = 1;
 		break;
 	case BLUETOOTH_COMMAND_SET_AMOUNT:
-		if(!get_amount_from_command(command, &amount)){
+		if(!BLUETOOTH_INTERFACE_get_amount_from_command(command, &amount)){
 			return BLUETOOTH_COMMAND_ERROR;
 		}
-		set_watering_time(pump, amount);
+		WATER_PUMP_set_watering_time(pump, amount);
 		return BLUETOOTH_COMMAND_OK;
 	case BLUETOOTH_COMMAND_SEND_DATA:
 		break;
 	case BLUETOOTH_COMMAND_FORCE_WATERING:
-		flags->watering = 1;
+		WATER_PUMP_start_watering(pump);
+		flags->wateringInProgress = 1;
 		return BLUETOOTH_COMMAND_OK;
 		break;
 	default:
@@ -61,7 +63,7 @@ uint8_t interpet_command(char *command, water_pump *pump, flags_struct * flags, 
 	}
 	return BLUETOOTH_COMMAND_ERROR;
 }
-uint8_t get_time_from_command(char *command, uint8_t *hours, uint8_t *minutes,
+uint8_t BLUETOOTH_INTERFACE_get_time_from_command(char *command, uint8_t *hours, uint8_t *minutes,
 		uint8_t *day) {
 	char *command_possition = command + 1;
 	char *command_end_possition;
@@ -93,7 +95,7 @@ uint8_t get_time_from_command(char *command, uint8_t *hours, uint8_t *minutes,
 	}
 	return BLUETOOTH_COMMAND_OK;
 }
-uint8_t get_freq_from_command(char *command, uint8_t *hours, uint8_t *freq) {
+uint8_t BLUETOOTH_INTERFACE_get_watering_period_from_command(char *command, uint8_t *hours, uint8_t *freq) {
 	char *command_possition = command + 1;
 	char *command_end_possition;
 	if (*(command_possition) != BLUETOOTH_COMMAND_SEPARATOR) {
@@ -115,7 +117,7 @@ uint8_t get_freq_from_command(char *command, uint8_t *hours, uint8_t *freq) {
 	}
 	return BLUETOOTH_COMMAND_OK;
 }
-uint8_t get_amount_from_command(char *command, uint8_t *amount) {
+uint8_t BLUETOOTH_INTERFACE_get_amount_from_command(char *command, uint8_t *amount) {
 	char *command_possition = command + 1;
 	char *command_end_possition;
 	if (*(command_possition) != BLUETOOTH_COMMAND_SEPARATOR) {
@@ -127,4 +129,9 @@ uint8_t get_amount_from_command(char *command, uint8_t *amount) {
 		return BLUETOOTH_COMMAND_ERROR;
 	}
 	return BLUETOOTH_COMMAND_OK;
+}
+
+uint8_t BLUETOOTH_INTERFACE_send_data(char *buffer,sensorReadings readings){
+	sprintf(buffer,"S/%2d/%2d/%3d/", readings.soilMoisturePercent,readings.airMoisture,readings.airTemperature);
+	return (uint8_t)sizeof(buffer);
 }

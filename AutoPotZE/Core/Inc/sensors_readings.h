@@ -9,11 +9,11 @@
 #define INC_SENSORS_READINGS_H_
 #include "stdlib.h"
 typedef struct{
-	uint16_t soil_moisture_percent;
-	uint32_t soil_moisture_raw;
-	uint8_t air_moisture;
-	uint8_t aiir_temperature;
-}sensor_readings_struct;
+	uint16_t soilMoisturePercent;
+	uint32_t soilMoistureRaw;
+	uint8_t airMoisture;
+	uint8_t airTemperature;
+}sensorReadings;
 
 
 #endif /* INC_SENSORS_READINGS_H_ */
