@@ -87,54 +87,77 @@ $(document).ready(function(){initNavTree('water__pump_8c.html',''); initResizabl
 <div class="title">water_pump.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Functions related to water_pump.  
-<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="water__pump_8h_source.html">water_pump.h</a>&quot;</code><br />
 </div>
 <p><a href="water__pump_8c_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a7a61c0eb25164b58b8667f50864f412d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="water__pump_8c.html#a7a61c0eb25164b58b8667f50864f412d">WATER_PUMP_set_water_level</a> (<a class="el" href="struct_water___pump___struct.html">Water_Pump_Struct</a> *<a class="el" href="main_8c.html#a2649a4098c074e58183be8281e75b4a4">pump</a>, uint8_t water_level)</td></tr>
-<tr class="memdesc:a7a61c0eb25164b58b8667f50864f412d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets minimal moisture.  <a href="water__pump_8c.html#a7a61c0eb25164b58b8667f50864f412d">More...</a><br /></td></tr>
-<tr class="separator:a7a61c0eb25164b58b8667f50864f412d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a238230a54726ccf08a4c6457ead5b358"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="water__pump_8c.html#a238230a54726ccf08a4c6457ead5b358">WATER_PUMP_set_tim</a> (<a class="el" href="struct_water___pump___struct.html">Water_Pump_Struct</a> *<a class="el" href="main_8c.html#a2649a4098c074e58183be8281e75b4a4">pump</a>, TIM_HandleTypeDef *tim)</td></tr>
-<tr class="memdesc:a238230a54726ccf08a4c6457ead5b358"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets timer timer.  <a href="water__pump_8c.html#a238230a54726ccf08a4c6457ead5b358">More...</a><br /></td></tr>
-<tr class="separator:a238230a54726ccf08a4c6457ead5b358"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac28e383a6a14311293557cb3cb3ce39f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="water__pump_8c.html#ac28e383a6a14311293557cb3cb3ce39f">WATER_PUMP_set_GPIO_port</a> (<a class="el" href="struct_water___pump___struct.html">Water_Pump_Struct</a> *<a class="el" href="main_8c.html#a2649a4098c074e58183be8281e75b4a4">pump</a>, GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)</td></tr>
-<tr class="memdesc:ac28e383a6a14311293557cb3cb3ce39f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets GPIO PIN used to drive pump.  <a href="water__pump_8c.html#ac28e383a6a14311293557cb3cb3ce39f">More...</a><br /></td></tr>
-<tr class="separator:ac28e383a6a14311293557cb3cb3ce39f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21c1fdf746c63b1aea063b922885254b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="water__pump_8c.html#a21c1fdf746c63b1aea063b922885254b">WATER_PUMP_timer_setup</a> (<a class="el" href="struct_water___pump___struct.html">Water_Pump_Struct</a> *<a class="el" href="main_8c.html#a2649a4098c074e58183be8281e75b4a4">pump</a>)</td></tr>
-<tr class="memdesc:a21c1fdf746c63b1aea063b922885254b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initalize pump's timer with parameters in.  <a href="water__pump_8c.html#a21c1fdf746c63b1aea063b922885254b">More...</a><br /></td></tr>
-<tr class="separator:a21c1fdf746c63b1aea063b922885254b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abac4df63c38b21aaa360c468bb729fd3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="water__pump_8c.html#abac4df63c38b21aaa360c468bb729fd3">WATER_PUMP_init</a> (<a class="el" href="struct_water___pump___struct.html">Water_Pump_Struct</a> *<a class="el" href="main_8c.html#a2649a4098c074e58183be8281e75b4a4">pump</a>)</td></tr>
-<tr class="memdesc:abac4df63c38b21aaa360c468bb729fd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initalize pump with parameters in.  <a href="water__pump_8c.html#abac4df63c38b21aaa360c468bb729fd3">More...</a><br /></td></tr>
-<tr class="separator:abac4df63c38b21aaa360c468bb729fd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1aa2c2eb2aa43756fcf0b18af0c88a40"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="water__pump_8c.html#a1aa2c2eb2aa43756fcf0b18af0c88a40">WATER_PUMP_set_watering_time</a> (<a class="el" href="struct_water___pump___struct.html">Water_Pump_Struct</a> *<a class="el" href="main_8c.html#a2649a4098c074e58183be8281e75b4a4">pump</a>, uint8_t watering_time)</td></tr>
-<tr class="memdesc:a1aa2c2eb2aa43756fcf0b18af0c88a40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops pump.  <a href="water__pump_8c.html#a1aa2c2eb2aa43756fcf0b18af0c88a40">More...</a><br /></td></tr>
-<tr class="separator:a1aa2c2eb2aa43756fcf0b18af0c88a40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a11900f8bb3cbc2c7668a9e1eb8451962"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="water__pump_8c.html#a11900f8bb3cbc2c7668a9e1eb8451962">WATER_PUMP_set_tim_freq</a> (<a class="el" href="struct_water___pump___struct.html">Water_Pump_Struct</a> *<a class="el" href="main_8c.html#a2649a4098c074e58183be8281e75b4a4">pump</a>, uint16_t timer_freq_kHz)</td></tr>
-<tr class="memdesc:a11900f8bb3cbc2c7668a9e1eb8451962"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets timer frequency.  <a href="water__pump_8c.html#a11900f8bb3cbc2c7668a9e1eb8451962">More...</a><br /></td></tr>
-<tr class="separator:a11900f8bb3cbc2c7668a9e1eb8451962"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f8dc1005778b9cec5e6263adc82eb7d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="water__pump_8c.html#a1f8dc1005778b9cec5e6263adc82eb7d">WATER_PUMP_set_timer_instance</a> (<a class="el" href="struct_water___pump___struct.html">Water_Pump_Struct</a> *<a class="el" href="main_8c.html#a2649a4098c074e58183be8281e75b4a4">pump</a>, TIM_TypeDef *Instance)</td></tr>
-<tr class="memdesc:a1f8dc1005778b9cec5e6263adc82eb7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets timer instance.  <a href="water__pump_8c.html#a1f8dc1005778b9cec5e6263adc82eb7d">More...</a><br /></td></tr>
-<tr class="separator:a1f8dc1005778b9cec5e6263adc82eb7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a65c18b0f64b2569bb2e2fd61ab357480"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="water__pump_8c.html#a65c18b0f64b2569bb2e2fd61ab357480">WATER_PUMP_start_watering</a> (<a class="el" href="struct_water___pump___struct.html">Water_Pump_Struct</a> *<a class="el" href="main_8c.html#a2649a4098c074e58183be8281e75b4a4">pump</a>)</td></tr>
-<tr class="memdesc:a65c18b0f64b2569bb2e2fd61ab357480"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts pump and pumps timer.  <a href="water__pump_8c.html#a65c18b0f64b2569bb2e2fd61ab357480">More...</a><br /></td></tr>
-<tr class="separator:a65c18b0f64b2569bb2e2fd61ab357480"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab133404ab3a806224039dbd3763b79e1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="water__pump_8c.html#ab133404ab3a806224039dbd3763b79e1">WATER_PUMP_stop_watering</a> (<a class="el" href="struct_water___pump___struct.html">Water_Pump_Struct</a> *<a class="el" href="main_8c.html#a2649a4098c074e58183be8281e75b4a4">pump</a>)</td></tr>
-<tr class="memdesc:ab133404ab3a806224039dbd3763b79e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops pump.  <a href="water__pump_8c.html#ab133404ab3a806224039dbd3763b79e1">More...</a><br /></td></tr>
-<tr class="separator:ab133404ab3a806224039dbd3763b79e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2867bc5d34010f5e50848a449ce0fb19"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="water__pump_8c.html#a2867bc5d34010f5e50848a449ce0fb19">WATER_PUMP_set_water_level</a> (<a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> *<a class="el" href="main_8c.html#adecb924c41d711add279be59985e80c6">pump</a>, uint8_t water_level)</td></tr>
+<tr class="memdesc:a2867bc5d34010f5e50848a449ce0fb19"><td class="mdescLeft">&#160;</td><td class="mdescRight">sets minimal moisture  <a href="water__pump_8c.html#a2867bc5d34010f5e50848a449ce0fb19">More...</a><br /></td></tr>
+<tr class="separator:a2867bc5d34010f5e50848a449ce0fb19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3bc18d372c5268a22c4f2444cbcb200"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="water__pump_8c.html#ac3bc18d372c5268a22c4f2444cbcb200">WATER_PUMP_set_tim</a> (<a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> *<a class="el" href="main_8c.html#adecb924c41d711add279be59985e80c6">pump</a>, TIM_HandleTypeDef *tim)</td></tr>
+<tr class="memdesc:ac3bc18d372c5268a22c4f2444cbcb200"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets timer timer.  <a href="water__pump_8c.html#ac3bc18d372c5268a22c4f2444cbcb200">More...</a><br /></td></tr>
+<tr class="separator:ac3bc18d372c5268a22c4f2444cbcb200"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79f86c3105beebaf11c944eae3347f0c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="water__pump_8c.html#a79f86c3105beebaf11c944eae3347f0c">WATER_PUMP_set_GPIO_port</a> (<a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> *<a class="el" href="main_8c.html#adecb924c41d711add279be59985e80c6">pump</a>, GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)</td></tr>
+<tr class="memdesc:a79f86c3105beebaf11c944eae3347f0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets GPIO PIN used to drive pump.  <a href="water__pump_8c.html#a79f86c3105beebaf11c944eae3347f0c">More...</a><br /></td></tr>
+<tr class="separator:a79f86c3105beebaf11c944eae3347f0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a018d752926c71bb6a67f850d52d74e8b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="water__pump_8c.html#a018d752926c71bb6a67f850d52d74e8b">WATER_PUMP_init</a> (<a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> *<a class="el" href="main_8c.html#adecb924c41d711add279be59985e80c6">pump</a>)</td></tr>
+<tr class="memdesc:a018d752926c71bb6a67f850d52d74e8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initalize pump with default parameters.  <a href="water__pump_8c.html#a018d752926c71bb6a67f850d52d74e8b">More...</a><br /></td></tr>
+<tr class="separator:a018d752926c71bb6a67f850d52d74e8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28e0d18b2cfdb6f2c44cc994af490d8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="water__pump_8c.html#a28e0d18b2cfdb6f2c44cc994af490d8d">WATER_PUMP_set_watering_time</a> (<a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> *<a class="el" href="main_8c.html#adecb924c41d711add279be59985e80c6">pump</a>, uint8_t watering_time)</td></tr>
+<tr class="memdesc:a28e0d18b2cfdb6f2c44cc994af490d8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops pump.  <a href="water__pump_8c.html#a28e0d18b2cfdb6f2c44cc994af490d8d">More...</a><br /></td></tr>
+<tr class="separator:a28e0d18b2cfdb6f2c44cc994af490d8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d540070307befd1777038eacfc675bd"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="water__pump_8c.html#a9d540070307befd1777038eacfc675bd">WATER_PUMP_start_watering</a> (<a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> *<a class="el" href="main_8c.html#adecb924c41d711add279be59985e80c6">pump</a>)</td></tr>
+<tr class="memdesc:a9d540070307befd1777038eacfc675bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts pump and pumps timer.  <a href="water__pump_8c.html#a9d540070307befd1777038eacfc675bd">More...</a><br /></td></tr>
+<tr class="separator:a9d540070307befd1777038eacfc675bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a7928bb752fe1e7cf528c7868ccbce3"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="water__pump_8c.html#a6a7928bb752fe1e7cf528c7868ccbce3">WATER_PUMP_stop_watering</a> (<a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> *<a class="el" href="main_8c.html#adecb924c41d711add279be59985e80c6">pump</a>)</td></tr>
+<tr class="memdesc:a6a7928bb752fe1e7cf528c7868ccbce3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops pump.  <a href="water__pump_8c.html#a6a7928bb752fe1e7cf528c7868ccbce3">More...</a><br /></td></tr>
+<tr class="separator:a6a7928bb752fe1e7cf528c7868ccbce3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11d19a4803a5990c547104493a54f66f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="water__pump_8c.html#a11d19a4803a5990c547104493a54f66f">WATER_PUMP_increase_counter</a> (<a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> *<a class="el" href="main_8c.html#adecb924c41d711add279be59985e80c6">pump</a>)</td></tr>
+<tr class="memdesc:a11d19a4803a5990c547104493a54f66f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increase pump inner counter by one.  <a href="water__pump_8c.html#a11d19a4803a5990c547104493a54f66f">More...</a><br /></td></tr>
+<tr class="separator:a11d19a4803a5990c547104493a54f66f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a659202a2b4c7b2fce0e9d99e5edf93e6"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="water__pump_8c.html#a659202a2b4c7b2fce0e9d99e5edf93e6">WATER_PUMP_is_watering_complete</a> (<a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> *<a class="el" href="main_8c.html#adecb924c41d711add279be59985e80c6">pump</a>)</td></tr>
+<tr class="memdesc:a659202a2b4c7b2fce0e9d99e5edf93e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether watering is complete.  <a href="water__pump_8c.html#a659202a2b4c7b2fce0e9d99e5edf93e6">More...</a><br /></td></tr>
+<tr class="separator:a659202a2b4c7b2fce0e9d99e5edf93e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Functions related to water_pump. </p>
-<dl class="section author"><dt>Author</dt><dd>Paweł Chalimoniuk </dd></dl>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a11d19a4803a5990c547104493a54f66f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11d19a4803a5990c547104493a54f66f">&#9670;&nbsp;</a></span>WATER_PUMP_increase_counter()</h2>
 
-<p class="definition">Definition in file <a class="el" href="water__pump_8c_source.html">water_pump.c</a>.</p>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a id="abac4df63c38b21aaa360c468bb729fd3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abac4df63c38b21aaa360c468bb729fd3">&#9670;&nbsp;</a></span>WATER_PUMP_init()</h2>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void WATER_PUMP_increase_counter </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> *&#160;</td>
+          <td class="paramname"><em>pump</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Increase pump inner counter by one. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pointer</td><td>to <a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> struct </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NONE</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="water__pump_8c_source.html#l00100">100</a> of file <a class="el" href="water__pump_8c_source.html">water_pump.c</a>.</p>
+
+</div>
+</div>
+<a id="a018d752926c71bb6a67f850d52d74e8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a018d752926c71bb6a67f850d52d74e8b">&#9670;&nbsp;</a></span>WATER_PUMP_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -142,27 +165,67 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void WATER_PUMP_init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_water___pump___struct.html">Water_Pump_Struct</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> *&#160;</td>
           <td class="paramname"><em>pump</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initalize pump with parameters in. </p>
+<p>Initalize pump with default parameters. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname"></td><td></td></tr>
+    <tr><td class="paramname">pointer</td><td>to <a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> struct </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NONE</td><td></td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="water__pump_8c_source.html#l00055">55</a> of file <a class="el" href="water__pump_8c_source.html">water_pump.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="water__pump_8c_source.html#l00042">42</a> of file <a class="el" href="water__pump_8c_source.html">water_pump.c</a>.</p>
 
 </div>
 </div>
-<a id="ac28e383a6a14311293557cb3cb3ce39f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac28e383a6a14311293557cb3cb3ce39f">&#9670;&nbsp;</a></span>WATER_PUMP_set_GPIO_port()</h2>
+<a id="a659202a2b4c7b2fce0e9d99e5edf93e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a659202a2b4c7b2fce0e9d99e5edf93e6">&#9670;&nbsp;</a></span>WATER_PUMP_is_watering_complete()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t WATER_PUMP_is_watering_complete </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> *&#160;</td>
+          <td class="paramname"><em>pump</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check whether watering is complete. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pointer</td><td>to <a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> struct </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">1</td><td>if watering is complete 0 otherwise </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="water__pump_8c_source.html#l00108">108</a> of file <a class="el" href="water__pump_8c_source.html">water_pump.c</a>.</p>
+
+</div>
+</div>
+<a id="a79f86c3105beebaf11c944eae3347f0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79f86c3105beebaf11c944eae3347f0c">&#9670;&nbsp;</a></span>WATER_PUMP_set_GPIO_port()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -170,7 +233,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void WATER_PUMP_set_GPIO_port </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_water___pump___struct.html">Water_Pump_Struct</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> *&#160;</td>
           <td class="paramname"><em>pump</em>, </td>
         </tr>
         <tr>
@@ -196,25 +259,25 @@ Functions</h2></td></tr>
 <p>Sets GPIO PIN used to drive pump. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">pump</td><td>Pointer to Water_pump_struct struct </td></tr>
-    <tr><td class="paramname">GPIOx</td><td>GPIO_TypeDef Pointer to selected pin </td></tr>
-    <tr><td class="paramname">GPIO_Pin</td><td>Pin number to selected pin </td></tr>
+    <tr><td class="paramname">pointer</td><td>to <a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> struct </td></tr>
+    <tr><td class="paramname">GPIO_TypeDef</td><td>pointer to selected pin </td></tr>
+    <tr><td class="paramname">GPIO_Pin</td><td>pin number to selected pin </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">Return</td><td>1 if pump stopped successfully, 0 otherwise </td></tr>
+    <tr><td class="paramname">return</td><td>1 if pump stopped successfully </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="water__pump_8c_source.html#l00032">32</a> of file <a class="el" href="water__pump_8c_source.html">water_pump.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="water__pump_8c_source.html#l00033">33</a> of file <a class="el" href="water__pump_8c_source.html">water_pump.c</a>.</p>
 
 </div>
 </div>
-<a id="a238230a54726ccf08a4c6457ead5b358"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a238230a54726ccf08a4c6457ead5b358">&#9670;&nbsp;</a></span>WATER_PUMP_set_tim()</h2>
+<a id="ac3bc18d372c5268a22c4f2444cbcb200"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3bc18d372c5268a22c4f2444cbcb200">&#9670;&nbsp;</a></span>WATER_PUMP_set_tim()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -222,7 +285,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void WATER_PUMP_set_tim </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_water___pump___struct.html">Water_Pump_Struct</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> *&#160;</td>
           <td class="paramname"><em>pump</em>, </td>
         </tr>
         <tr>
@@ -242,114 +305,24 @@ Functions</h2></td></tr>
 <p>Sets timer timer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">pump</td><td>Pointer to Water_pump_struct struct </td></tr>
-    <tr><td class="paramname">tim</td><td>Handler to timer </td></tr>
+    <tr><td class="paramname">pointer</td><td>to <a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> struct </td></tr>
+    <tr><td class="paramname">Handler</td><td>to timmer </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
+    <tr><td class="paramname">NONE</td><td></td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="water__pump_8c_source.html#l00022">22</a> of file <a class="el" href="water__pump_8c_source.html">water_pump.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="water__pump_8c_source.html#l00023">23</a> of file <a class="el" href="water__pump_8c_source.html">water_pump.c</a>.</p>
 
 </div>
 </div>
-<a id="a11900f8bb3cbc2c7668a9e1eb8451962"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a11900f8bb3cbc2c7668a9e1eb8451962">&#9670;&nbsp;</a></span>WATER_PUMP_set_tim_freq()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void WATER_PUMP_set_tim_freq </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_water___pump___struct.html">Water_Pump_Struct</a> *&#160;</td>
-          <td class="paramname"><em>pump</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>timer_freq_kHz</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Sets timer frequency. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">pump</td><td>Pointer to Water_pump_struct struct </td></tr>
-    <tr><td class="paramname">timer_freq_kHz</td><td>frequency that timer is working on </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="water__pump_8c_source.html#l00081">81</a> of file <a class="el" href="water__pump_8c_source.html">water_pump.c</a>.</p>
-
-</div>
-</div>
-<a id="a1f8dc1005778b9cec5e6263adc82eb7d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1f8dc1005778b9cec5e6263adc82eb7d">&#9670;&nbsp;</a></span>WATER_PUMP_set_timer_instance()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void WATER_PUMP_set_timer_instance </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_water___pump___struct.html">Water_Pump_Struct</a> *&#160;</td>
-          <td class="paramname"><em>pump</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">TIM_TypeDef *&#160;</td>
-          <td class="paramname"><em>Instance</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Sets timer instance. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">pump</td><td>Pointer to Water_pump_struct struct </td></tr>
-    <tr><td class="paramname">Instance</td><td>instance of timer </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="water__pump_8c_source.html#l00090">90</a> of file <a class="el" href="water__pump_8c_source.html">water_pump.c</a>.</p>
-
-</div>
-</div>
-<a id="a7a61c0eb25164b58b8667f50864f412d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7a61c0eb25164b58b8667f50864f412d">&#9670;&nbsp;</a></span>WATER_PUMP_set_water_level()</h2>
+<a id="a2867bc5d34010f5e50848a449ce0fb19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2867bc5d34010f5e50848a449ce0fb19">&#9670;&nbsp;</a></span>WATER_PUMP_set_water_level()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -357,7 +330,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void WATER_PUMP_set_water_level </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_water___pump___struct.html">Water_Pump_Struct</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> *&#160;</td>
           <td class="paramname"><em>pump</em>, </td>
         </tr>
         <tr>
@@ -374,27 +347,27 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Sets minimal moisture. </p>
+<p>sets minimal moisture </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">pump</td><td>Pointer to Water_pump_struct struct </td></tr>
-    <tr><td class="paramname">water_level</td><td>Minimal soil moisture </td></tr>
+    <tr><td class="paramname">pointer</td><td>to <a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> struct </td></tr>
+    <tr><td class="paramname">minimal</td><td>soil moisture </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">None</td><td></td></tr>
+    <tr><td class="paramname">NONE</td><td></td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="water__pump_8c_source.html#l00013">13</a> of file <a class="el" href="water__pump_8c_source.html">water_pump.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="water__pump_8c_source.html#l00014">14</a> of file <a class="el" href="water__pump_8c_source.html">water_pump.c</a>.</p>
 
 </div>
 </div>
-<a id="a1aa2c2eb2aa43756fcf0b18af0c88a40"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1aa2c2eb2aa43756fcf0b18af0c88a40">&#9670;&nbsp;</a></span>WATER_PUMP_set_watering_time()</h2>
+<a id="a28e0d18b2cfdb6f2c44cc994af490d8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28e0d18b2cfdb6f2c44cc994af490d8d">&#9670;&nbsp;</a></span>WATER_PUMP_set_watering_time()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -402,7 +375,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void WATER_PUMP_set_watering_time </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_water___pump___struct.html">Water_Pump_Struct</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> *&#160;</td>
           <td class="paramname"><em>pump</em>, </td>
         </tr>
         <tr>
@@ -422,8 +395,8 @@ Functions</h2></td></tr>
 <p>Stops pump. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">pump</td><td>Pointer to Water_pump_struct struct </td></tr>
-    <tr><td class="paramname">watering_time</td><td>Time in seconds for how long pump should be on (minimum 10s) </td></tr>
+    <tr><td class="paramname">pointer</td><td>to <a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> struct </td></tr>
+    <tr><td class="paramname">time</td><td>in seconds for how long pump should be on (minimum 10s) </td></tr>
   </table>
   </dd>
 </dl>
@@ -434,12 +407,12 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="water__pump_8c_source.html#l00072">72</a> of file <a class="el" href="water__pump_8c_source.html">water_pump.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="water__pump_8c_source.html#l00059">59</a> of file <a class="el" href="water__pump_8c_source.html">water_pump.c</a>.</p>
 
 </div>
 </div>
-<a id="a65c18b0f64b2569bb2e2fd61ab357480"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a65c18b0f64b2569bb2e2fd61ab357480">&#9670;&nbsp;</a></span>WATER_PUMP_start_watering()</h2>
+<a id="a9d540070307befd1777038eacfc675bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d540070307befd1777038eacfc675bd">&#9670;&nbsp;</a></span>WATER_PUMP_start_watering()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -447,7 +420,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">uint8_t WATER_PUMP_start_watering </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_water___pump___struct.html">Water_Pump_Struct</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> *&#160;</td>
           <td class="paramname"><em>pump</em></td><td>)</td>
           <td></td>
         </tr>
@@ -457,23 +430,23 @@ Functions</h2></td></tr>
 <p>Starts pump and pumps timer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">pump</td><td>Pointer to Water_pump_struct struct </td></tr>
+    <tr><td class="paramname">pointer</td><td>to <a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> struct </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">Return</td><td>1 if pump started successfully, 0 otherwise </td></tr>
+    <tr><td class="paramname">return</td><td>1 if pump started successfully </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="water__pump_8c_source.html#l00099">99</a> of file <a class="el" href="water__pump_8c_source.html">water_pump.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="water__pump_8c_source.html#l00068">68</a> of file <a class="el" href="water__pump_8c_source.html">water_pump.c</a>.</p>
 
 </div>
 </div>
-<a id="ab133404ab3a806224039dbd3763b79e1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab133404ab3a806224039dbd3763b79e1">&#9670;&nbsp;</a></span>WATER_PUMP_stop_watering()</h2>
+<a id="a6a7928bb752fe1e7cf528c7868ccbce3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a7928bb752fe1e7cf528c7868ccbce3">&#9670;&nbsp;</a></span>WATER_PUMP_stop_watering()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -481,7 +454,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">uint8_t WATER_PUMP_stop_watering </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_water___pump___struct.html">Water_Pump_Struct</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> *&#160;</td>
           <td class="paramname"><em>pump</em></td><td>)</td>
           <td></td>
         </tr>
@@ -491,46 +464,18 @@ Functions</h2></td></tr>
 <p>Stops pump. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">pump</td><td>Pointer to Water_pump_struct struct </td></tr>
+    <tr><td class="paramname">pointer</td><td>to <a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> struct </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">Return</td><td>1 if pump stopped successfully, 0 otherwise </td></tr>
+    <tr><td class="paramname">return</td><td>1 if pump stopped successfully </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="water__pump_8c_source.html#l00115">115</a> of file <a class="el" href="water__pump_8c_source.html">water_pump.c</a>.</p>
-
-</div>
-</div>
-<a id="a21c1fdf746c63b1aea063b922885254b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a21c1fdf746c63b1aea063b922885254b">&#9670;&nbsp;</a></span>WATER_PUMP_timer_setup()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void WATER_PUMP_timer_setup </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_water___pump___struct.html">Water_Pump_Struct</a> *&#160;</td>
-          <td class="paramname"><em>pump</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Initalize pump's timer with parameters in. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname"></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="water__pump_8c_source.html#l00041">41</a> of file <a class="el" href="water__pump_8c_source.html">water_pump.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="water__pump_8c_source.html#l00084">84</a> of file <a class="el" href="water__pump_8c_source.html">water_pump.c</a>.</p>
 
 </div>
 </div>

@@ -82,7 +82,6 @@ $(document).ready(function(){initNavTree('main_8c.html',''); initResizable(); })
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
@@ -93,57 +92,36 @@ $(document).ready(function(){initNavTree('main_8c.html',''); initResizable(); })
 <p>: Main program body  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="main_8h_source.html">main.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="bluetooth__interface_8h_source.html">bluetooth_interface.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="soil__moisture__sensor_8h_source.html">soil_moisture_sensor.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="water__pump_8h_source.html">water_pump.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_r_t_c__alarm_8h_source.html">RTC_alarm.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="bluetooth__logic_8h_source.html">bluetooth_logic.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="flags_8h_source.html">flags.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="sensors__readings_8h_source.html">sensors_readings.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_d_h_t11__sensor_8h_source.html">DHT11_sensor.h</a>&quot;</code><br />
 </div>
 <p><a href="main_8c_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ab0c84c64ae0b5f5c09746ff4b9e47e8f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#ab0c84c64ae0b5f5c09746ff4b9e47e8f">WATERING_TIME</a>&#160;&#160;&#160;10</td></tr>
-<tr class="separator:ab0c84c64ae0b5f5c09746ff4b9e47e8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef65c1f674a0a44a486179b3be694946"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#aef65c1f674a0a44a486179b3be694946">DAYS_BETWEEN_WATERING</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:aef65c1f674a0a44a486179b3be694946"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a071a707c38c11a4f8f69553b8cca6e00"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a071a707c38c11a4f8f69553b8cca6e00">DEFUALT_WATER_LEVEL</a>&#160;&#160;&#160;70</td></tr>
-<tr class="separator:a071a707c38c11a4f8f69553b8cca6e00"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae333e98d40f3f50324a7fc906d17d2e2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#ae333e98d40f3f50324a7fc906d17d2e2">TIMER_FREQ_MHZ</a>&#160;&#160;&#160;21</td></tr>
-<tr class="separator:ae333e98d40f3f50324a7fc906d17d2e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f32a4680c37d08154fa6d3288633b11"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a5f32a4680c37d08154fa6d3288633b11">TIMER_FREQ_KHZ</a>&#160;&#160;&#160;21000</td></tr>
-<tr class="separator:a5f32a4680c37d08154fa6d3288633b11"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a70af21c671abfcc773614a9a4f63d920"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a70af21c671abfcc773614a9a4f63d920">SystemClock_Config</a> (void)</td></tr>
 <tr class="memdesc:a70af21c671abfcc773614a9a4f63d920"><td class="mdescLeft">&#160;</td><td class="mdescRight">System Clock Configuration.  <a href="main_8c.html#a70af21c671abfcc773614a9a4f63d920">More...</a><br /></td></tr>
 <tr class="separator:a70af21c671abfcc773614a9a4f63d920"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac2085bf2e2915745ccdf044eca22c776"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#ac2085bf2e2915745ccdf044eca22c776">handle_measurement</a> (void)</td></tr>
-<tr class="memdesc:ac2085bf2e2915745ccdf044eca22c776"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper function to handle measurement logic.  <a href="main_8c.html#ac2085bf2e2915745ccdf044eca22c776">More...</a><br /></td></tr>
 <tr class="separator:ac2085bf2e2915745ccdf044eca22c776"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad673a78792ca385054ccc8f3f7b847c2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#ad673a78792ca385054ccc8f3f7b847c2">handle_bluetooth</a> (void)</td></tr>
-<tr class="memdesc:ad673a78792ca385054ccc8f3f7b847c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper function to handle bluetooth logic.  <a href="main_8c.html#ad673a78792ca385054ccc8f3f7b847c2">More...</a><br /></td></tr>
 <tr class="separator:ad673a78792ca385054ccc8f3f7b847c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7d21aa04742c116b7a611826001b1eda"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a7d21aa04742c116b7a611826001b1eda">handle_wattering</a> (void)</td></tr>
-<tr class="memdesc:a7d21aa04742c116b7a611826001b1eda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper function to handle wattering logic.  <a href="main_8c.html#a7d21aa04742c116b7a611826001b1eda">More...</a><br /></td></tr>
 <tr class="separator:a7d21aa04742c116b7a611826001b1eda"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a840291bc02cba5474a4cb46a9b9566fe"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a840291bc02cba5474a4cb46a9b9566fe">main</a> (void)</td></tr>
 <tr class="memdesc:a840291bc02cba5474a4cb46a9b9566fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">The application entry point.  <a href="main_8c.html#a840291bc02cba5474a4cb46a9b9566fe">More...</a><br /></td></tr>
 <tr class="separator:a840291bc02cba5474a4cb46a9b9566fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af20a88180db1113be1e89266917d148b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#af20a88180db1113be1e89266917d148b">HAL_ADC_ConvCpltCallback</a> (ADC_HandleTypeDef *hadc)</td></tr>
-<tr class="memdesc:af20a88180db1113be1e89266917d148b"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC Handler callback for soil moisture sensor.  <a href="main_8c.html#af20a88180db1113be1e89266917d148b">More...</a><br /></td></tr>
 <tr class="separator:af20a88180db1113be1e89266917d148b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a11aeff83fd498cddbed3bcddcf017e0a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a11aeff83fd498cddbed3bcddcf017e0a">HAL_RTC_AlarmAEventCallback</a> (RTC_HandleTypeDef *<a class="el" href="main_8c.html#aa0c7fca836406ade332e1e3f1039d8ab">hrtc</a>)</td></tr>
-<tr class="memdesc:a11aeff83fd498cddbed3bcddcf017e0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">RTC Alarm callback setting measurenet flag.  <a href="main_8c.html#a11aeff83fd498cddbed3bcddcf017e0a">More...</a><br /></td></tr>
 <tr class="separator:a11aeff83fd498cddbed3bcddcf017e0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a3b0ad512a6e6c6157440b68d395eac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a8a3b0ad512a6e6c6157440b68d395eac">HAL_TIM_PeriodElapsedCallback</a> (TIM_HandleTypeDef *htim)</td></tr>
-<tr class="memdesc:a8a3b0ad512a6e6c6157440b68d395eac"><td class="mdescLeft">&#160;</td><td class="mdescRight">TIM callback controlling Water Pump inner counter.  <a href="main_8c.html#a8a3b0ad512a6e6c6157440b68d395eac">More...</a><br /></td></tr>
 <tr class="separator:a8a3b0ad512a6e6c6157440b68d395eac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae494a9643f29b87d6d81e5264e60e57b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#ae494a9643f29b87d6d81e5264e60e57b">HAL_UART_RxCpltCallback</a> (UART_HandleTypeDef *huart)</td></tr>
-<tr class="memdesc:ae494a9643f29b87d6d81e5264e60e57b"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL_UART callback triggering bluetooth event.  <a href="main_8c.html#ae494a9643f29b87d6d81e5264e60e57b">More...</a><br /></td></tr>
 <tr class="separator:ae494a9643f29b87d6d81e5264e60e57b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1730ffe1e560465665eb47d9264826f9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a1730ffe1e560465665eb47d9264826f9">Error_Handler</a> (void)</td></tr>
 <tr class="memdesc:a1730ffe1e560465665eb47d9264826f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is executed in case of error occurrence.  <a href="main_8c.html#a1730ffe1e560465665eb47d9264826f9">More...</a><br /></td></tr>
@@ -159,24 +137,30 @@ Variables</h2></td></tr>
 <tr class="separator:aa0c7fca836406ade332e1e3f1039d8ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c80fd5510e2990a59a5c90d745c716c"><td class="memItemLeft" align="right" valign="top">TIM_HandleTypeDef&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a2c80fd5510e2990a59a5c90d745c716c">htim2</a></td></tr>
 <tr class="separator:a2c80fd5510e2990a59a5c90d745c716c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac3d2c59ee0e3bbae1b99529a154eb62"><td class="memItemLeft" align="right" valign="top">TIM_HandleTypeDef&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#aac3d2c59ee0e3bbae1b99529a154eb62">htim3</a></td></tr>
-<tr class="separator:aac3d2c59ee0e3bbae1b99529a154eb62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa9479c261d65eecedd3d9582f7f0f89c"><td class="memItemLeft" align="right" valign="top">UART_HandleTypeDef&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#aa9479c261d65eecedd3d9582f7f0f89c">huart2</a></td></tr>
 <tr class="separator:aa9479c261d65eecedd3d9582f7f0f89c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7c63c1b0f65db92b6a4ea19edf957e1"><td class="memItemLeft" align="right" valign="top">UART_HandleTypeDef&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#ab7c63c1b0f65db92b6a4ea19edf957e1">huart3</a></td></tr>
+<tr class="separator:ab7c63c1b0f65db92b6a4ea19edf957e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ec0d70a6cb9406d997fb3d006cc940d"><td class="memItemLeft" align="right" valign="top">PCD_HandleTypeDef&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a3ec0d70a6cb9406d997fb3d006cc940d">hpcd_USB_OTG_FS</a></td></tr>
+<tr class="separator:a3ec0d70a6cb9406d997fb3d006cc940d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9bc961a364bd9548ed569b0abf34ea78"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a9bc961a364bd9548ed569b0abf34ea78">command_buffer</a> [18]</td></tr>
 <tr class="separator:a9bc961a364bd9548ed569b0abf34ea78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4dcd3904f197c09007c3e543b019d974"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a4dcd3904f197c09007c3e543b019d974">out_buffer</a> [20]</td></tr>
 <tr class="separator:a4dcd3904f197c09007c3e543b019d974"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a710f2654bd0828d357e8439786d58a09"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_flags___struct.html">Flags_Struct</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a710f2654bd0828d357e8439786d58a09">flags</a> = {0}</td></tr>
-<tr class="separator:a710f2654bd0828d357e8439786d58a09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a394e698f0ee9ec68aaaac1c4d1f570e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_sensor___readings___struct.html">Sensor_Readings_Struct</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a394e698f0ee9ec68aaaac1c4d1f570e4">sensor_readings</a> = {0}</td></tr>
-<tr class="separator:a394e698f0ee9ec68aaaac1c4d1f570e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2649a4098c074e58183be8281e75b4a4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_water___pump___struct.html">Water_Pump_Struct</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a2649a4098c074e58183be8281e75b4a4">pump</a></td></tr>
-<tr class="separator:a2649a4098c074e58183be8281e75b4a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa991e2b209ef26272bf4fd920777bcda"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_flags.html">Flags</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#aa991e2b209ef26272bf4fd920777bcda">flags</a> = {0}</td></tr>
+<tr class="separator:aa991e2b209ef26272bf4fd920777bcda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa001668986798f4594cbf3b059e27102"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsensor_readings.html">sensorReadings</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#aa001668986798f4594cbf3b059e27102">sensor_readings</a> = {0}</td></tr>
+<tr class="separator:aa001668986798f4594cbf3b059e27102"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adecb924c41d711add279be59985e80c6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#adecb924c41d711add279be59985e80c6">pump</a></td></tr>
+<tr class="separator:adecb924c41d711add279be59985e80c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea448f89c6b968930abf2ac62031add3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_a_l_a_r_m___r_t_c__struct.html">ALARM_RTC_struct</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#aea448f89c6b968930abf2ac62031add3">alarm_struct</a></td></tr>
 <tr class="separator:aea448f89c6b968930abf2ac62031add3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a118f09ba98da64a251fffa4321f9617e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_d_h_t___config.html">DHT_Config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a118f09ba98da64a251fffa4321f9617e">config</a></td></tr>
-<tr class="separator:a118f09ba98da64a251fffa4321f9617e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afed4f29eda0f2d0900a0b347e29a8c91"><td class="memItemLeft" align="right" valign="top">RTC_TimeTypeDef&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#afed4f29eda0f2d0900a0b347e29a8c91">sTime</a> = { 0 }</td></tr>
+<tr class="separator:afed4f29eda0f2d0900a0b347e29a8c91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa805acf5185e2a95f250a2da91bf84e0"><td class="memItemLeft" align="right" valign="top">RTC_DateTypeDef&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#aa805acf5185e2a95f250a2da91bf84e0">sDate</a> = { 0 }</td></tr>
+<tr class="separator:aa805acf5185e2a95f250a2da91bf84e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22eb04f6640dc2f76a7871fe525c7da3"><td class="memItemLeft" align="right" valign="top">RTC_AlarmTypeDef&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8c.html#a22eb04f6640dc2f76a7871fe525c7da3">sAlarm</a> = { 0 }</td></tr>
+<tr class="separator:a22eb04f6640dc2f76a7871fe525c7da3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>: Main program body </p>
@@ -185,88 +169,7 @@ Variables</h2></td></tr>
 <p>This software component is licensed by ST under BSD 3-Clause license, the "License"; You may not use this file except in compliance with the License. You may obtain a copy of the License at: opensource.org/licenses/BSD-3-Clause </p>
 
 <p class="definition">Definition in file <a class="el" href="main_8c_source.html">main.c</a>.</p>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="aef65c1f674a0a44a486179b3be694946"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aef65c1f674a0a44a486179b3be694946">&#9670;&nbsp;</a></span>DAYS_BETWEEN_WATERING</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DAYS_BETWEEN_WATERING&#160;&#160;&#160;1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00042">42</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
-
-</div>
-</div>
-<a id="a071a707c38c11a4f8f69553b8cca6e00"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a071a707c38c11a4f8f69553b8cca6e00">&#9670;&nbsp;</a></span>DEFUALT_WATER_LEVEL</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DEFUALT_WATER_LEVEL&#160;&#160;&#160;70</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00043">43</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
-
-</div>
-</div>
-<a id="a5f32a4680c37d08154fa6d3288633b11"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5f32a4680c37d08154fa6d3288633b11">&#9670;&nbsp;</a></span>TIMER_FREQ_KHZ</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define TIMER_FREQ_KHZ&#160;&#160;&#160;21000</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00045">45</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
-
-</div>
-</div>
-<a id="ae333e98d40f3f50324a7fc906d17d2e2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae333e98d40f3f50324a7fc906d17d2e2">&#9670;&nbsp;</a></span>TIMER_FREQ_MHZ</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define TIMER_FREQ_MHZ&#160;&#160;&#160;21</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00044">44</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
-
-</div>
-</div>
-<a id="ab0c84c64ae0b5f5c09746ff4b9e47e8f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab0c84c64ae0b5f5c09746ff4b9e47e8f">&#9670;&nbsp;</a></span>WATERING_TIME</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define WATERING_TIME&#160;&#160;&#160;10</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00041">41</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="a1730ffe1e560465665eb47d9264826f9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1730ffe1e560465665eb47d9264826f9">&#9670;&nbsp;</a></span>Error_Handler()</h2>
 
@@ -291,7 +194,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00498">498</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00681">681</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>
@@ -311,15 +214,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>ADC Handler callback for soil moisture sensor. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">hadc</td><td>ADC Handler </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00456">456</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00645">645</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>
@@ -339,15 +234,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>RTC Alarm callback setting measurenet flag. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">hrtc</td><td>RTC Handler </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00468">468</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00653">653</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>
@@ -367,15 +254,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>TIM callback controlling Water Pump inner counter. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">htim</td><td>TIM Handler </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00475">475</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00657">657</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>
@@ -395,15 +274,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>HAL_UART callback triggering bluetooth event. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">huart</td><td>UART Handler </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00486">486</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00666">666</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>
@@ -423,9 +294,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Wrapper function to handle bluetooth logic. </p>
-
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00426">426</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00620">620</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>
@@ -445,9 +314,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Wrapper function to handle measurement logic. </p>
-
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00390">390</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00592">592</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>
@@ -467,9 +334,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Wrapper function to handle wattering logic. </p>
-
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00443">443</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00637">637</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>
@@ -496,9 +361,8 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>Initalize water pump</p>
 
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00092">92</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00099">99</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>
@@ -529,7 +393,7 @@ Variables</h2></td></tr>
 <p>Initializes the RCC Oscillators according to the specified parameters in the RCC_OscInitTypeDef structure.</p>
 <p>Initializes the CPU, AHB and APB buses clocks</p>
 
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00169">169</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00182">182</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>
@@ -545,9 +409,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Struct holding alarm setting . </p>
 
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00081">81</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00088">88</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>
@@ -562,43 +425,24 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Buffer for incoming bluetooth comand. </p>
 
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00076">76</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00083">83</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>
-<a id="a118f09ba98da64a251fffa4321f9617e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a118f09ba98da64a251fffa4321f9617e">&#9670;&nbsp;</a></span>config</h2>
+<a id="aa991e2b209ef26272bf4fd920777bcda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa991e2b209ef26272bf4fd920777bcda">&#9670;&nbsp;</a></span>flags</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_d_h_t___config.html">DHT_Config</a> config</td>
+          <td class="memname"><a class="el" href="struct_flags.html">Flags</a> flags = {0}</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Struct holding DHT11 settings. </p>
 
 <p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00085">85</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
-
-</div>
-</div>
-<a id="a710f2654bd0828d357e8439786d58a09"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a710f2654bd0828d357e8439786d58a09">&#9670;&nbsp;</a></span>flags</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="struct_flags___struct.html">Flags_Struct</a> flags = {0}</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Struct holding flags. </p>
-
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00078">78</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>
@@ -613,9 +457,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handler to ADC used by soil moisture sensor. </p>
 
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00053">53</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00049">49</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>
@@ -630,9 +473,24 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handler to ADC DMA used by soil moisture sensor. </p>
 
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00054">54</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00050">50</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+
+</div>
+</div>
+<a id="a3ec0d70a6cb9406d997fb3d006cc940d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ec0d70a6cb9406d997fb3d006cc940d">&#9670;&nbsp;</a></span>hpcd_USB_OTG_FS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">PCD_HandleTypeDef hpcd_USB_OTG_FS</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00059">59</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>
@@ -647,9 +505,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handler to RTC clock. </p>
 
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00055">55</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00052">52</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>
@@ -664,26 +521,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handler to TIM2 used by pump. </p>
 
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00056">56</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
-
-</div>
-</div>
-<a id="aac3d2c59ee0e3bbae1b99529a154eb62"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aac3d2c59ee0e3bbae1b99529a154eb62">&#9670;&nbsp;</a></span>htim3</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TIM_HandleTypeDef htim3</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handler to TIM3 used by DHT11 sensor. </p>
-
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00057">57</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00054">54</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>
@@ -698,9 +537,24 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handler to UART used by HC-05 Bluetooth module. </p>
 
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00058">58</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00056">56</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+
+</div>
+</div>
+<a id="ab7c63c1b0f65db92b6a4ea19edf957e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7c63c1b0f65db92b6a4ea19edf957e1">&#9670;&nbsp;</a></span>huart3</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">UART_HandleTypeDef huart3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00057">57</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>
@@ -715,43 +569,88 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Out buffer for sending data over bluetooth. </p>
 
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00077">77</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00084">84</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>
-<a id="a2649a4098c074e58183be8281e75b4a4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2649a4098c074e58183be8281e75b4a4">&#9670;&nbsp;</a></span>pump</h2>
+<a id="adecb924c41d711add279be59985e80c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adecb924c41d711add279be59985e80c6">&#9670;&nbsp;</a></span>pump</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_water___pump___struct.html">Water_Pump_Struct</a> pump</td>
+          <td class="memname"><a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> pump</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Struct controling pump. </p>
 
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00080">80</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00087">87</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>
-<a id="a394e698f0ee9ec68aaaac1c4d1f570e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a394e698f0ee9ec68aaaac1c4d1f570e4">&#9670;&nbsp;</a></span>sensor_readings</h2>
+<a id="a22eb04f6640dc2f76a7871fe525c7da3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22eb04f6640dc2f76a7871fe525c7da3">&#9670;&nbsp;</a></span>sAlarm</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_sensor___readings___struct.html">Sensor_Readings_Struct</a> sensor_readings = {0}</td>
+          <td class="memname">RTC_AlarmTypeDef sAlarm = { 0 }</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Struct holding all sensor readings. </p>
 
-<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00079">79</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00092">92</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+
+</div>
+</div>
+<a id="aa805acf5185e2a95f250a2da91bf84e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa805acf5185e2a95f250a2da91bf84e0">&#9670;&nbsp;</a></span>sDate</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">RTC_DateTypeDef sDate = { 0 }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00091">91</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+
+</div>
+</div>
+<a id="aa001668986798f4594cbf3b059e27102"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa001668986798f4594cbf3b059e27102">&#9670;&nbsp;</a></span>sensor_readings</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structsensor_readings.html">sensorReadings</a> sensor_readings = {0}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00086">86</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
+
+</div>
+</div>
+<a id="afed4f29eda0f2d0900a0b347e29a8c91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afed4f29eda0f2d0900a0b347e29a8c91">&#9670;&nbsp;</a></span>sTime</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">RTC_TimeTypeDef sTime = { 0 }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="main_8c_source.html#l00090">90</a> of file <a class="el" href="main_8c_source.html">main.c</a>.</p>
 
 </div>
 </div>
