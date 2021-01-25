@@ -1,0 +1,64 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.android.autopotmanger"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="25"
+8-->C:\Users\Dell\AndroidStudioProjects\AutoPotManger\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="29" />
+9-->C:\Users\Dell\AndroidStudioProjects\AutoPotManger\app\src\main\AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.BLUETOOTH" />
+11-->C:\Users\Dell\AndroidStudioProjects\AutoPotManger\app\src\main\AndroidManifest.xml:5:5-68
+11-->C:\Users\Dell\AndroidStudioProjects\AutoPotManger\app\src\main\AndroidManifest.xml:5:22-65
+12    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+12-->C:\Users\Dell\AndroidStudioProjects\AutoPotManger\app\src\main\AndroidManifest.xml:6:5-74
+12-->C:\Users\Dell\AndroidStudioProjects\AutoPotManger\app\src\main\AndroidManifest.xml:6:22-71
+13    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+13-->C:\Users\Dell\AndroidStudioProjects\AutoPotManger\app\src\main\AndroidManifest.xml:7:5-79
+13-->C:\Users\Dell\AndroidStudioProjects\AutoPotManger\app\src\main\AndroidManifest.xml:7:22-76
+14
+15    <application
+15-->C:\Users\Dell\AndroidStudioProjects\AutoPotManger\app\src\main\AndroidManifest.xml:9:5-25:19
+16        android:allowBackup="true"
+16-->C:\Users\Dell\AndroidStudioProjects\AutoPotManger\app\src\main\AndroidManifest.xml:10:9-35
+17        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+17-->[androidx.core:core:1.1.0] C:\Users\Dell\.gradle\caches\transforms-2\files-2.1\03736cf4bc3669a69d502627b70a527e\core-1.1.0\AndroidManifest.xml:24:18-86
+18        android:debuggable="true"
+19        android:extractNativeLibs="false"
+20        android:icon="@mipmap/ic_launcher"
+20-->C:\Users\Dell\AndroidStudioProjects\AutoPotManger\app\src\main\AndroidManifest.xml:11:9-43
+21        android:label="@string/app_name"
+21-->C:\Users\Dell\AndroidStudioProjects\AutoPotManger\app\src\main\AndroidManifest.xml:12:9-41
+22        android:roundIcon="@mipmap/ic_launcher_round"
+22-->C:\Users\Dell\AndroidStudioProjects\AutoPotManger\app\src\main\AndroidManifest.xml:13:9-54
+23        android:supportsRtl="true"
+23-->C:\Users\Dell\AndroidStudioProjects\AutoPotManger\app\src\main\AndroidManifest.xml:14:9-35
+24        android:testOnly="true"
+25        android:theme="@style/AppTheme" >
+25-->C:\Users\Dell\AndroidStudioProjects\AutoPotManger\app\src\main\AndroidManifest.xml:15:9-40
+26        <activity android:name="com.example.android.autopotmanger.Device" />
+26-->C:\Users\Dell\AndroidStudioProjects\AutoPotManger\app\src\main\AndroidManifest.xml:16:9-53
+26-->C:\Users\Dell\AndroidStudioProjects\AutoPotManger\app\src\main\AndroidManifest.xml:16:19-41
+27        <activity android:name="com.example.android.autopotmanger.MainActivity" >
+27-->C:\Users\Dell\AndroidStudioProjects\AutoPotManger\app\src\main\AndroidManifest.xml:17:9-23:20
+27-->C:\Users\Dell\AndroidStudioProjects\AutoPotManger\app\src\main\AndroidManifest.xml:17:19-47
+28            <intent-filter>
+28-->C:\Users\Dell\AndroidStudioProjects\AutoPotManger\app\src\main\AndroidManifest.xml:18:13-22:29
+29                <action android:name="android.intent.action.MAIN" />
+29-->C:\Users\Dell\AndroidStudioProjects\AutoPotManger\app\src\main\AndroidManifest.xml:19:17-69
+29-->C:\Users\Dell\AndroidStudioProjects\AutoPotManger\app\src\main\AndroidManifest.xml:19:25-66
+30
+31                <category android:name="android.intent.category.LAUNCHER" />
+31-->C:\Users\Dell\AndroidStudioProjects\AutoPotManger\app\src\main\AndroidManifest.xml:21:17-77
+31-->C:\Users\Dell\AndroidStudioProjects\AutoPotManger\app\src\main\AndroidManifest.xml:21:27-74
+32            </intent-filter>
+33        </activity>
+34        <activity android:name="com.example.android.autopotmanger.BluetoothActivity" />
+34-->C:\Users\Dell\AndroidStudioProjects\AutoPotManger\app\src\main\AndroidManifest.xml:24:9-55
+34-->C:\Users\Dell\AndroidStudioProjects\AutoPotManger\app\src\main\AndroidManifest.xml:24:19-52
+35    </application>
+36
+37</manifest>
