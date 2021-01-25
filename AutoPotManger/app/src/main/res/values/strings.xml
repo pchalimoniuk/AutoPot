@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">AutoPotManger</string>
+    <string name="bluetooth_devices">Bluetooth devices</string>
+    <string name="select_bluetooth_device">Select</string>
+    <string name="scan_bluetooth_device">"Scan "</string>
+    <string name="bluetooth_address_key">"BLUETOOTH_ADDRESS_KEY"</string>
+    <string name="title_activity_device_info">DeviceInfo</string>
+    <string name="pot_name">Your pot</string>
+    <string name="force_watering_button">Water plant</string>
+    <string name="refresh_plant_data">Refresh</string>
+    <string name="soil_humidity">Soil humidity</string>
+    <string name="air_humidity">Air humidity</string>
+    <string name="temperature">Temperature</string>
+</resources>
