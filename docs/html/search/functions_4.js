@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['get_5fnormalized_5fmoisture_5flevel_193',['get_normalized_moisture_level',['../soil__moisture__sensor_8c.html#a382aae164e49a2400dcb7293c100721b',1,'get_normalized_moisture_level(uint16_t value):&#160;soil_moisture_sensor.c'],['../soil__moisture__sensor_8h.html#a382aae164e49a2400dcb7293c100721b',1,'get_normalized_moisture_level(uint16_t value):&#160;soil_moisture_sensor.c']]]
+  ['error_5fhandler_179',['Error_Handler',['../main_8c.html#a1730ffe1e560465665eb47d9264826f9',1,'Error_Handler(void):&#160;main.c'],['../main_8h.html#a1730ffe1e560465665eb47d9264826f9',1,'Error_Handler(void):&#160;main.c']]]
 ];

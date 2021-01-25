@@ -1,5 +1,5 @@
 var struct_d_h_t___data =
 [
-    [ "Humidity", "struct_d_h_t___data.html#aa89905b62886f8dd96cee63c1b5e8ea2", null ],
-    [ "Temperature", "struct_d_h_t___data.html#abe58442f86399641d4ca7ee3e53de1f8", null ]
+    [ "humidity", "struct_d_h_t___data.html#a6a87b2b0cff24d38b367ccd34843a206", null ],
+    [ "temperature", "struct_d_h_t___data.html#afc1d28cfbce795d6ea954ebe725241f5", null ]
 ];

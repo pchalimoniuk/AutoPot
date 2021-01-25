@@ -25,10 +25,6 @@
 var NAVTREE =
 [
   [ "AutoPot", "index.html", [
-    [ "Comunicating with board using BlueTooth", "bluetooth.html", null ],
-    [ "Controling the pump", "pump.html", null ],
-    [ "Measuremnt parameters", "measure_parameters.html", null ],
-    [ "Performing measurement", "measurement.html", null ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Structure Index", "classes.html", null ],
@@ -51,7 +47,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_d_h_t11__sensor_8c.html"
+"_r_t_c__alarm_8c.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

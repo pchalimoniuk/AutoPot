@@ -1,10 +1,5 @@
 var main_8c =
 [
-    [ "DAYS_BETWEEN_WATERING", "main_8c.html#aef65c1f674a0a44a486179b3be694946", null ],
-    [ "DEFUALT_WATER_LEVEL", "main_8c.html#a071a707c38c11a4f8f69553b8cca6e00", null ],
-    [ "TIMER_FREQ_KHZ", "main_8c.html#a5f32a4680c37d08154fa6d3288633b11", null ],
-    [ "TIMER_FREQ_MHZ", "main_8c.html#ae333e98d40f3f50324a7fc906d17d2e2", null ],
-    [ "WATERING_TIME", "main_8c.html#ab0c84c64ae0b5f5c09746ff4b9e47e8f", null ],
     [ "Error_Handler", "main_8c.html#a1730ffe1e560465665eb47d9264826f9", null ],
     [ "HAL_ADC_ConvCpltCallback", "main_8c.html#af20a88180db1113be1e89266917d148b", null ],
     [ "HAL_RTC_AlarmAEventCallback", "main_8c.html#a11aeff83fd498cddbed3bcddcf017e0a", null ],
@@ -17,15 +12,18 @@ var main_8c =
     [ "SystemClock_Config", "main_8c.html#a70af21c671abfcc773614a9a4f63d920", null ],
     [ "alarm_struct", "main_8c.html#aea448f89c6b968930abf2ac62031add3", null ],
     [ "command_buffer", "main_8c.html#a9bc961a364bd9548ed569b0abf34ea78", null ],
-    [ "config", "main_8c.html#a118f09ba98da64a251fffa4321f9617e", null ],
-    [ "flags", "main_8c.html#a710f2654bd0828d357e8439786d58a09", null ],
+    [ "flags", "main_8c.html#aa991e2b209ef26272bf4fd920777bcda", null ],
     [ "hadc1", "main_8c.html#a22b804736f5648d52f639b2647d4ed13", null ],
     [ "hdma_adc1", "main_8c.html#a1c126854bb1813d31ab4776b21dcc51f", null ],
+    [ "hpcd_USB_OTG_FS", "main_8c.html#a3ec0d70a6cb9406d997fb3d006cc940d", null ],
     [ "hrtc", "main_8c.html#aa0c7fca836406ade332e1e3f1039d8ab", null ],
     [ "htim2", "main_8c.html#a2c80fd5510e2990a59a5c90d745c716c", null ],
-    [ "htim3", "main_8c.html#aac3d2c59ee0e3bbae1b99529a154eb62", null ],
     [ "huart2", "main_8c.html#aa9479c261d65eecedd3d9582f7f0f89c", null ],
+    [ "huart3", "main_8c.html#ab7c63c1b0f65db92b6a4ea19edf957e1", null ],
     [ "out_buffer", "main_8c.html#a4dcd3904f197c09007c3e543b019d974", null ],
-    [ "pump", "main_8c.html#a2649a4098c074e58183be8281e75b4a4", null ],
-    [ "sensor_readings", "main_8c.html#a394e698f0ee9ec68aaaac1c4d1f570e4", null ]
+    [ "pump", "main_8c.html#adecb924c41d711add279be59985e80c6", null ],
+    [ "sAlarm", "main_8c.html#a22eb04f6640dc2f76a7871fe525c7da3", null ],
+    [ "sDate", "main_8c.html#aa805acf5185e2a95f250a2da91bf84e0", null ],
+    [ "sensor_readings", "main_8c.html#aa001668986798f4594cbf3b059e27102", null ],
+    [ "sTime", "main_8c.html#afed4f29eda0f2d0900a0b347e29a8c91", null ]
 ];
