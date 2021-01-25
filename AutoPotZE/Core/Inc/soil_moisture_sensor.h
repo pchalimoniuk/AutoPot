@@ -1,10 +1,8 @@
-/*
- * soil_moisture_sensor.h
- *
- *  Created on: Nov 10, 2020
- *      Author: Dell
+/**
+ * @file soil_moisture_sensor.c
+ * @brief Functions related to soil moisture sensor
+ * @author Paweł Chalimoniuk
  */
-
 
 #ifndef INC_SOIL_MOISTURE_SENSOR_H_
 #define INC_SOIL_MOISTURE_SENSOR_H_
