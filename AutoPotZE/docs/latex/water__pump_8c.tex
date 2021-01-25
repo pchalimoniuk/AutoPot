@@ -1,0 +1,286 @@
+\hypertarget{water__pump_8c}{}\doxysection{Core/\+Src/water\+\_\+pump.c File Reference}
+\label{water__pump_8c}\index{Core/Src/water\_pump.c@{Core/Src/water\_pump.c}}
+
+
+Functions related to water\+\_\+pump.  
+
+
+{\ttfamily \#include \char`\"{}water\+\_\+pump.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{water__pump_8c_a7a61c0eb25164b58b8667f50864f412d}{WATER\+\_\+\+PUMP\+\_\+set\+\_\+water\+\_\+level}} (\mbox{\hyperlink{struct_water___pump___struct}{Water\+\_\+\+Pump\+\_\+\+Struct}} $\ast$\mbox{\hyperlink{main_8c_a2649a4098c074e58183be8281e75b4a4}{pump}}, uint8\+\_\+t water\+\_\+level)
+\begin{DoxyCompactList}\small\item\em Sets minimal moisture. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{water__pump_8c_a238230a54726ccf08a4c6457ead5b358}{WATER\+\_\+\+PUMP\+\_\+set\+\_\+tim}} (\mbox{\hyperlink{struct_water___pump___struct}{Water\+\_\+\+Pump\+\_\+\+Struct}} $\ast$\mbox{\hyperlink{main_8c_a2649a4098c074e58183be8281e75b4a4}{pump}}, TIM\+\_\+\+Handle\+Type\+Def $\ast$tim)
+\begin{DoxyCompactList}\small\item\em Sets timer timer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{water__pump_8c_ac28e383a6a14311293557cb3cb3ce39f}{WATER\+\_\+\+PUMP\+\_\+set\+\_\+\+GPIO\+\_\+port}} (\mbox{\hyperlink{struct_water___pump___struct}{Water\+\_\+\+Pump\+\_\+\+Struct}} $\ast$\mbox{\hyperlink{main_8c_a2649a4098c074e58183be8281e75b4a4}{pump}}, GPIO\+\_\+\+Type\+Def $\ast$GPIOx, uint16\+\_\+t GPIO\+\_\+\+Pin)
+\begin{DoxyCompactList}\small\item\em Sets GPIO PIN used to drive pump. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{water__pump_8c_a21c1fdf746c63b1aea063b922885254b}{WATER\+\_\+\+PUMP\+\_\+timer\+\_\+setup}} (\mbox{\hyperlink{struct_water___pump___struct}{Water\+\_\+\+Pump\+\_\+\+Struct}} $\ast$\mbox{\hyperlink{main_8c_a2649a4098c074e58183be8281e75b4a4}{pump}})
+\begin{DoxyCompactList}\small\item\em Initalize pump\textquotesingle{}s timer with parameters in. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{water__pump_8c_abac4df63c38b21aaa360c468bb729fd3}{WATER\+\_\+\+PUMP\+\_\+init}} (\mbox{\hyperlink{struct_water___pump___struct}{Water\+\_\+\+Pump\+\_\+\+Struct}} $\ast$\mbox{\hyperlink{main_8c_a2649a4098c074e58183be8281e75b4a4}{pump}})
+\begin{DoxyCompactList}\small\item\em Initalize pump with parameters in. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{water__pump_8c_a1aa2c2eb2aa43756fcf0b18af0c88a40}{WATER\+\_\+\+PUMP\+\_\+set\+\_\+watering\+\_\+time}} (\mbox{\hyperlink{struct_water___pump___struct}{Water\+\_\+\+Pump\+\_\+\+Struct}} $\ast$\mbox{\hyperlink{main_8c_a2649a4098c074e58183be8281e75b4a4}{pump}}, uint8\+\_\+t watering\+\_\+time)
+\begin{DoxyCompactList}\small\item\em Stops pump. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{water__pump_8c_a11900f8bb3cbc2c7668a9e1eb8451962}{WATER\+\_\+\+PUMP\+\_\+set\+\_\+tim\+\_\+freq}} (\mbox{\hyperlink{struct_water___pump___struct}{Water\+\_\+\+Pump\+\_\+\+Struct}} $\ast$\mbox{\hyperlink{main_8c_a2649a4098c074e58183be8281e75b4a4}{pump}}, uint16\+\_\+t timer\+\_\+freq\+\_\+k\+Hz)
+\begin{DoxyCompactList}\small\item\em Sets timer frequency. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{water__pump_8c_a1f8dc1005778b9cec5e6263adc82eb7d}{WATER\+\_\+\+PUMP\+\_\+set\+\_\+timer\+\_\+instance}} (\mbox{\hyperlink{struct_water___pump___struct}{Water\+\_\+\+Pump\+\_\+\+Struct}} $\ast$\mbox{\hyperlink{main_8c_a2649a4098c074e58183be8281e75b4a4}{pump}}, TIM\+\_\+\+Type\+Def $\ast$Instance)
+\begin{DoxyCompactList}\small\item\em Sets timer instance. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{water__pump_8c_a65c18b0f64b2569bb2e2fd61ab357480}{WATER\+\_\+\+PUMP\+\_\+start\+\_\+watering}} (\mbox{\hyperlink{struct_water___pump___struct}{Water\+\_\+\+Pump\+\_\+\+Struct}} $\ast$\mbox{\hyperlink{main_8c_a2649a4098c074e58183be8281e75b4a4}{pump}})
+\begin{DoxyCompactList}\small\item\em Starts pump and pumps timer. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{water__pump_8c_ab133404ab3a806224039dbd3763b79e1}{WATER\+\_\+\+PUMP\+\_\+stop\+\_\+watering}} (\mbox{\hyperlink{struct_water___pump___struct}{Water\+\_\+\+Pump\+\_\+\+Struct}} $\ast$\mbox{\hyperlink{main_8c_a2649a4098c074e58183be8281e75b4a4}{pump}})
+\begin{DoxyCompactList}\small\item\em Stops pump. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Functions related to water\+\_\+pump. 
+
+\begin{DoxyAuthor}{Author}
+Paweł Chalimoniuk 
+\end{DoxyAuthor}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{water__pump_8c_abac4df63c38b21aaa360c468bb729fd3}\label{water__pump_8c_abac4df63c38b21aaa360c468bb729fd3}} 
+\index{water\_pump.c@{water\_pump.c}!WATER\_PUMP\_init@{WATER\_PUMP\_init}}
+\index{WATER\_PUMP\_init@{WATER\_PUMP\_init}!water\_pump.c@{water\_pump.c}}
+\doxysubsubsection{\texorpdfstring{WATER\_PUMP\_init()}{WATER\_PUMP\_init()}}
+{\footnotesize\ttfamily void WATER\+\_\+\+PUMP\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_water___pump___struct}{Water\+\_\+\+Pump\+\_\+\+Struct}} $\ast$}]{pump }\end{DoxyParamCaption})}
+
+
+
+Initalize pump with parameters in. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em } & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 55 of file water\+\_\+pump.\+c.
+
+\mbox{\Hypertarget{water__pump_8c_ac28e383a6a14311293557cb3cb3ce39f}\label{water__pump_8c_ac28e383a6a14311293557cb3cb3ce39f}} 
+\index{water\_pump.c@{water\_pump.c}!WATER\_PUMP\_set\_GPIO\_port@{WATER\_PUMP\_set\_GPIO\_port}}
+\index{WATER\_PUMP\_set\_GPIO\_port@{WATER\_PUMP\_set\_GPIO\_port}!water\_pump.c@{water\_pump.c}}
+\doxysubsubsection{\texorpdfstring{WATER\_PUMP\_set\_GPIO\_port()}{WATER\_PUMP\_set\_GPIO\_port()}}
+{\footnotesize\ttfamily void WATER\+\_\+\+PUMP\+\_\+set\+\_\+\+GPIO\+\_\+port (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_water___pump___struct}{Water\+\_\+\+Pump\+\_\+\+Struct}} $\ast$}]{pump,  }\item[{GPIO\+\_\+\+Type\+Def $\ast$}]{GPIOx,  }\item[{uint16\+\_\+t}]{GPIO\+\_\+\+Pin }\end{DoxyParamCaption})}
+
+
+
+Sets GPIO PIN used to drive pump. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pump} & Pointer to Water\+\_\+pump\+\_\+struct struct \\
+\hline
+{\em GPIOx} & GPIO\+\_\+\+Type\+Def Pointer to selected pin \\
+\hline
+{\em GPIO\+\_\+\+Pin} & Pin number to selected pin \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Return} & 1 if pump stopped successfully, 0 otherwise \\
+\hline
+\end{DoxyRetVals}
+
+
+Definition at line 32 of file water\+\_\+pump.\+c.
+
+\mbox{\Hypertarget{water__pump_8c_a238230a54726ccf08a4c6457ead5b358}\label{water__pump_8c_a238230a54726ccf08a4c6457ead5b358}} 
+\index{water\_pump.c@{water\_pump.c}!WATER\_PUMP\_set\_tim@{WATER\_PUMP\_set\_tim}}
+\index{WATER\_PUMP\_set\_tim@{WATER\_PUMP\_set\_tim}!water\_pump.c@{water\_pump.c}}
+\doxysubsubsection{\texorpdfstring{WATER\_PUMP\_set\_tim()}{WATER\_PUMP\_set\_tim()}}
+{\footnotesize\ttfamily void WATER\+\_\+\+PUMP\+\_\+set\+\_\+tim (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_water___pump___struct}{Water\+\_\+\+Pump\+\_\+\+Struct}} $\ast$}]{pump,  }\item[{TIM\+\_\+\+Handle\+Type\+Def $\ast$}]{tim }\end{DoxyParamCaption})}
+
+
+
+Sets timer timer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pump} & Pointer to Water\+\_\+pump\+\_\+struct struct \\
+\hline
+{\em tim} & Handler to timer \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+
+
+Definition at line 22 of file water\+\_\+pump.\+c.
+
+\mbox{\Hypertarget{water__pump_8c_a11900f8bb3cbc2c7668a9e1eb8451962}\label{water__pump_8c_a11900f8bb3cbc2c7668a9e1eb8451962}} 
+\index{water\_pump.c@{water\_pump.c}!WATER\_PUMP\_set\_tim\_freq@{WATER\_PUMP\_set\_tim\_freq}}
+\index{WATER\_PUMP\_set\_tim\_freq@{WATER\_PUMP\_set\_tim\_freq}!water\_pump.c@{water\_pump.c}}
+\doxysubsubsection{\texorpdfstring{WATER\_PUMP\_set\_tim\_freq()}{WATER\_PUMP\_set\_tim\_freq()}}
+{\footnotesize\ttfamily void WATER\+\_\+\+PUMP\+\_\+set\+\_\+tim\+\_\+freq (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_water___pump___struct}{Water\+\_\+\+Pump\+\_\+\+Struct}} $\ast$}]{pump,  }\item[{uint16\+\_\+t}]{timer\+\_\+freq\+\_\+k\+Hz }\end{DoxyParamCaption})}
+
+
+
+Sets timer frequency. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pump} & Pointer to Water\+\_\+pump\+\_\+struct struct \\
+\hline
+{\em timer\+\_\+freq\+\_\+k\+Hz} & frequency that timer is working on \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+
+
+Definition at line 81 of file water\+\_\+pump.\+c.
+
+\mbox{\Hypertarget{water__pump_8c_a1f8dc1005778b9cec5e6263adc82eb7d}\label{water__pump_8c_a1f8dc1005778b9cec5e6263adc82eb7d}} 
+\index{water\_pump.c@{water\_pump.c}!WATER\_PUMP\_set\_timer\_instance@{WATER\_PUMP\_set\_timer\_instance}}
+\index{WATER\_PUMP\_set\_timer\_instance@{WATER\_PUMP\_set\_timer\_instance}!water\_pump.c@{water\_pump.c}}
+\doxysubsubsection{\texorpdfstring{WATER\_PUMP\_set\_timer\_instance()}{WATER\_PUMP\_set\_timer\_instance()}}
+{\footnotesize\ttfamily void WATER\+\_\+\+PUMP\+\_\+set\+\_\+timer\+\_\+instance (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_water___pump___struct}{Water\+\_\+\+Pump\+\_\+\+Struct}} $\ast$}]{pump,  }\item[{TIM\+\_\+\+Type\+Def $\ast$}]{Instance }\end{DoxyParamCaption})}
+
+
+
+Sets timer instance. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pump} & Pointer to Water\+\_\+pump\+\_\+struct struct \\
+\hline
+{\em Instance} & instance of timer \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+
+
+Definition at line 90 of file water\+\_\+pump.\+c.
+
+\mbox{\Hypertarget{water__pump_8c_a7a61c0eb25164b58b8667f50864f412d}\label{water__pump_8c_a7a61c0eb25164b58b8667f50864f412d}} 
+\index{water\_pump.c@{water\_pump.c}!WATER\_PUMP\_set\_water\_level@{WATER\_PUMP\_set\_water\_level}}
+\index{WATER\_PUMP\_set\_water\_level@{WATER\_PUMP\_set\_water\_level}!water\_pump.c@{water\_pump.c}}
+\doxysubsubsection{\texorpdfstring{WATER\_PUMP\_set\_water\_level()}{WATER\_PUMP\_set\_water\_level()}}
+{\footnotesize\ttfamily void WATER\+\_\+\+PUMP\+\_\+set\+\_\+water\+\_\+level (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_water___pump___struct}{Water\+\_\+\+Pump\+\_\+\+Struct}} $\ast$}]{pump,  }\item[{uint8\+\_\+t}]{water\+\_\+level }\end{DoxyParamCaption})}
+
+
+
+Sets minimal moisture. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pump} & Pointer to Water\+\_\+pump\+\_\+struct struct \\
+\hline
+{\em water\+\_\+level} & Minimal soil moisture \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+
+
+Definition at line 13 of file water\+\_\+pump.\+c.
+
+\mbox{\Hypertarget{water__pump_8c_a1aa2c2eb2aa43756fcf0b18af0c88a40}\label{water__pump_8c_a1aa2c2eb2aa43756fcf0b18af0c88a40}} 
+\index{water\_pump.c@{water\_pump.c}!WATER\_PUMP\_set\_watering\_time@{WATER\_PUMP\_set\_watering\_time}}
+\index{WATER\_PUMP\_set\_watering\_time@{WATER\_PUMP\_set\_watering\_time}!water\_pump.c@{water\_pump.c}}
+\doxysubsubsection{\texorpdfstring{WATER\_PUMP\_set\_watering\_time()}{WATER\_PUMP\_set\_watering\_time()}}
+{\footnotesize\ttfamily void WATER\+\_\+\+PUMP\+\_\+set\+\_\+watering\+\_\+time (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_water___pump___struct}{Water\+\_\+\+Pump\+\_\+\+Struct}} $\ast$}]{pump,  }\item[{uint8\+\_\+t}]{watering\+\_\+time }\end{DoxyParamCaption})}
+
+
+
+Stops pump. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pump} & Pointer to Water\+\_\+pump\+\_\+struct struct \\
+\hline
+{\em watering\+\_\+time} & Time in seconds for how long pump should be on (minimum 10s) \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+
+
+Definition at line 72 of file water\+\_\+pump.\+c.
+
+\mbox{\Hypertarget{water__pump_8c_a65c18b0f64b2569bb2e2fd61ab357480}\label{water__pump_8c_a65c18b0f64b2569bb2e2fd61ab357480}} 
+\index{water\_pump.c@{water\_pump.c}!WATER\_PUMP\_start\_watering@{WATER\_PUMP\_start\_watering}}
+\index{WATER\_PUMP\_start\_watering@{WATER\_PUMP\_start\_watering}!water\_pump.c@{water\_pump.c}}
+\doxysubsubsection{\texorpdfstring{WATER\_PUMP\_start\_watering()}{WATER\_PUMP\_start\_watering()}}
+{\footnotesize\ttfamily uint8\+\_\+t WATER\+\_\+\+PUMP\+\_\+start\+\_\+watering (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_water___pump___struct}{Water\+\_\+\+Pump\+\_\+\+Struct}} $\ast$}]{pump }\end{DoxyParamCaption})}
+
+
+
+Starts pump and pumps timer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pump} & Pointer to Water\+\_\+pump\+\_\+struct struct \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Return} & 1 if pump started successfully, 0 otherwise \\
+\hline
+\end{DoxyRetVals}
+
+
+Definition at line 99 of file water\+\_\+pump.\+c.
+
+\mbox{\Hypertarget{water__pump_8c_ab133404ab3a806224039dbd3763b79e1}\label{water__pump_8c_ab133404ab3a806224039dbd3763b79e1}} 
+\index{water\_pump.c@{water\_pump.c}!WATER\_PUMP\_stop\_watering@{WATER\_PUMP\_stop\_watering}}
+\index{WATER\_PUMP\_stop\_watering@{WATER\_PUMP\_stop\_watering}!water\_pump.c@{water\_pump.c}}
+\doxysubsubsection{\texorpdfstring{WATER\_PUMP\_stop\_watering()}{WATER\_PUMP\_stop\_watering()}}
+{\footnotesize\ttfamily uint8\+\_\+t WATER\+\_\+\+PUMP\+\_\+stop\+\_\+watering (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_water___pump___struct}{Water\+\_\+\+Pump\+\_\+\+Struct}} $\ast$}]{pump }\end{DoxyParamCaption})}
+
+
+
+Stops pump. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pump} & Pointer to Water\+\_\+pump\+\_\+struct struct \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Return} & 1 if pump stopped successfully, 0 otherwise \\
+\hline
+\end{DoxyRetVals}
+
+
+Definition at line 115 of file water\+\_\+pump.\+c.
+
+\mbox{\Hypertarget{water__pump_8c_a21c1fdf746c63b1aea063b922885254b}\label{water__pump_8c_a21c1fdf746c63b1aea063b922885254b}} 
+\index{water\_pump.c@{water\_pump.c}!WATER\_PUMP\_timer\_setup@{WATER\_PUMP\_timer\_setup}}
+\index{WATER\_PUMP\_timer\_setup@{WATER\_PUMP\_timer\_setup}!water\_pump.c@{water\_pump.c}}
+\doxysubsubsection{\texorpdfstring{WATER\_PUMP\_timer\_setup()}{WATER\_PUMP\_timer\_setup()}}
+{\footnotesize\ttfamily void WATER\+\_\+\+PUMP\+\_\+timer\+\_\+setup (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_water___pump___struct}{Water\+\_\+\+Pump\+\_\+\+Struct}} $\ast$}]{pump }\end{DoxyParamCaption})}
+
+
+
+Initalize pump\textquotesingle{}s timer with parameters in. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em } & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 41 of file water\+\_\+pump.\+c.
+

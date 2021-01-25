@@ -1,0 +1,61 @@
+\hypertarget{soil__moisture__sensor_8h}{}\doxysection{Core/\+Inc/soil\+\_\+moisture\+\_\+sensor.h File Reference}
+\label{soil__moisture__sensor_8h}\index{Core/Inc/soil\_moisture\_sensor.h@{Core/Inc/soil\_moisture\_sensor.h}}
+
+
+Functions related to soil moisture sensor.  
+
+
+{\ttfamily \#include \char`\"{}stdint.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}string.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}stdio.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}stm32f4xx\+\_\+hal.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint16\+\_\+t \mbox{\hyperlink{soil__moisture__sensor_8h_a382aae164e49a2400dcb7293c100721b}{get\+\_\+normalized\+\_\+moisture\+\_\+level}} (uint16\+\_\+t value)
+\item 
+uint8\+\_\+t \mbox{\hyperlink{soil__moisture__sensor_8h_a4df5aae98fe8762e057f8f367b264fbd}{start\+\_\+soil\+\_\+moisture\+\_\+measurement}} (ADC\+\_\+\+Handle\+Type\+Def $\ast$adc, DMA\+\_\+\+Handle\+Type\+Def $\ast$hdma\+\_\+adc, uint32\+\_\+t $\ast$value)
+\item 
+uint8\+\_\+t \mbox{\hyperlink{soil__moisture__sensor_8h_a252f2269da357d2f884ad35c0749e2c5}{stop\+\_\+soil\+\_\+measurement}} (ADC\+\_\+\+Handle\+Type\+Def $\ast$adc)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Functions related to soil moisture sensor. 
+
+\begin{DoxyAuthor}{Author}
+Paweł Chalimoniuk 
+\end{DoxyAuthor}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{soil__moisture__sensor_8h_a382aae164e49a2400dcb7293c100721b}\label{soil__moisture__sensor_8h_a382aae164e49a2400dcb7293c100721b}} 
+\index{soil\_moisture\_sensor.h@{soil\_moisture\_sensor.h}!get\_normalized\_moisture\_level@{get\_normalized\_moisture\_level}}
+\index{get\_normalized\_moisture\_level@{get\_normalized\_moisture\_level}!soil\_moisture\_sensor.h@{soil\_moisture\_sensor.h}}
+\doxysubsubsection{\texorpdfstring{get\_normalized\_moisture\_level()}{get\_normalized\_moisture\_level()}}
+{\footnotesize\ttfamily uint16\+\_\+t get\+\_\+normalized\+\_\+moisture\+\_\+level (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{value }\end{DoxyParamCaption})}
+
+
+
+Definition at line 8 of file soil\+\_\+moisture\+\_\+sensor.\+c.
+
+\mbox{\Hypertarget{soil__moisture__sensor_8h_a4df5aae98fe8762e057f8f367b264fbd}\label{soil__moisture__sensor_8h_a4df5aae98fe8762e057f8f367b264fbd}} 
+\index{soil\_moisture\_sensor.h@{soil\_moisture\_sensor.h}!start\_soil\_moisture\_measurement@{start\_soil\_moisture\_measurement}}
+\index{start\_soil\_moisture\_measurement@{start\_soil\_moisture\_measurement}!soil\_moisture\_sensor.h@{soil\_moisture\_sensor.h}}
+\doxysubsubsection{\texorpdfstring{start\_soil\_moisture\_measurement()}{start\_soil\_moisture\_measurement()}}
+{\footnotesize\ttfamily uint8\+\_\+t start\+\_\+soil\+\_\+moisture\+\_\+measurement (\begin{DoxyParamCaption}\item[{ADC\+\_\+\+Handle\+Type\+Def $\ast$}]{adc,  }\item[{DMA\+\_\+\+Handle\+Type\+Def $\ast$}]{hdma\+\_\+adc,  }\item[{uint32\+\_\+t $\ast$}]{value }\end{DoxyParamCaption})}
+
+
+
+Definition at line 12 of file soil\+\_\+moisture\+\_\+sensor.\+c.
+
+\mbox{\Hypertarget{soil__moisture__sensor_8h_a252f2269da357d2f884ad35c0749e2c5}\label{soil__moisture__sensor_8h_a252f2269da357d2f884ad35c0749e2c5}} 
+\index{soil\_moisture\_sensor.h@{soil\_moisture\_sensor.h}!stop\_soil\_measurement@{stop\_soil\_measurement}}
+\index{stop\_soil\_measurement@{stop\_soil\_measurement}!soil\_moisture\_sensor.h@{soil\_moisture\_sensor.h}}
+\doxysubsubsection{\texorpdfstring{stop\_soil\_measurement()}{stop\_soil\_measurement()}}
+{\footnotesize\ttfamily uint8\+\_\+t stop\+\_\+soil\+\_\+measurement (\begin{DoxyParamCaption}\item[{ADC\+\_\+\+Handle\+Type\+Def $\ast$}]{adc }\end{DoxyParamCaption})}
+
+
+
+Definition at line 22 of file soil\+\_\+moisture\+\_\+sensor.\+c.
+

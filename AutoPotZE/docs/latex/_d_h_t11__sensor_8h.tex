@@ -1,0 +1,86 @@
+\hypertarget{_d_h_t11__sensor_8h}{}\doxysection{Core/\+Inc/\+DHT11\+\_\+sensor.h File Reference}
+\label{_d_h_t11__sensor_8h}\index{Core/Inc/DHT11\_sensor.h@{Core/Inc/DHT11\_sensor.h}}
+
+
+Function used to retrieve data from DHT11 sensor and struct associated with it.  
+
+
+{\ttfamily \#include \char`\"{}stm32f4xx\+\_\+hal.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}stdlib.\+h\char`\"{}}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_d_h_t___data}{DHT\+\_\+\+Data}}
+\begin{DoxyCompactList}\small\item\em Structure holding readings from DHT11 sensor. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_d_h_t___config}{DHT\+\_\+\+Config}}
+\begin{DoxyCompactList}\small\item\em Structure used to config DHT11 sensor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_d_h_t11__sensor_8h_ac36381ff79d196eabd30a3af8f34687b}{DHT11\+\_\+\+OK}}~1
+\item 
+\#define \mbox{\hyperlink{_d_h_t11__sensor_8h_a20c35bcb0dc09dbe2365f2b389ee20ba}{DHT11\+\_\+\+ERROR}}~0
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{_d_h_t11__sensor_8h_a715fd7e3f24e1b1845d5258bb9f6ac9c}{DHT11\+\_\+get\+\_\+data\+\_\+from\+\_\+sensor}} (\mbox{\hyperlink{struct_d_h_t___data}{DHT\+\_\+\+Data}} $\ast$\mbox{\hyperlink{struct_d_h_t___data}{DHT\+\_\+\+Data}}, \mbox{\hyperlink{struct_d_h_t___config}{DHT\+\_\+\+Config}} $\ast$\mbox{\hyperlink{main_8c_a118f09ba98da64a251fffa4321f9617e}{config}})
+\begin{DoxyCompactList}\small\item\em Function used to retrieve data from DHT11. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Function used to retrieve data from DHT11 sensor and struct associated with it. 
+
+\begin{DoxyAuthor}{Author}
+Paweł Chalimoniuk 
+\end{DoxyAuthor}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{_d_h_t11__sensor_8h_a20c35bcb0dc09dbe2365f2b389ee20ba}\label{_d_h_t11__sensor_8h_a20c35bcb0dc09dbe2365f2b389ee20ba}} 
+\index{DHT11\_sensor.h@{DHT11\_sensor.h}!DHT11\_ERROR@{DHT11\_ERROR}}
+\index{DHT11\_ERROR@{DHT11\_ERROR}!DHT11\_sensor.h@{DHT11\_sensor.h}}
+\doxysubsubsection{\texorpdfstring{DHT11\_ERROR}{DHT11\_ERROR}}
+{\footnotesize\ttfamily \#define DHT11\+\_\+\+ERROR~0}
+
+Makro indicating error in reading from sensor. 
+
+Definition at line 12 of file DHT11\+\_\+sensor.\+h.
+
+\mbox{\Hypertarget{_d_h_t11__sensor_8h_ac36381ff79d196eabd30a3af8f34687b}\label{_d_h_t11__sensor_8h_ac36381ff79d196eabd30a3af8f34687b}} 
+\index{DHT11\_sensor.h@{DHT11\_sensor.h}!DHT11\_OK@{DHT11\_OK}}
+\index{DHT11\_OK@{DHT11\_OK}!DHT11\_sensor.h@{DHT11\_sensor.h}}
+\doxysubsubsection{\texorpdfstring{DHT11\_OK}{DHT11\_OK}}
+{\footnotesize\ttfamily \#define DHT11\+\_\+\+OK~1}
+
+Makro indicating successful reading from sensor. 
+
+Definition at line 11 of file DHT11\+\_\+sensor.\+h.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{_d_h_t11__sensor_8h_a715fd7e3f24e1b1845d5258bb9f6ac9c}\label{_d_h_t11__sensor_8h_a715fd7e3f24e1b1845d5258bb9f6ac9c}} 
+\index{DHT11\_sensor.h@{DHT11\_sensor.h}!DHT11\_get\_data\_from\_sensor@{DHT11\_get\_data\_from\_sensor}}
+\index{DHT11\_get\_data\_from\_sensor@{DHT11\_get\_data\_from\_sensor}!DHT11\_sensor.h@{DHT11\_sensor.h}}
+\doxysubsubsection{\texorpdfstring{DHT11\_get\_data\_from\_sensor()}{DHT11\_get\_data\_from\_sensor()}}
+{\footnotesize\ttfamily uint8\+\_\+t DHT11\+\_\+get\+\_\+data\+\_\+from\+\_\+sensor (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_d_h_t___data}{DHT\+\_\+\+Data}} $\ast$}]{DHT\+\_\+\+Data,  }\item[{\mbox{\hyperlink{struct_d_h_t___config}{DHT\+\_\+\+Config}} $\ast$}]{config }\end{DoxyParamCaption})}
+
+
+
+Function used to retrieve data from DHT11. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & Pointer to DHT11\+\_\+\+Data structure \\
+\hline
+{\em config} & Handler to DHT\+\_\+config with dht connection parameters \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+DHT11\+\_\+\+OK if successful, DHT11\+\_\+\+ERROR otherwise 
+\end{DoxyReturn}
+
+
+Definition at line 146 of file DHT11\+\_\+sensor.\+c.
+

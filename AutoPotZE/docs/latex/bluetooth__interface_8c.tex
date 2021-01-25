@@ -1,0 +1,192 @@
+\hypertarget{bluetooth__interface_8c}{}\doxysection{Core/\+Src/bluetooth\+\_\+interface.c File Reference}
+\label{bluetooth__interface_8c}\index{Core/Src/bluetooth\_interface.c@{Core/Src/bluetooth\_interface.c}}
+
+
+Functions related to interpreting and executing command received over Bluetooth.  
+
+
+{\ttfamily \#include \char`\"{}bluetooth\+\_\+interface.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{bluetooth__interface_8c_a9e22bddb2215d7e5e1e1058c73ccb558}{BLUETOOTH\+\_\+\+INTERFACE\+\_\+get\+\_\+time\+\_\+from\+\_\+command}} (char $\ast$command, uint8\+\_\+t $\ast$hours, uint8\+\_\+t $\ast$minutes, uint8\+\_\+t $\ast$day)
+\begin{DoxyCompactList}\small\item\em Function gets time to set RTC from command. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{bluetooth__interface_8c_ad7cf7a65ae293f6d27a7383855f365d7}{BLUETOOTH\+\_\+\+INTERFACE\+\_\+get\+\_\+watering\+\_\+period\+\_\+from\+\_\+command}} (char $\ast$command, uint8\+\_\+t $\ast$hours, uint8\+\_\+t $\ast$freq)
+\begin{DoxyCompactList}\small\item\em Function gets period between watering from command. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{bluetooth__interface_8c_ad6d95c63018795fefc5406c293eab64b}{BLUETOOTH\+\_\+\+INTERFACE\+\_\+get\+\_\+amount\+\_\+from\+\_\+command}} (char $\ast$command, uint8\+\_\+t $\ast$amount)
+\begin{DoxyCompactList}\small\item\em Function gets amount of time that pump should be working for. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{bluetooth__interface_8c_a58b50a73130e3cdbae78364c76134ab1}{BLUETOOTH\+\_\+\+INTERFACE\+\_\+execute\+\_\+command}} (char $\ast$command, \mbox{\hyperlink{struct_water___pump___struct}{Water\+\_\+\+Pump\+\_\+\+Struct}} $\ast$\mbox{\hyperlink{main_8c_a2649a4098c074e58183be8281e75b4a4}{pump}}, \mbox{\hyperlink{struct_flags___struct}{Flags\+\_\+\+Struct}} $\ast$\mbox{\hyperlink{main_8c_a710f2654bd0828d357e8439786d58a09}{flags}}, \mbox{\hyperlink{struct_a_l_a_r_m___r_t_c__struct}{ALARM\+\_\+\+RTC\+\_\+struct}} $\ast$\mbox{\hyperlink{main_8c_aea448f89c6b968930abf2ac62031add3}{alarm\+\_\+struct}})
+\begin{DoxyCompactList}\small\item\em Execcute command based on action. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{bluetooth__interface_8c_a498f92a1519445a2fd94181a6b5e5a68}{BLUETOOTH\+\_\+\+INTERFACE\+\_\+interpret\+\_\+command}} (char $\ast$command, \mbox{\hyperlink{struct_water___pump___struct}{Water\+\_\+\+Pump\+\_\+\+Struct}} $\ast$\mbox{\hyperlink{main_8c_a2649a4098c074e58183be8281e75b4a4}{pump}}, \mbox{\hyperlink{struct_flags___struct}{Flags\+\_\+\+Struct}} $\ast$\mbox{\hyperlink{main_8c_a710f2654bd0828d357e8439786d58a09}{flags}}, \mbox{\hyperlink{struct_a_l_a_r_m___r_t_c__struct}{ALARM\+\_\+\+RTC\+\_\+struct}} $\ast$\mbox{\hyperlink{main_8c_aea448f89c6b968930abf2ac62031add3}{alarm\+\_\+struct}})
+\begin{DoxyCompactList}\small\item\em Function used to interpret command according to rules of custom protocol. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{bluetooth__interface_8c_a46a15cdb1a7e826ba0ef0a12f7cd82df}{BLUETOOTH\+\_\+\+INTERFACE\+\_\+send\+\_\+data}} (char $\ast$buffer, \mbox{\hyperlink{struct_sensor___readings___struct}{Sensor\+\_\+\+Readings\+\_\+\+Struct}} readings)
+\begin{DoxyCompactList}\small\item\em Prepares command with sensor data according to rules of protocol. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Functions related to interpreting and executing command received over Bluetooth. 
+
+\begin{DoxyAuthor}{Author}
+Paweł Chalimoniuk 
+\end{DoxyAuthor}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{bluetooth__interface_8c_a58b50a73130e3cdbae78364c76134ab1}\label{bluetooth__interface_8c_a58b50a73130e3cdbae78364c76134ab1}} 
+\index{bluetooth\_interface.c@{bluetooth\_interface.c}!BLUETOOTH\_INTERFACE\_execute\_command@{BLUETOOTH\_INTERFACE\_execute\_command}}
+\index{BLUETOOTH\_INTERFACE\_execute\_command@{BLUETOOTH\_INTERFACE\_execute\_command}!bluetooth\_interface.c@{bluetooth\_interface.c}}
+\doxysubsubsection{\texorpdfstring{BLUETOOTH\_INTERFACE\_execute\_command()}{BLUETOOTH\_INTERFACE\_execute\_command()}}
+{\footnotesize\ttfamily uint8\+\_\+t BLUETOOTH\+\_\+\+INTERFACE\+\_\+execute\+\_\+command (\begin{DoxyParamCaption}\item[{char $\ast$}]{command,  }\item[{\mbox{\hyperlink{struct_water___pump___struct}{Water\+\_\+\+Pump\+\_\+\+Struct}} $\ast$}]{pump,  }\item[{\mbox{\hyperlink{struct_flags___struct}{Flags\+\_\+\+Struct}} $\ast$}]{flags,  }\item[{\mbox{\hyperlink{struct_a_l_a_r_m___r_t_c__struct}{ALARM\+\_\+\+RTC\+\_\+struct}} $\ast$}]{alarm\+\_\+struct }\end{DoxyParamCaption})}
+
+
+
+Execcute command based on action. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em command} & Pointer to command to be interpreted \\
+\hline
+{\em pump} & Pointer to water pump structure \\
+\hline
+{\em flags} & Pointer to flag structure \\
+\hline
+{\em alarm\+\_\+struct} & Pointer to RTC alarm structure \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+MAKROS\+: BLUETOOTH\+\_\+\+COMMAND\+\_\+\+OK if successful, BLUETOOTH\+\_\+\+COMMAND\+\_\+\+ERROR otherwise 
+\end{DoxyReturn}
+
+
+Definition at line 45 of file bluetooth\+\_\+interface.\+c.
+
+\mbox{\Hypertarget{bluetooth__interface_8c_ad6d95c63018795fefc5406c293eab64b}\label{bluetooth__interface_8c_ad6d95c63018795fefc5406c293eab64b}} 
+\index{bluetooth\_interface.c@{bluetooth\_interface.c}!BLUETOOTH\_INTERFACE\_get\_amount\_from\_command@{BLUETOOTH\_INTERFACE\_get\_amount\_from\_command}}
+\index{BLUETOOTH\_INTERFACE\_get\_amount\_from\_command@{BLUETOOTH\_INTERFACE\_get\_amount\_from\_command}!bluetooth\_interface.c@{bluetooth\_interface.c}}
+\doxysubsubsection{\texorpdfstring{BLUETOOTH\_INTERFACE\_get\_amount\_from\_command()}{BLUETOOTH\_INTERFACE\_get\_amount\_from\_command()}}
+{\footnotesize\ttfamily uint8\+\_\+t BLUETOOTH\+\_\+\+INTERFACE\+\_\+get\+\_\+amount\+\_\+from\+\_\+command (\begin{DoxyParamCaption}\item[{char $\ast$}]{command,  }\item[{uint8\+\_\+t $\ast$}]{amount }\end{DoxyParamCaption})}
+
+
+
+Function gets amount of time that pump should be working for. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em command} & Pointer to command \\
+\hline
+{\em amount} & Pointer to variable to store amount from command \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+MAKROS\+: BLUETOOTH\+\_\+\+COMMAND\+\_\+\+OK if successful, BLUETOOTH\+\_\+\+COMMAND\+\_\+\+ERROR otherwise 
+\end{DoxyReturn}
+
+
+Definition at line 148 of file bluetooth\+\_\+interface.\+c.
+
+\mbox{\Hypertarget{bluetooth__interface_8c_a9e22bddb2215d7e5e1e1058c73ccb558}\label{bluetooth__interface_8c_a9e22bddb2215d7e5e1e1058c73ccb558}} 
+\index{bluetooth\_interface.c@{bluetooth\_interface.c}!BLUETOOTH\_INTERFACE\_get\_time\_from\_command@{BLUETOOTH\_INTERFACE\_get\_time\_from\_command}}
+\index{BLUETOOTH\_INTERFACE\_get\_time\_from\_command@{BLUETOOTH\_INTERFACE\_get\_time\_from\_command}!bluetooth\_interface.c@{bluetooth\_interface.c}}
+\doxysubsubsection{\texorpdfstring{BLUETOOTH\_INTERFACE\_get\_time\_from\_command()}{BLUETOOTH\_INTERFACE\_get\_time\_from\_command()}}
+{\footnotesize\ttfamily uint8\+\_\+t BLUETOOTH\+\_\+\+INTERFACE\+\_\+get\+\_\+time\+\_\+from\+\_\+command (\begin{DoxyParamCaption}\item[{char $\ast$}]{command,  }\item[{uint8\+\_\+t $\ast$}]{hours,  }\item[{uint8\+\_\+t $\ast$}]{minutes,  }\item[{uint8\+\_\+t $\ast$}]{day }\end{DoxyParamCaption})}
+
+
+
+Function gets time to set RTC from command. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em command} & Pointer to command \\
+\hline
+{\em hours} & Pointer to variable to store hours from command \\
+\hline
+{\em minutes} & Pointer to variable to store minutes from command \\
+\hline
+{\em day} & Pointer to variable to store weekday from command \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+MAKROS\+: BLUETOOTH\+\_\+\+COMMAND\+\_\+\+OK if successful, BLUETOOTH\+\_\+\+COMMAND\+\_\+\+ERROR otherwise 
+\end{DoxyReturn}
+
+
+Definition at line 94 of file bluetooth\+\_\+interface.\+c.
+
+\mbox{\Hypertarget{bluetooth__interface_8c_ad7cf7a65ae293f6d27a7383855f365d7}\label{bluetooth__interface_8c_ad7cf7a65ae293f6d27a7383855f365d7}} 
+\index{bluetooth\_interface.c@{bluetooth\_interface.c}!BLUETOOTH\_INTERFACE\_get\_watering\_period\_from\_command@{BLUETOOTH\_INTERFACE\_get\_watering\_period\_from\_command}}
+\index{BLUETOOTH\_INTERFACE\_get\_watering\_period\_from\_command@{BLUETOOTH\_INTERFACE\_get\_watering\_period\_from\_command}!bluetooth\_interface.c@{bluetooth\_interface.c}}
+\doxysubsubsection{\texorpdfstring{BLUETOOTH\_INTERFACE\_get\_watering\_period\_from\_command()}{BLUETOOTH\_INTERFACE\_get\_watering\_period\_from\_command()}}
+{\footnotesize\ttfamily uint8\+\_\+t BLUETOOTH\+\_\+\+INTERFACE\+\_\+get\+\_\+watering\+\_\+period\+\_\+from\+\_\+command (\begin{DoxyParamCaption}\item[{char $\ast$}]{command,  }\item[{uint8\+\_\+t $\ast$}]{hours,  }\item[{uint8\+\_\+t $\ast$}]{freq }\end{DoxyParamCaption})}
+
+
+
+Function gets period between watering from command. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em command} & Pointer to command \\
+\hline
+{\em hours} & Pointer to variable to store hours from command \\
+\hline
+{\em freq} & Pointer to variable to store period from command \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+MAKROS\+: BLUETOOTH\+\_\+\+COMMAND\+\_\+\+OK if successful, BLUETOOTH\+\_\+\+COMMAND\+\_\+\+ERROR otherwise 
+\end{DoxyReturn}
+
+
+Definition at line 126 of file bluetooth\+\_\+interface.\+c.
+
+\mbox{\Hypertarget{bluetooth__interface_8c_a498f92a1519445a2fd94181a6b5e5a68}\label{bluetooth__interface_8c_a498f92a1519445a2fd94181a6b5e5a68}} 
+\index{bluetooth\_interface.c@{bluetooth\_interface.c}!BLUETOOTH\_INTERFACE\_interpret\_command@{BLUETOOTH\_INTERFACE\_interpret\_command}}
+\index{BLUETOOTH\_INTERFACE\_interpret\_command@{BLUETOOTH\_INTERFACE\_interpret\_command}!bluetooth\_interface.c@{bluetooth\_interface.c}}
+\doxysubsubsection{\texorpdfstring{BLUETOOTH\_INTERFACE\_interpret\_command()}{BLUETOOTH\_INTERFACE\_interpret\_command()}}
+{\footnotesize\ttfamily uint8\+\_\+t BLUETOOTH\+\_\+\+INTERFACE\+\_\+interpret\+\_\+command (\begin{DoxyParamCaption}\item[{char $\ast$}]{command,  }\item[{\mbox{\hyperlink{struct_water___pump___struct}{Water\+\_\+\+Pump\+\_\+\+Struct}} $\ast$}]{pump,  }\item[{\mbox{\hyperlink{struct_flags___struct}{Flags\+\_\+\+Struct}} $\ast$}]{flags,  }\item[{\mbox{\hyperlink{struct_a_l_a_r_m___r_t_c__struct}{ALARM\+\_\+\+RTC\+\_\+struct}} $\ast$}]{alarm\+\_\+struct }\end{DoxyParamCaption})}
+
+
+
+Function used to interpret command according to rules of custom protocol. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em command} & Pointer to command to be interpreted \\
+\hline
+{\em pump} & Pointer to water pump structure \\
+\hline
+{\em flags} & Pointer to flag structure \\
+\hline
+{\em alarm\+\_\+struct} & Pointer to RTC alarm structure \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+MAKROS\+: BLUETOOTH\+\_\+\+COMMAND\+\_\+\+OK if successful, BLUETOOTH\+\_\+\+COMMAND\+\_\+\+ERROR otherwise 
+\end{DoxyReturn}
+
+
+Definition at line 42 of file bluetooth\+\_\+interface.\+c.
+
+\mbox{\Hypertarget{bluetooth__interface_8c_a46a15cdb1a7e826ba0ef0a12f7cd82df}\label{bluetooth__interface_8c_a46a15cdb1a7e826ba0ef0a12f7cd82df}} 
+\index{bluetooth\_interface.c@{bluetooth\_interface.c}!BLUETOOTH\_INTERFACE\_send\_data@{BLUETOOTH\_INTERFACE\_send\_data}}
+\index{BLUETOOTH\_INTERFACE\_send\_data@{BLUETOOTH\_INTERFACE\_send\_data}!bluetooth\_interface.c@{bluetooth\_interface.c}}
+\doxysubsubsection{\texorpdfstring{BLUETOOTH\_INTERFACE\_send\_data()}{BLUETOOTH\_INTERFACE\_send\_data()}}
+{\footnotesize\ttfamily uint8\+\_\+t BLUETOOTH\+\_\+\+INTERFACE\+\_\+send\+\_\+data (\begin{DoxyParamCaption}\item[{char $\ast$}]{buffer,  }\item[{\mbox{\hyperlink{struct_sensor___readings___struct}{Sensor\+\_\+\+Readings\+\_\+\+Struct}}}]{readings }\end{DoxyParamCaption})}
+
+
+
+Prepares command with sensor data according to rules of protocol. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buffer} & Pointer to char array that will be filled with data -\/ should be at least 12 characters long \\
+\hline
+{\em readings} & struct with readings from sensors \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+MAKROS\+: BLUETOOTH\+\_\+\+COMMAND\+\_\+\+OK if successful, BLUETOOTH\+\_\+\+COMMAND\+\_\+\+ERROR otherwise 
+\end{DoxyReturn}
+
+
+Definition at line 162 of file bluetooth\+\_\+interface.\+c.
+

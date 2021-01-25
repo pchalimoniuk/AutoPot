@@ -1,0 +1,458 @@
+\hypertarget{main_8c}{}\doxysection{Core/\+Src/main.c File Reference}
+\label{main_8c}\index{Core/Src/main.c@{Core/Src/main.c}}
+
+
+\+: Main program body  
+
+
+{\ttfamily \#include \char`\"{}main.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}bluetooth\+\_\+interface.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}soil\+\_\+moisture\+\_\+sensor.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}water\+\_\+pump.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}RTC\+\_\+alarm.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}flags.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}sensors\+\_\+readings.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}DHT11\+\_\+sensor.\+h\char`\"{}}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{main_8c_ab0c84c64ae0b5f5c09746ff4b9e47e8f}{WATERING\+\_\+\+TIME}}~10
+\item 
+\#define \mbox{\hyperlink{main_8c_aef65c1f674a0a44a486179b3be694946}{DAYS\+\_\+\+BETWEEN\+\_\+\+WATERING}}~1
+\item 
+\#define \mbox{\hyperlink{main_8c_a071a707c38c11a4f8f69553b8cca6e00}{DEFUALT\+\_\+\+WATER\+\_\+\+LEVEL}}~70
+\item 
+\#define \mbox{\hyperlink{main_8c_ae333e98d40f3f50324a7fc906d17d2e2}{TIMER\+\_\+\+FREQ\+\_\+\+MHZ}}~21
+\item 
+\#define \mbox{\hyperlink{main_8c_a5f32a4680c37d08154fa6d3288633b11}{TIMER\+\_\+\+FREQ\+\_\+\+KHZ}}~21000
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{main_8c_a70af21c671abfcc773614a9a4f63d920}{System\+Clock\+\_\+\+Config}} (void)
+\begin{DoxyCompactList}\small\item\em System Clock Configuration. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8c_ac2085bf2e2915745ccdf044eca22c776}{handle\+\_\+measurement}} (void)
+\begin{DoxyCompactList}\small\item\em Wrapper function to handle measurement logic. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8c_ad673a78792ca385054ccc8f3f7b847c2}{handle\+\_\+bluetooth}} (void)
+\begin{DoxyCompactList}\small\item\em Wrapper function to handle bluetooth logic. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8c_a7d21aa04742c116b7a611826001b1eda}{handle\+\_\+wattering}} (void)
+\begin{DoxyCompactList}\small\item\em Wrapper function to handle wattering logic. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{main_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}} (void)
+\begin{DoxyCompactList}\small\item\em The application entry point. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8c_af20a88180db1113be1e89266917d148b}{HAL\+\_\+\+ADC\+\_\+\+Conv\+Cplt\+Callback}} (ADC\+\_\+\+Handle\+Type\+Def $\ast$hadc)
+\begin{DoxyCompactList}\small\item\em ADC Handler callback for soil moisture sensor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8c_a11aeff83fd498cddbed3bcddcf017e0a}{HAL\+\_\+\+RTC\+\_\+\+Alarm\+AEvent\+Callback}} (RTC\+\_\+\+Handle\+Type\+Def $\ast$\mbox{\hyperlink{main_8c_aa0c7fca836406ade332e1e3f1039d8ab}{hrtc}})
+\begin{DoxyCompactList}\small\item\em RTC Alarm callback setting measurenet flag. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8c_a8a3b0ad512a6e6c6157440b68d395eac}{HAL\+\_\+\+TIM\+\_\+\+Period\+Elapsed\+Callback}} (TIM\+\_\+\+Handle\+Type\+Def $\ast$htim)
+\begin{DoxyCompactList}\small\item\em TIM callback controlling Water Pump inner counter. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8c_ae494a9643f29b87d6d81e5264e60e57b}{HAL\+\_\+\+UART\+\_\+\+Rx\+Cplt\+Callback}} (UART\+\_\+\+Handle\+Type\+Def $\ast$huart)
+\begin{DoxyCompactList}\small\item\em HAL\+\_\+\+UART callback triggering bluetooth event. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8c_a1730ffe1e560465665eb47d9264826f9}{Error\+\_\+\+Handler}} (void)
+\begin{DoxyCompactList}\small\item\em This function is executed in case of error occurrence. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+ADC\+\_\+\+Handle\+Type\+Def \mbox{\hyperlink{main_8c_a22b804736f5648d52f639b2647d4ed13}{hadc1}}
+\item 
+DMA\+\_\+\+Handle\+Type\+Def \mbox{\hyperlink{main_8c_a1c126854bb1813d31ab4776b21dcc51f}{hdma\+\_\+adc1}}
+\item 
+RTC\+\_\+\+Handle\+Type\+Def \mbox{\hyperlink{main_8c_aa0c7fca836406ade332e1e3f1039d8ab}{hrtc}}
+\item 
+TIM\+\_\+\+Handle\+Type\+Def \mbox{\hyperlink{main_8c_a2c80fd5510e2990a59a5c90d745c716c}{htim2}}
+\item 
+TIM\+\_\+\+Handle\+Type\+Def \mbox{\hyperlink{main_8c_aac3d2c59ee0e3bbae1b99529a154eb62}{htim3}}
+\item 
+UART\+\_\+\+Handle\+Type\+Def \mbox{\hyperlink{main_8c_aa9479c261d65eecedd3d9582f7f0f89c}{huart2}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{main_8c_a9bc961a364bd9548ed569b0abf34ea78}{command\+\_\+buffer}} \mbox{[}18\mbox{]}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{main_8c_a4dcd3904f197c09007c3e543b019d974}{out\+\_\+buffer}} \mbox{[}20\mbox{]}
+\item 
+\mbox{\hyperlink{struct_flags___struct}{Flags\+\_\+\+Struct}} \mbox{\hyperlink{main_8c_a710f2654bd0828d357e8439786d58a09}{flags}} = \{0\}
+\item 
+\mbox{\hyperlink{struct_sensor___readings___struct}{Sensor\+\_\+\+Readings\+\_\+\+Struct}} \mbox{\hyperlink{main_8c_a394e698f0ee9ec68aaaac1c4d1f570e4}{sensor\+\_\+readings}} = \{0\}
+\item 
+\mbox{\hyperlink{struct_water___pump___struct}{Water\+\_\+\+Pump\+\_\+\+Struct}} \mbox{\hyperlink{main_8c_a2649a4098c074e58183be8281e75b4a4}{pump}}
+\item 
+\mbox{\hyperlink{struct_a_l_a_r_m___r_t_c__struct}{ALARM\+\_\+\+RTC\+\_\+struct}} \mbox{\hyperlink{main_8c_aea448f89c6b968930abf2ac62031add3}{alarm\+\_\+struct}}
+\item 
+\mbox{\hyperlink{struct_d_h_t___config}{DHT\+\_\+\+Config}} \mbox{\hyperlink{main_8c_a118f09ba98da64a251fffa4321f9617e}{config}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\+: Main program body 
+
+\begin{DoxyAttention}{Attention}
+
+\end{DoxyAttention}
+\doxysubsubsection*{\begin{center}\copyright{} Copyright (c) 2020 STMicroelectronics. All rights reserved.\end{center} }
+
+This software component is licensed by ST under BSD 3-\/Clause license, the \char`\"{}\+License\char`\"{}; You may not use this file except in compliance with the License. You may obtain a copy of the License at\+: opensource.\+org/licenses/\+BSD-\/3-\/\+Clause 
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{main_8c_aef65c1f674a0a44a486179b3be694946}\label{main_8c_aef65c1f674a0a44a486179b3be694946}} 
+\index{main.c@{main.c}!DAYS\_BETWEEN\_WATERING@{DAYS\_BETWEEN\_WATERING}}
+\index{DAYS\_BETWEEN\_WATERING@{DAYS\_BETWEEN\_WATERING}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{DAYS\_BETWEEN\_WATERING}{DAYS\_BETWEEN\_WATERING}}
+{\footnotesize\ttfamily \#define DAYS\+\_\+\+BETWEEN\+\_\+\+WATERING~1}
+
+
+
+Definition at line 42 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a071a707c38c11a4f8f69553b8cca6e00}\label{main_8c_a071a707c38c11a4f8f69553b8cca6e00}} 
+\index{main.c@{main.c}!DEFUALT\_WATER\_LEVEL@{DEFUALT\_WATER\_LEVEL}}
+\index{DEFUALT\_WATER\_LEVEL@{DEFUALT\_WATER\_LEVEL}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{DEFUALT\_WATER\_LEVEL}{DEFUALT\_WATER\_LEVEL}}
+{\footnotesize\ttfamily \#define DEFUALT\+\_\+\+WATER\+\_\+\+LEVEL~70}
+
+
+
+Definition at line 43 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a5f32a4680c37d08154fa6d3288633b11}\label{main_8c_a5f32a4680c37d08154fa6d3288633b11}} 
+\index{main.c@{main.c}!TIMER\_FREQ\_KHZ@{TIMER\_FREQ\_KHZ}}
+\index{TIMER\_FREQ\_KHZ@{TIMER\_FREQ\_KHZ}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{TIMER\_FREQ\_KHZ}{TIMER\_FREQ\_KHZ}}
+{\footnotesize\ttfamily \#define TIMER\+\_\+\+FREQ\+\_\+\+KHZ~21000}
+
+
+
+Definition at line 45 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_ae333e98d40f3f50324a7fc906d17d2e2}\label{main_8c_ae333e98d40f3f50324a7fc906d17d2e2}} 
+\index{main.c@{main.c}!TIMER\_FREQ\_MHZ@{TIMER\_FREQ\_MHZ}}
+\index{TIMER\_FREQ\_MHZ@{TIMER\_FREQ\_MHZ}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{TIMER\_FREQ\_MHZ}{TIMER\_FREQ\_MHZ}}
+{\footnotesize\ttfamily \#define TIMER\+\_\+\+FREQ\+\_\+\+MHZ~21}
+
+
+
+Definition at line 44 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_ab0c84c64ae0b5f5c09746ff4b9e47e8f}\label{main_8c_ab0c84c64ae0b5f5c09746ff4b9e47e8f}} 
+\index{main.c@{main.c}!WATERING\_TIME@{WATERING\_TIME}}
+\index{WATERING\_TIME@{WATERING\_TIME}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{WATERING\_TIME}{WATERING\_TIME}}
+{\footnotesize\ttfamily \#define WATERING\+\_\+\+TIME~10}
+
+
+
+Definition at line 41 of file main.\+c.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{main_8c_a1730ffe1e560465665eb47d9264826f9}\label{main_8c_a1730ffe1e560465665eb47d9264826f9}} 
+\index{main.c@{main.c}!Error\_Handler@{Error\_Handler}}
+\index{Error\_Handler@{Error\_Handler}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{Error\_Handler()}{Error\_Handler()}}
+{\footnotesize\ttfamily void Error\+\_\+\+Handler (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+This function is executed in case of error occurrence. 
+
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+
+
+Definition at line 498 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_af20a88180db1113be1e89266917d148b}\label{main_8c_af20a88180db1113be1e89266917d148b}} 
+\index{main.c@{main.c}!HAL\_ADC\_ConvCpltCallback@{HAL\_ADC\_ConvCpltCallback}}
+\index{HAL\_ADC\_ConvCpltCallback@{HAL\_ADC\_ConvCpltCallback}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{HAL\_ADC\_ConvCpltCallback()}{HAL\_ADC\_ConvCpltCallback()}}
+{\footnotesize\ttfamily void HAL\+\_\+\+ADC\+\_\+\+Conv\+Cplt\+Callback (\begin{DoxyParamCaption}\item[{ADC\+\_\+\+Handle\+Type\+Def $\ast$}]{hadc }\end{DoxyParamCaption})}
+
+
+
+ADC Handler callback for soil moisture sensor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em hadc} & ADC Handler \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 456 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a11aeff83fd498cddbed3bcddcf017e0a}\label{main_8c_a11aeff83fd498cddbed3bcddcf017e0a}} 
+\index{main.c@{main.c}!HAL\_RTC\_AlarmAEventCallback@{HAL\_RTC\_AlarmAEventCallback}}
+\index{HAL\_RTC\_AlarmAEventCallback@{HAL\_RTC\_AlarmAEventCallback}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{HAL\_RTC\_AlarmAEventCallback()}{HAL\_RTC\_AlarmAEventCallback()}}
+{\footnotesize\ttfamily void HAL\+\_\+\+RTC\+\_\+\+Alarm\+AEvent\+Callback (\begin{DoxyParamCaption}\item[{RTC\+\_\+\+Handle\+Type\+Def $\ast$}]{hrtc }\end{DoxyParamCaption})}
+
+
+
+RTC Alarm callback setting measurenet flag. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em hrtc} & RTC Handler \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 468 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a8a3b0ad512a6e6c6157440b68d395eac}\label{main_8c_a8a3b0ad512a6e6c6157440b68d395eac}} 
+\index{main.c@{main.c}!HAL\_TIM\_PeriodElapsedCallback@{HAL\_TIM\_PeriodElapsedCallback}}
+\index{HAL\_TIM\_PeriodElapsedCallback@{HAL\_TIM\_PeriodElapsedCallback}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{HAL\_TIM\_PeriodElapsedCallback()}{HAL\_TIM\_PeriodElapsedCallback()}}
+{\footnotesize\ttfamily void HAL\+\_\+\+TIM\+\_\+\+Period\+Elapsed\+Callback (\begin{DoxyParamCaption}\item[{TIM\+\_\+\+Handle\+Type\+Def $\ast$}]{htim }\end{DoxyParamCaption})}
+
+
+
+TIM callback controlling Water Pump inner counter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em htim} & TIM Handler \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 475 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_ae494a9643f29b87d6d81e5264e60e57b}\label{main_8c_ae494a9643f29b87d6d81e5264e60e57b}} 
+\index{main.c@{main.c}!HAL\_UART\_RxCpltCallback@{HAL\_UART\_RxCpltCallback}}
+\index{HAL\_UART\_RxCpltCallback@{HAL\_UART\_RxCpltCallback}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{HAL\_UART\_RxCpltCallback()}{HAL\_UART\_RxCpltCallback()}}
+{\footnotesize\ttfamily void HAL\+\_\+\+UART\+\_\+\+Rx\+Cplt\+Callback (\begin{DoxyParamCaption}\item[{UART\+\_\+\+Handle\+Type\+Def $\ast$}]{huart }\end{DoxyParamCaption})}
+
+
+
+HAL\+\_\+\+UART callback triggering bluetooth event. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em huart} & UART Handler \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 486 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_ad673a78792ca385054ccc8f3f7b847c2}\label{main_8c_ad673a78792ca385054ccc8f3f7b847c2}} 
+\index{main.c@{main.c}!handle\_bluetooth@{handle\_bluetooth}}
+\index{handle\_bluetooth@{handle\_bluetooth}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{handle\_bluetooth()}{handle\_bluetooth()}}
+{\footnotesize\ttfamily void handle\+\_\+bluetooth (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Wrapper function to handle bluetooth logic. 
+
+
+
+Definition at line 426 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_ac2085bf2e2915745ccdf044eca22c776}\label{main_8c_ac2085bf2e2915745ccdf044eca22c776}} 
+\index{main.c@{main.c}!handle\_measurement@{handle\_measurement}}
+\index{handle\_measurement@{handle\_measurement}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{handle\_measurement()}{handle\_measurement()}}
+{\footnotesize\ttfamily void handle\+\_\+measurement (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Wrapper function to handle measurement logic. 
+
+
+
+Definition at line 390 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a7d21aa04742c116b7a611826001b1eda}\label{main_8c_a7d21aa04742c116b7a611826001b1eda}} 
+\index{main.c@{main.c}!handle\_wattering@{handle\_wattering}}
+\index{handle\_wattering@{handle\_wattering}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{handle\_wattering()}{handle\_wattering()}}
+{\footnotesize\ttfamily void handle\+\_\+wattering (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Wrapper function to handle wattering logic. 
+
+
+
+Definition at line 443 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{main_8c_a840291bc02cba5474a4cb46a9b9566fe}} 
+\index{main.c@{main.c}!main@{main}}
+\index{main@{main}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+The application entry point. 
+
+
+\begin{DoxyRetVals}{Return values}
+{\em int} & \\
+\hline
+\end{DoxyRetVals}
+Initalize water pump
+
+Definition at line 92 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a70af21c671abfcc773614a9a4f63d920}\label{main_8c_a70af21c671abfcc773614a9a4f63d920}} 
+\index{main.c@{main.c}!SystemClock\_Config@{SystemClock\_Config}}
+\index{SystemClock\_Config@{SystemClock\_Config}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{SystemClock\_Config()}{SystemClock\_Config()}}
+{\footnotesize\ttfamily void System\+Clock\+\_\+\+Config (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+System Clock Configuration. 
+
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+Configure the main internal regulator output voltage
+
+Initializes the RCC Oscillators according to the specified parameters in the RCC\+\_\+\+Osc\+Init\+Type\+Def structure.
+
+Initializes the CPU, AHB and APB buses clocks
+
+Definition at line 169 of file main.\+c.
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{main_8c_aea448f89c6b968930abf2ac62031add3}\label{main_8c_aea448f89c6b968930abf2ac62031add3}} 
+\index{main.c@{main.c}!alarm\_struct@{alarm\_struct}}
+\index{alarm\_struct@{alarm\_struct}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{alarm\_struct}{alarm\_struct}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_a_l_a_r_m___r_t_c__struct}{ALARM\+\_\+\+RTC\+\_\+struct}} alarm\+\_\+struct}
+
+Struct holding alarm setting . 
+
+Definition at line 81 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a9bc961a364bd9548ed569b0abf34ea78}\label{main_8c_a9bc961a364bd9548ed569b0abf34ea78}} 
+\index{main.c@{main.c}!command\_buffer@{command\_buffer}}
+\index{command\_buffer@{command\_buffer}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{command\_buffer}{command\_buffer}}
+{\footnotesize\ttfamily uint8\+\_\+t command\+\_\+buffer\mbox{[}18\mbox{]}}
+
+Buffer for incoming bluetooth comand. 
+
+Definition at line 76 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a118f09ba98da64a251fffa4321f9617e}\label{main_8c_a118f09ba98da64a251fffa4321f9617e}} 
+\index{main.c@{main.c}!config@{config}}
+\index{config@{config}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{config}{config}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_d_h_t___config}{DHT\+\_\+\+Config}} config}
+
+Struct holding DHT11 settings. 
+
+Definition at line 85 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a710f2654bd0828d357e8439786d58a09}\label{main_8c_a710f2654bd0828d357e8439786d58a09}} 
+\index{main.c@{main.c}!flags@{flags}}
+\index{flags@{flags}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{flags}{flags}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_flags___struct}{Flags\+\_\+\+Struct}} flags = \{0\}}
+
+Struct holding flags. 
+
+Definition at line 78 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a22b804736f5648d52f639b2647d4ed13}\label{main_8c_a22b804736f5648d52f639b2647d4ed13}} 
+\index{main.c@{main.c}!hadc1@{hadc1}}
+\index{hadc1@{hadc1}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{hadc1}{hadc1}}
+{\footnotesize\ttfamily ADC\+\_\+\+Handle\+Type\+Def hadc1}
+
+Handler to ADC used by soil moisture sensor. 
+
+Definition at line 53 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a1c126854bb1813d31ab4776b21dcc51f}\label{main_8c_a1c126854bb1813d31ab4776b21dcc51f}} 
+\index{main.c@{main.c}!hdma\_adc1@{hdma\_adc1}}
+\index{hdma\_adc1@{hdma\_adc1}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{hdma\_adc1}{hdma\_adc1}}
+{\footnotesize\ttfamily DMA\+\_\+\+Handle\+Type\+Def hdma\+\_\+adc1}
+
+Handler to ADC DMA used by soil moisture sensor. 
+
+Definition at line 54 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_aa0c7fca836406ade332e1e3f1039d8ab}\label{main_8c_aa0c7fca836406ade332e1e3f1039d8ab}} 
+\index{main.c@{main.c}!hrtc@{hrtc}}
+\index{hrtc@{hrtc}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{hrtc}{hrtc}}
+{\footnotesize\ttfamily RTC\+\_\+\+Handle\+Type\+Def hrtc}
+
+Handler to RTC clock. 
+
+Definition at line 55 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a2c80fd5510e2990a59a5c90d745c716c}\label{main_8c_a2c80fd5510e2990a59a5c90d745c716c}} 
+\index{main.c@{main.c}!htim2@{htim2}}
+\index{htim2@{htim2}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{htim2}{htim2}}
+{\footnotesize\ttfamily TIM\+\_\+\+Handle\+Type\+Def htim2}
+
+Handler to TIM2 used by pump. 
+
+Definition at line 56 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_aac3d2c59ee0e3bbae1b99529a154eb62}\label{main_8c_aac3d2c59ee0e3bbae1b99529a154eb62}} 
+\index{main.c@{main.c}!htim3@{htim3}}
+\index{htim3@{htim3}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{htim3}{htim3}}
+{\footnotesize\ttfamily TIM\+\_\+\+Handle\+Type\+Def htim3}
+
+Handler to TIM3 used by DHT11 sensor. 
+
+Definition at line 57 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_aa9479c261d65eecedd3d9582f7f0f89c}\label{main_8c_aa9479c261d65eecedd3d9582f7f0f89c}} 
+\index{main.c@{main.c}!huart2@{huart2}}
+\index{huart2@{huart2}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{huart2}{huart2}}
+{\footnotesize\ttfamily UART\+\_\+\+Handle\+Type\+Def huart2}
+
+Handler to UART used by HC-\/05 Bluetooth module. 
+
+Definition at line 58 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a4dcd3904f197c09007c3e543b019d974}\label{main_8c_a4dcd3904f197c09007c3e543b019d974}} 
+\index{main.c@{main.c}!out\_buffer@{out\_buffer}}
+\index{out\_buffer@{out\_buffer}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{out\_buffer}{out\_buffer}}
+{\footnotesize\ttfamily uint8\+\_\+t out\+\_\+buffer\mbox{[}20\mbox{]}}
+
+Out buffer for sending data over bluetooth. 
+
+Definition at line 77 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a2649a4098c074e58183be8281e75b4a4}\label{main_8c_a2649a4098c074e58183be8281e75b4a4}} 
+\index{main.c@{main.c}!pump@{pump}}
+\index{pump@{pump}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{pump}{pump}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_water___pump___struct}{Water\+\_\+\+Pump\+\_\+\+Struct}} pump}
+
+Struct controling pump. 
+
+Definition at line 80 of file main.\+c.
+
+\mbox{\Hypertarget{main_8c_a394e698f0ee9ec68aaaac1c4d1f570e4}\label{main_8c_a394e698f0ee9ec68aaaac1c4d1f570e4}} 
+\index{main.c@{main.c}!sensor\_readings@{sensor\_readings}}
+\index{sensor\_readings@{sensor\_readings}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{sensor\_readings}{sensor\_readings}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_sensor___readings___struct}{Sensor\+\_\+\+Readings\+\_\+\+Struct}} sensor\+\_\+readings = \{0\}}
+
+Struct holding all sensor readings. 
+
+Definition at line 79 of file main.\+c.
+
