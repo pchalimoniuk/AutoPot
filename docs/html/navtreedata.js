@@ -25,6 +25,11 @@
 var NAVTREE =
 [
   [ "AutoPot", "index.html", [
+    [ "Comunicating with board using BlueTooth", "bluetooth.html", null ],
+    [ "Controling the pump", "pump.html", null ],
+    [ "Measuremnt parameters", "measure_parameters.html", null ],
+    [ "Performing measurement", "measurement.html", null ],
+    [ "Demo app for Android", "demo_app.html", null ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Structure Index", "classes.html", null ],

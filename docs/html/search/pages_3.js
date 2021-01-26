@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['performing_20measurement_305',['Performing measurement',['../measurement.html',1,'']]]
+  ['measuremnt_20parameters_302',['Measuremnt parameters',['../measure_parameters.html',1,'']]]
 ];
