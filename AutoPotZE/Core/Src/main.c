@@ -22,56 +22,67 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <string.h>
-#include <stdio.h>
-#include <soil_moisture_sensor.h>
-#include <temperature_sensor.h>
+#include "bluetooth_interface.h"
+#include "soil_moisture_sensor.h"
+#include "water_pump.h"
+#include "RTC_alarm.h"
+#include "flags.h"
+#include "sensors_readings.h"
+#include "DHT11_sensor.h"
+//#include "temperature_sensor.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define WATERING_TIME  10 /**<Default watering time **/
+#define DAYS_BETWEEN_WATERING 1 /**<Default  period between measurements**/
+#define DEFUALT_WATER_LEVEL 30 /**<Default watering level that triggers watering **/
+#define TIMER_FREQ_MHZ 21 /**<TIMER2 freq in MHZ**/
+#define TIMER_FREQ_KHZ 21000 /**<TIMER3 freq in kHz**/
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-ADC_HandleTypeDef hadc1;
-
-RTC_HandleTypeDef hrtc;
-
-TIM_HandleTypeDef htim1;
-
-UART_HandleTypeDef huart4;
-UART_HandleTypeDef huart2;
-
+ADC_HandleTypeDef hadc1;	/**<Handler to ADC used by soil moisture sensor.**/
+DMA_HandleTypeDef hdma_adc1; /**<Handler to ADC DMA used by soil moisture sensor.**/
+RTC_HandleTypeDef hrtc; /**<Handler to RTC clock.**/
+TIM_HandleTypeDef htim2; /**<Handler to TIM2 used by pump.**/
+TIM_HandleTypeDef htim3; /**<Handler to TIM3 used by DHT11 sensor.**/
+UART_HandleTypeDef huart2; /**<Handler to UART used by HC-05 Bluetooth module.**/
 /* USER CODE BEGIN PV */
-uint16_t raw;
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_DMA_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_USART2_UART_Init(void);
-static void MX_RTC_Init(void);
-static void MX_TIM1_Init(void);
-static void MX_UART4_Init(void);
 /* USER CODE BEGIN PFP */
-
+void handle_measurement(void);
+void handle_bluetooth(void);
+void handle_wattering(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+	uint8_t command_buffer[18]; /**<Buffer for incoming bluetooth comand.**/
+	uint8_t out_buffer[20]; /**<Out buffer for sending data over bluetooth.**/
+	Flags_Struct flags = {0}; /**<Struct holding flags.**/
+	Sensor_Readings_Struct sensor_readings = {0}; /**<Struct holding all sensor readings.**/
+	Water_Pump_Struct pump; /**<Struct controling pump.**/
+	ALARM_RTC_struct alarm_struct; /**<Struct holding alarm setting .**/
+	RTC_TimeTypeDef sTime = { 0 };
+	RTC_DateTypeDef sDate = { 0 };
+	RTC_AlarmTypeDef sAlarm = { 0 };
+	DHT_Config config; /**<Struct holding DHT11 settings.**/
 /* USER CODE END 0 */
 
 /**
@@ -81,14 +92,6 @@ static void MX_UART4_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	char msg[11];
-	float soil_moisture = 100.0f;
-	float RH = 0.0f;
-	float TM = 0.0f;
-	uint16_t data=0;
-	DHT_Data DHT11_Data = {0};
-	float Temperature, Humidity;
-
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -97,45 +100,67 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
   /* USER CODE END Init */
 
   /* Configure the system clock */
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_ADC1_Init();
   MX_USART2_UART_Init();
-  MX_RTC_Init();
-  MX_TIM1_Init();
-  MX_UART4_Init();
   /* USER CODE BEGIN 2 */
 
+  /* Initialize DHT11 sensor*/
+  __HAL_RCC_TIM3_CLK_ENABLE();
+  config.htim=&htim3;
+  config.GPIO_Pin=GPIO_PIN_9;
+  config.GPIOx = GPIOC;
+  config.tim_freq = TIMER_FREQ_MHZ;
+  config.Instance= TIM3;
+
+  /*Initialize rtc and alarm */
+  alarm_struct.hrtc= &hrtc;
+  alarm_struct.alarmTypeX = RTC_ALARM_A;
+  alarm_struct.alarmTimeHour=10;
+  ALARM_RTC_init_rtc(&alarm_struct);
+  HAL_RTC_GetTime(alarm_struct.hrtc, &sTime, RTC_FORMAT_BIN);
+  HAL_RTC_GetDate(alarm_struct.hrtc, &sDate, RTC_FORMAT_BIN);
+  ALARM_RTC_set_alarm(&alarm_struct);
+  alarm_struct.wateringPeriod=DAYS_BETWEEN_WATERING;
+
+  /** Initalize water pump */
+  __HAL_RCC_TIM2_CLK_ENABLE();
+  sensor_readings.soilMoisturePercent = 100;
+  WATER_PUMP_set_tim(&pump, &htim2);
+  WATER_PUMP_set_GPIO_port(&pump,GPIOF, GPIO_PIN_7);
+  WATER_PUMP_set_water_level(&pump,DEFUALT_WATER_LEVEL);
+  WATER_PUMP_set_tim_freq(&pump, TIMER_FREQ_KHZ);
+  WATER_PUMP_set_timer_instance(&pump, TIM2);
+  WATER_PUMP_set_watering_time(&pump, WATERING_TIME);
+  WATER_PUMP_init(&pump);
+  WATER_PUMP_start_watering(&pump);
+  WATER_PUMP_stop_watering(&pump);
+  /*Prepare to recive command over bluetooth*/
+  HAL_UART_Receive_IT(&huart2, command_buffer, sizeof(command_buffer));
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
-	  /* USER CODE END WHILE */
-	 //	  get_data_from_sensor(&DHT11_Data, GPIOA, GPIO_PIN_1);
-	 //	  	  Temperature = DHT11_Data.temperature;
-	 //	  	  Humidity = DHT11_Data.humidity;
-	 //	  	  HAL_Delay(300);
-	 //	  	  sprintf(msg, "%f\r\n", Temperature);
-	 //	  	  HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
-	 	  	  read_moisture_from_sensor_raw(&hadc1, HAL_MAX_DELAY, &data);
-	 	  	  sprintf(msg,"%u\r\n", data);
-	 	  	  HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
-	 	  	  HAL_Delay(100);
+    while (1)
+    {
+    /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
-  }
+    	handle_bluetooth();
+    	handle_measurement();
+    	handle_wattering();
+    }
   /* USER CODE END 3 */
 }
 
@@ -156,12 +181,17 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_LSI;
-  RCC_OscInitStruct.LSEState = RCC_LSE_OFF;
-  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI|RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_BYPASS;
+  RCC_OscInitStruct.LSEState = RCC_LSE_ON;
   RCC_OscInitStruct.LSIState = RCC_LSI_ON;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLM = 4;
+  RCC_OscInitStruct.PLL.PLLN = 168;
+  RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
+  RCC_OscInitStruct.PLL.PLLQ = 7;
+  RCC_OscInitStruct.PLL.PLLR = 2;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -170,17 +200,18 @@ void SystemClock_Config(void)
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV4;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
   {
     Error_Handler();
   }
-  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_RTC;
+  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_RTC|RCC_PERIPHCLK_CLK48;
   PeriphClkInitStruct.RTCClockSelection = RCC_RTCCLKSOURCE_LSI;
+  PeriphClkInitStruct.Clk48ClockSelection = RCC_CLK48CLKSOURCE_PLLQ;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -224,7 +255,7 @@ static void MX_ADC1_Init(void)
   }
   /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
   */
-  sConfig.Channel = ADC_CHANNEL_9;
+  sConfig.Channel = ADC_CHANNEL_1;
   sConfig.Rank = 1;
   sConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
@@ -234,172 +265,6 @@ static void MX_ADC1_Init(void)
   /* USER CODE BEGIN ADC1_Init 2 */
 
   /* USER CODE END ADC1_Init 2 */
-
-}
-
-/**
-  * @brief RTC Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_RTC_Init(void)
-{
-
-  /* USER CODE BEGIN RTC_Init 0 */
-
-  /* USER CODE END RTC_Init 0 */
-
-  RTC_TimeTypeDef sTime = {0};
-  RTC_DateTypeDef sDate = {0};
-  RTC_AlarmTypeDef sAlarm = {0};
-
-  /* USER CODE BEGIN RTC_Init 1 */
-
-  /* USER CODE END RTC_Init 1 */
-  /** Initialize RTC Only
-  */
-  hrtc.Instance = RTC;
-  hrtc.Init.HourFormat = RTC_HOURFORMAT_24;
-  hrtc.Init.AsynchPrediv = 127;
-  hrtc.Init.SynchPrediv = 255;
-  hrtc.Init.OutPut = RTC_OUTPUT_DISABLE;
-  hrtc.Init.OutPutPolarity = RTC_OUTPUT_POLARITY_HIGH;
-  hrtc.Init.OutPutType = RTC_OUTPUT_TYPE_OPENDRAIN;
-  if (HAL_RTC_Init(&hrtc) != HAL_OK)
-  {
-    Error_Handler();
-  }
-
-  /* USER CODE BEGIN Check_RTC_BKUP */
-
-  /* USER CODE END Check_RTC_BKUP */
-
-  /** Initialize RTC and set the Time and Date
-  */
-  sTime.Hours = 0x0;
-  sTime.Minutes = 0x0;
-  sTime.Seconds = 0x0;
-  sTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
-  sTime.StoreOperation = RTC_STOREOPERATION_RESET;
-  if (HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BCD) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sDate.WeekDay = RTC_WEEKDAY_MONDAY;
-  sDate.Month = RTC_MONTH_JANUARY;
-  sDate.Date = 0x1;
-  sDate.Year = 0x0;
-
-  if (HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BCD) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /** Enable the Alarm A
-  */
-  sAlarm.AlarmTime.Hours = 0x0;
-  sAlarm.AlarmTime.Minutes = 0x0;
-  sAlarm.AlarmTime.Seconds = 0x0;
-  sAlarm.AlarmTime.SubSeconds = 0x0;
-  sAlarm.AlarmTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
-  sAlarm.AlarmTime.StoreOperation = RTC_STOREOPERATION_RESET;
-  sAlarm.AlarmMask = RTC_ALARMMASK_NONE;
-  sAlarm.AlarmSubSecondMask = RTC_ALARMSUBSECONDMASK_ALL;
-  sAlarm.AlarmDateWeekDaySel = RTC_ALARMDATEWEEKDAYSEL_DATE;
-  sAlarm.AlarmDateWeekDay = 0x1;
-  sAlarm.Alarm = RTC_ALARM_A;
-  if (HAL_RTC_SetAlarm(&hrtc, &sAlarm, RTC_FORMAT_BCD) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /** Enable the TimeStamp
-  */
-  if (HAL_RTCEx_SetTimeStamp(&hrtc, RTC_TIMESTAMPEDGE_RISING, RTC_TIMESTAMPPIN_POS1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN RTC_Init 2 */
-
-  /* USER CODE END RTC_Init 2 */
-
-}
-
-/**
-  * @brief TIM1 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_TIM1_Init(void)
-{
-
-  /* USER CODE BEGIN TIM1_Init 0 */
-
-  /* USER CODE END TIM1_Init 0 */
-
-  TIM_SlaveConfigTypeDef sSlaveConfig = {0};
-  TIM_MasterConfigTypeDef sMasterConfig = {0};
-
-  /* USER CODE BEGIN TIM1_Init 1 */
-
-  /* USER CODE END TIM1_Init 1 */
-  htim1.Instance = TIM1;
-  htim1.Init.Prescaler = 0;
-  htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim1.Init.Period = 65535;
-  htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim1.Init.RepetitionCounter = 0;
-  htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  if (HAL_TIM_Base_Init(&htim1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sSlaveConfig.SlaveMode = TIM_SLAVEMODE_EXTERNAL1;
-  sSlaveConfig.InputTrigger = TIM_TS_ITR0;
-  if (HAL_TIM_SlaveConfigSynchro(&htim1, &sSlaveConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
-  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim1, &sMasterConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN TIM1_Init 2 */
-
-  /* USER CODE END TIM1_Init 2 */
-
-}
-
-/**
-  * @brief UART4 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_UART4_Init(void)
-{
-
-  /* USER CODE BEGIN UART4_Init 0 */
-
-  /* USER CODE END UART4_Init 0 */
-
-  /* USER CODE BEGIN UART4_Init 1 */
-
-  /* USER CODE END UART4_Init 1 */
-  huart4.Instance = UART4;
-  huart4.Init.BaudRate = 115200;
-  huart4.Init.WordLength = UART_WORDLENGTH_8B;
-  huart4.Init.StopBits = UART_STOPBITS_1;
-  huart4.Init.Parity = UART_PARITY_NONE;
-  huart4.Init.Mode = UART_MODE_TX_RX;
-  huart4.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  huart4.Init.OverSampling = UART_OVERSAMPLING_16;
-  if (HAL_UART_Init(&huart4) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN UART4_Init 2 */
-
-  /* USER CODE END UART4_Init 2 */
 
 }
 
@@ -431,8 +296,25 @@ static void MX_USART2_UART_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN USART2_Init 2 */
-
+  HAL_NVIC_SetPriority(USART2_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(USART2_IRQn);
   /* USER CODE END USART2_Init 2 */
+
+}
+
+/**
+  * Enable DMA controller clock
+  */
+static void MX_DMA_Init(void)
+{
+
+  /* DMA controller clock enable */
+  __HAL_RCC_DMA2_CLK_ENABLE();
+
+  /* DMA interrupt init */
+  /* DMA2_Stream0_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA2_Stream0_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA2_Stream0_IRQn);
 
 }
 
@@ -447,32 +329,166 @@ static void MX_GPIO_Init(void)
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOF_CLK_ENABLE();
+  __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
+  __HAL_RCC_GPIOD_CLK_ENABLE();
+  __HAL_RCC_GPIOG_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOF, GPIO_PIN_7, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOB, LD1_Pin|LD3_Pin|LD2_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin : PC15 */
-  GPIO_InitStruct.Pin = GPIO_PIN_15;
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(USB_PowerSwitchOn_GPIO_Port, USB_PowerSwitchOn_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_11, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin : PF7 */
+  GPIO_InitStruct.Pin = GPIO_PIN_7;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : LD1_Pin LD3_Pin LD2_Pin */
+  GPIO_InitStruct.Pin = LD1_Pin|LD3_Pin|LD2_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : USB_PowerSwitchOn_Pin */
+  GPIO_InitStruct.Pin = USB_PowerSwitchOn_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(USB_PowerSwitchOn_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : USB_OverCurrent_Pin PG10 */
+  GPIO_InitStruct.Pin = USB_OverCurrent_Pin|GPIO_PIN_10;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PC11 */
+  GPIO_InitStruct.Pin = GPIO_PIN_11;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PA1 */
-  GPIO_InitStruct.Pin = GPIO_PIN_1;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
 }
 
 /* USER CODE BEGIN 4 */
+
+/**@brief Wrapper function to handle measurement logic
+ *
+ */
+void handle_measurement(void) {
+	/* Start measurement if time has passed or user requested */
+	if (1 == flags.alarm || flags.refreshRequest) {
+		if (!start_soil_moisture_measurement(&hadc1, &hdma_adc1,
+				&sensor_readings.soilMoistureRaw)) {
+			Error_Handler();
+		}
+		flags.alarm = 0;
+	}
+	if(flags.soilMeasurementComplete){
+  		sensor_readings.soilMoisturePercent = get_normalized_moisture_level(sensor_readings.soilMoistureRaw);
+  		flags.soilMeasurementComplete = 0;
+  		if(DHT11_get_data_from_sensor(&sensor_readings.dht11SensorData,&config) != DHT11_OK){
+  			sensor_readings.dht11SensorData.Humidity = 0;  /* If measurement was faulty alarm user*/
+  			sensor_readings.dht11SensorData.Temperature = 0;
+  		}
+ 		 if(flags.refreshRequest){ /*Send data if user made a request*/
+ 			 BLUETOOTH_INTERFACE_send_data((char *)out_buffer, sensor_readings);
+ 			 HAL_UART_Transmit(&huart2, out_buffer,sizeof(out_buffer),HAL_MAX_DELAY);
+ 			__HAL_UART_FLUSH_DRREGISTER(&huart2);
+ 			 flags.refreshRequest = 0;
+ 			 return;
+ 		 }
+ 	/*Start waterinng if water level is below set level */
+ 	 if(sensor_readings.soilMoisturePercent < pump.water_level){
+ 			WATER_PUMP_start_watering(&pump);
+ 	 	}
+ 	 /*Start next alarm*/
+  		ALARM_RTC_set_alarm(&alarm_struct);
+
+	}
+}
+
+/**@brief Wrapper function to handle bluetooth logic
+ *
+ */
+void handle_bluetooth(void) {
+	if (flags.bluetoothEvent == 1) {
+		if (BLUETOOTH_INTERFACE_interpret_command((char*) command_buffer, &pump, &flags,
+				&alarm_struct) == BLUETOOTH_COMMAND_OK) {
+			__NOP();
+		}
+		 HAL_NVIC_ClearPendingIRQ(USART2_IRQn);
+		__HAL_UART_FLUSH_DRREGISTER(&huart2);
+		 HAL_UART_Receive_IT(&huart2, command_buffer, sizeof(command_buffer));
+		flags.bluetoothEvent = 0;
+	}
+
+}
+/**@brief Wrapper function to handle wattering logic
+ *
+ */
+void handle_wattering(void) {
+	/*Stop watering if complete */
+	if (flags.wateringComplete) {
+		if(WATER_PUMP_stop_watering(&pump)){
+			flags.wateringComplete = 0;
+		}
+	}
+
+}
+/**
+ * @brief ADC Handler callback for soil moisture sensor
+ * @param hadc ADC Handler
+ */
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
+	if(!stop_soil_measurement(&hadc1)){
+		Error_Handler();
+	}
+		flags.soilMeasurementComplete = 1;
+
+
+}
+/**
+ * @brief RTC Alarm callback setting measurenet flag
+ * @param hrtc RTC Handler
+ */
+void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc){
+		flags.alarm = 1;
+}
+/**
+ * @brief TIM callback controlling Water Pump flag
+ * @param htim TIM Handler
+ */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+	 if (htim->Instance==TIM2)
+	 {
+		 flags.wateringComplete = 1;
+	 }
+}
+/**
+ * @brief HAL_UART callback triggering bluetooth event
+ * @param huart UART Handler
+ */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
+	if(huart->Instance == USART2){
+		flags.bluetoothEvent = 1;
+	}
+}
 
 /* USER CODE END 4 */
 
@@ -500,7 +516,7 @@ void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
-     tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+     tex: printf("Wrong parameters value: file %s on line %d\r\r\n", file, line) */
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */

@@ -1,13 +1,12 @@
-/*
- * soil_moisture_sensor.c
- *
- *  Created on: Nov 10, 2020
- *      Author: Dell
+/**
+ * @file soil_moisture_sensor.h
+ * @brief Functions related to soil moisture sensor
+ * @author Paweł Chalimoniuk
  */
 #include "soil_moisture_sensor.h"
 
  uint16_t get_normalized_moisture_level(uint16_t value){
-	return ((value*100)/4096);
+	return (100-(value*100)/4096);
  }
 
 uint8_t start_soil_moisture_measurement(ADC_HandleTypeDef* adc, DMA_HandleTypeDef* hdma_adc, uint32_t* value){

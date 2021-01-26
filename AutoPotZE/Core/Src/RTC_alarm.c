@@ -1,3 +1,9 @@
+/**
+ * @file RTC_alarm.c
+ * @brief Functions related to RTC and RTC alarm
+ * @author Paweł Chalimoniuk
+ */
+
 #include "RTC_alarm.h"
 uint8_t ALARM_RTC_get_weekday_from_macro(uint8_t weekday_macro);
 uint8_t ALARM_RTC_get_weekday_to_macro(uint8_t weekday);

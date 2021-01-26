@@ -7,6 +7,7 @@ The program allows user to controll water level of plant and watering schedule u
 - \ref pump "Controling the pump"
 - \ref measureParameters "Measuremnt parameters"
 - \ref measurement "Performing measurement"
+- \ref demoApp "Demo app for Android"
 
 \page bluetooth Comunicating with board using BlueTooth
 User can communicate with board using simple protocol. Command should follow specific format, explained below:<br/>
@@ -26,7 +27,7 @@ Board uses UART Bluetooth module with baud rate 9600
 
 \page pump Controling the pump
 User can control two meaningful aspects of pump over Bluetooth: <br/>
-Minimum water level that won't trigger pump - by default 70% soil moisture <br/>
+Minimum water level that won't trigger pump - by default 30% soil moisture <br/>
 How long watering should last - by default 10s<br/>
 See \ref bluetooth for more information.<br/>
 
@@ -41,3 +42,9 @@ Soil moisture is represented in percent ranging from 0 to 100 percent.<br/>
 To perform soil moisture call start_soil_moisture_measurement(ADC_HandleTypeDef* adc, DMA_HandleTypeDef* hdma_adc, uint32_t* value). If initilization was successful a positive integer is returned. End of measurement cause interput handler HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) to be called. <br/>
 To perform humidity and temperature of air call DHT11_get_data_from_sensor(DHT_Data *DHT_Data, DHT_Config *config). The measurement is perform in polling mode takes about 19ms. Longer measurement indicate faulty read. Funtion returns DHT_OK if measurement was successful and DHT_ERROR otherwise. <br/>
 See \ref measureParameters to get more information about data returned from sensors. <br/>
+
+\page demoApp Demo app for Android
+The demo app for Android allows to connect to board over bluetooth to check current soil and air parameters and force watering of the plant.
+\image html scandevices.png width=400px
+\image html device.png width=400px
+
