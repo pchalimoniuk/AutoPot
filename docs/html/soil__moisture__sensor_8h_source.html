@@ -85,27 +85,20 @@ $(document).ready(function(){initNavTree('soil__moisture__sensor_8h_source.html'
 <div class="title">soil_moisture_sensor.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="soil__moisture__sensor_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * soil_moisture_sensor.h</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *  Created on: Nov 10, 2020</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> *      Author: Dell</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#ifndef INC_SOIL_MOISTURE_SENSOR_H_</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define INC_SOIL_MOISTURE_SENSOR_H_</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;stdint.h&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;string.h&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;stdio.h&quot;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;stm32f4xx_hal.h&quot;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;uint16_t <a class="code" href="soil__moisture__sensor_8h.html#a382aae164e49a2400dcb7293c100721b">get_normalized_moisture_level</a>(uint16_t value);</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;uint8_t <a class="code" href="soil__moisture__sensor_8h.html#a4df5aae98fe8762e057f8f367b264fbd">start_soil_moisture_measurement</a>(ADC_HandleTypeDef* adc, DMA_HandleTypeDef* hdma_adc, uint32_t* value);</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;uint8_t <a class="code" href="soil__moisture__sensor_8h.html#a252f2269da357d2f884ad35c0749e2c5">stop_soil_measurement</a>(ADC_HandleTypeDef* adc);</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* INC_SOIL_MOISTURE_SENSOR_H_ */</span><span class="preprocessor"></span></div>
-<div class="ttc" id="asoil__moisture__sensor_8h_html_a252f2269da357d2f884ad35c0749e2c5"><div class="ttname"><a href="soil__moisture__sensor_8h.html#a252f2269da357d2f884ad35c0749e2c5">stop_soil_measurement</a></div><div class="ttdeci">uint8_t stop_soil_measurement(ADC_HandleTypeDef *adc)</div><div class="ttdef"><b>Definition:</b> <a href="soil__moisture__sensor_8c_source.html#l00023">soil_moisture_sensor.c:23</a></div></div>
-<div class="ttc" id="asoil__moisture__sensor_8h_html_a382aae164e49a2400dcb7293c100721b"><div class="ttname"><a href="soil__moisture__sensor_8h.html#a382aae164e49a2400dcb7293c100721b">get_normalized_moisture_level</a></div><div class="ttdeci">uint16_t get_normalized_moisture_level(uint16_t value)</div><div class="ttdef"><b>Definition:</b> <a href="soil__moisture__sensor_8c_source.html#l00009">soil_moisture_sensor.c:9</a></div></div>
-<div class="ttc" id="asoil__moisture__sensor_8h_html_a4df5aae98fe8762e057f8f367b264fbd"><div class="ttname"><a href="soil__moisture__sensor_8h.html#a4df5aae98fe8762e057f8f367b264fbd">start_soil_moisture_measurement</a></div><div class="ttdeci">uint8_t start_soil_moisture_measurement(ADC_HandleTypeDef *adc, DMA_HandleTypeDef *hdma_adc, uint32_t *value)</div><div class="ttdef"><b>Definition:</b> <a href="soil__moisture__sensor_8c_source.html#l00013">soil_moisture_sensor.c:13</a></div></div>
+<a href="soil__moisture__sensor_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#ifndef INC_SOIL_MOISTURE_SENSOR_H_</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define INC_SOIL_MOISTURE_SENSOR_H_</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;stdint.h&quot;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;string.h&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;stdio.h&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;stm32f4xx_hal.h&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;uint16_t <a class="code" href="soil__moisture__sensor_8h.html#a382aae164e49a2400dcb7293c100721b">get_normalized_moisture_level</a>(uint16_t value);</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;uint8_t <a class="code" href="soil__moisture__sensor_8h.html#a4df5aae98fe8762e057f8f367b264fbd">start_soil_moisture_measurement</a>(ADC_HandleTypeDef* adc, DMA_HandleTypeDef* hdma_adc, uint32_t* value);</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;uint8_t <a class="code" href="soil__moisture__sensor_8h.html#a252f2269da357d2f884ad35c0749e2c5">stop_soil_measurement</a>(ADC_HandleTypeDef* adc);</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* INC_SOIL_MOISTURE_SENSOR_H_ */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="asoil__moisture__sensor_8h_html_a252f2269da357d2f884ad35c0749e2c5"><div class="ttname"><a href="soil__moisture__sensor_8h.html#a252f2269da357d2f884ad35c0749e2c5">stop_soil_measurement</a></div><div class="ttdeci">uint8_t stop_soil_measurement(ADC_HandleTypeDef *adc)</div><div class="ttdef"><b>Definition:</b> <a href="soil__moisture__sensor_8c_source.html#l00022">soil_moisture_sensor.c:22</a></div></div>
+<div class="ttc" id="asoil__moisture__sensor_8h_html_a382aae164e49a2400dcb7293c100721b"><div class="ttname"><a href="soil__moisture__sensor_8h.html#a382aae164e49a2400dcb7293c100721b">get_normalized_moisture_level</a></div><div class="ttdeci">uint16_t get_normalized_moisture_level(uint16_t value)</div><div class="ttdef"><b>Definition:</b> <a href="soil__moisture__sensor_8c_source.html#l00008">soil_moisture_sensor.c:8</a></div></div>
+<div class="ttc" id="asoil__moisture__sensor_8h_html_a4df5aae98fe8762e057f8f367b264fbd"><div class="ttname"><a href="soil__moisture__sensor_8h.html#a4df5aae98fe8762e057f8f367b264fbd">start_soil_moisture_measurement</a></div><div class="ttdeci">uint8_t start_soil_moisture_measurement(ADC_HandleTypeDef *adc, DMA_HandleTypeDef *hdma_adc, uint32_t *value)</div><div class="ttdef"><b>Definition:</b> <a href="soil__moisture__sensor_8c_source.html#l00012">soil_moisture_sensor.c:12</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

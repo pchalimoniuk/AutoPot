@@ -29,6 +29,7 @@ var NAVTREE =
     [ "Controling the pump", "pump.html", null ],
     [ "Measuremnt parameters", "measure_parameters.html", null ],
     [ "Performing measurement", "measurement.html", null ],
+    [ "Demo app for Android", "demo_app.html", null ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Structure Index", "classes.html", null ],
@@ -51,7 +52,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_r_t_c__alarm_8c.html"
+"_d_h_t11__sensor_8c.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

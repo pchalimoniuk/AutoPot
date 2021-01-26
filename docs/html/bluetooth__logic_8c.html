@@ -99,11 +99,11 @@ Functions</h2></td></tr>
 <tr class="separator:ad7cf7a65ae293f6d27a7383855f365d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6d95c63018795fefc5406c293eab64b"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bluetooth__logic_8c.html#ad6d95c63018795fefc5406c293eab64b">BLUETOOTH_INTERFACE_get_amount_from_command</a> (char *command, uint8_t *amount)</td></tr>
 <tr class="separator:ad6d95c63018795fefc5406c293eab64b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6763bdc2e916dbf84c47d5e6b22f327c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bluetooth__logic_8c.html#a6763bdc2e916dbf84c47d5e6b22f327c">BLUETOOTH_INTERFACE_interpet_command</a> (char *command, <a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> *<a class="el" href="main_8c.html#adecb924c41d711add279be59985e80c6">pump</a>, <a class="el" href="struct_flags.html">Flags</a> *<a class="el" href="main_8c.html#aa991e2b209ef26272bf4fd920777bcda">flags</a>, <a class="el" href="struct_a_l_a_r_m___r_t_c__struct.html">ALARM_RTC_struct</a> *<a class="el" href="main_8c.html#aea448f89c6b968930abf2ac62031add3">alarm_struct</a>)</td></tr>
+<tr class="memitem:a6763bdc2e916dbf84c47d5e6b22f327c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bluetooth__logic_8c.html#a6763bdc2e916dbf84c47d5e6b22f327c">BLUETOOTH_INTERFACE_interpet_command</a> (char *command, Water_pump_struct *<a class="el" href="main_8c.html#a2649a4098c074e58183be8281e75b4a4">pump</a>, Flags *<a class="el" href="main_8c.html#a710f2654bd0828d357e8439786d58a09">flags</a>, <a class="el" href="struct_a_l_a_r_m___r_t_c__struct.html">ALARM_RTC_struct</a> *<a class="el" href="main_8c.html#aea448f89c6b968930abf2ac62031add3">alarm_struct</a>)</td></tr>
 <tr class="separator:a6763bdc2e916dbf84c47d5e6b22f327c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a6eb0f5de11330b6a4cd5019ba2df3e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bluetooth__logic_8c.html#a8a6eb0f5de11330b6a4cd5019ba2df3e">bluetooth</a> (char *command, <a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> *<a class="el" href="main_8c.html#adecb924c41d711add279be59985e80c6">pump</a>, <a class="el" href="struct_flags.html">Flags</a> *<a class="el" href="main_8c.html#aa991e2b209ef26272bf4fd920777bcda">flags</a>, <a class="el" href="struct_a_l_a_r_m___r_t_c__struct.html">ALARM_RTC_struct</a> *<a class="el" href="main_8c.html#aea448f89c6b968930abf2ac62031add3">alarm_struct</a>)</td></tr>
+<tr class="memitem:a8a6eb0f5de11330b6a4cd5019ba2df3e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bluetooth__logic_8c.html#a8a6eb0f5de11330b6a4cd5019ba2df3e">bluetooth</a> (char *command, Water_pump_struct *<a class="el" href="main_8c.html#a2649a4098c074e58183be8281e75b4a4">pump</a>, Flags *<a class="el" href="main_8c.html#a710f2654bd0828d357e8439786d58a09">flags</a>, <a class="el" href="struct_a_l_a_r_m___r_t_c__struct.html">ALARM_RTC_struct</a> *<a class="el" href="main_8c.html#aea448f89c6b968930abf2ac62031add3">alarm_struct</a>)</td></tr>
 <tr class="separator:a8a6eb0f5de11330b6a4cd5019ba2df3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add414904cceeb8efdc46debd82cb80b5"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bluetooth__logic_8c.html#add414904cceeb8efdc46debd82cb80b5">BLUETOOTH_INTERFACE_send_data</a> (char *buffer, <a class="el" href="structsensor_readings.html">sensorReadings</a> readings)</td></tr>
+<tr class="memitem:add414904cceeb8efdc46debd82cb80b5"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bluetooth__logic_8c.html#add414904cceeb8efdc46debd82cb80b5">BLUETOOTH_INTERFACE_send_data</a> (char *buffer, sensorReadings readings)</td></tr>
 <tr class="separator:add414904cceeb8efdc46debd82cb80b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -122,13 +122,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> *&#160;</td>
+          <td class="paramtype">Water_pump_struct *&#160;</td>
           <td class="paramname"><em>pump</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="struct_flags.html">Flags</a> *&#160;</td>
+          <td class="paramtype">Flags *&#160;</td>
           <td class="paramname"><em>flags</em>, </td>
         </tr>
         <tr>
@@ -272,13 +272,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="struct_water__pump__struct.html">Water_pump_struct</a> *&#160;</td>
+          <td class="paramtype">Water_pump_struct *&#160;</td>
           <td class="paramname"><em>pump</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="struct_flags.html">Flags</a> *&#160;</td>
+          <td class="paramtype">Flags *&#160;</td>
           <td class="paramname"><em>flags</em>, </td>
         </tr>
         <tr>
@@ -314,7 +314,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structsensor_readings.html">sensorReadings</a>&#160;</td>
+          <td class="paramtype">sensorReadings&#160;</td>
           <td class="paramname"><em>readings</em>&#160;</td>
         </tr>
         <tr>

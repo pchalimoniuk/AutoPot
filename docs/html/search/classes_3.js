@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['sensorreadings_154',['sensorReadings',['../structsensor_readings.html',1,'']]]
+  ['sensor_5freadings_5fstruct_161',['Sensor_Readings_Struct',['../struct_sensor___readings___struct.html',1,'']]]
 ];
