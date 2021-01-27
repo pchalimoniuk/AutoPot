@@ -21,6 +21,7 @@ void WATER_PUMP_set_water_level(Water_Pump_Struct* pump, uint8_t water_level){
   */
 void WATER_PUMP_set_tim(Water_Pump_Struct* pump,TIM_HandleTypeDef* tim){
 	pump->tim = tim;
+
 }
 /**
   * @brief Sets GPIO PIN used to drive pump
@@ -39,6 +40,7 @@ void WATER_PUMP_set_GPIO_port(Water_Pump_Struct* pump, GPIO_TypeDef* GPIOx, uint
   * @retval None
   */
 void WATER_PUMP_timer_setup(Water_Pump_Struct* pump){
+	  //HAL_TIM_Base_DeInit(pump->tim);
 	  pump->tim->Instance = pump->Instance;
 	  pump->tim->Init.Prescaler = pump->timer_freq_kHZ -1;
 	  pump->tim->Init.CounterMode = TIM_COUNTERMODE_UP;
@@ -72,6 +74,7 @@ void WATER_PUMP_init(Water_Pump_Struct* pump){
 void WATER_PUMP_set_watering_time(Water_Pump_Struct* pump, uint8_t watering_time){ //convert time in seconds to 10s
 	pump->watering_time = watering_time;
 	WATER_PUMP_timer_setup(pump);
+
 }
 /**
   * @brief Sets timer frequency
@@ -98,6 +101,8 @@ void WATER_PUMP_set_timer_instance(Water_Pump_Struct* pump, TIM_TypeDef *Instanc
   * @retval Return 1 if pump started successfully, 0 otherwise
   */
 uint8_t WATER_PUMP_start_watering(Water_Pump_Struct* pump){
+	__HAL_TIM_CLEAR_IT(pump->tim, TIM_IT_UPDATE);
+	pump->tim->Instance->CNT=0;
 	if(HAL_TIM_Base_Start_IT(pump->tim) != HAL_OK){
 		return 0;
 	}

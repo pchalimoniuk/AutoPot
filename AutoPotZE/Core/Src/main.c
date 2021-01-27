@@ -143,8 +143,6 @@ int main(void)
   WATER_PUMP_set_timer_instance(&pump, TIM2);
   WATER_PUMP_set_watering_time(&pump, WATERING_TIME);
   WATER_PUMP_init(&pump);
-  WATER_PUMP_start_watering(&pump);
-  WATER_PUMP_stop_watering(&pump);
   /*Prepare to recive command over bluetooth*/
   HAL_UART_Receive_IT(&huart2, command_buffer, sizeof(command_buffer));
 
